@@ -1,2 +1,6 @@
 .DS_*
 node_modules
+workspace
+*.log
+logs
+coverage

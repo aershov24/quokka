@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "node_modules/.bin/mocha tests/**"
+    "test": "node node_modules/mocha/bin/mocha test/*/*",
+    "nodemon": "SET NODE_ENV=dev && nodemon -e js",
+    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha test/*/*"
   },
   "keywords": [
     "base",
@@ -19,7 +21,9 @@
   "dependencies": {
     "body-parser": "^1.12.3",
     "express": "^4.12.3",
-    "jade": "^1.9.2"
+    "jade": "^1.9.2",
+    "winston": "^1.1.0",
+    "winston-loggly": "^1.1.0"
   },
   "devDependencies": {
     "mocha": "^2.2.4",
