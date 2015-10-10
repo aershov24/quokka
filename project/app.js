@@ -9,6 +9,13 @@ var session      = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var mongoose    = require('mongoose');
 var cfg    = require('./config.js');
+var passport = require('passport');
+var https = require('https');
+var morgan = require('morgan');
+var FacebookStrategy = require('passport-facebook').Strategy;
+var errorhandler = require('./middlewares/errorhandler.js');
+var auth = require('./helpers/auth.js');
+var customMw = require('./middlewares/middleware.js');
 
 var opt = {
   server:{
@@ -30,7 +37,9 @@ mongoose.connect(cfg.mongo.connectionString, function(err) {
 
 app.use(session({
 	secret: 'foo',
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+	resave: false,
+    saveUninitialized: true
 }));
   
 app.set('views', __dirname + '/views')
@@ -40,17 +49,39 @@ app.set('view engine', 'jade')
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
 app.use(cookieParser());
+app.use(customMw.sessionCookie);
+app.use(morgan('combined', {
+    "stream": logger.stream
+}));
+app.use(passport.initialize());
 app.use(bodyParser.urlencoded({extended: true}))
+
+passport.use(new FacebookStrategy({
+    clientID: cfg.facebook.apiKey,
+    clientSecret: cfg.facebook.apiSecret,
+    callbackURL: cfg.facebook.callback,
+    profileFields: cfg.facebook.fields,
+    passReqToCallback: true
+  }, auth.facebookAuth));
+  
+passport.serializeUser(function(user, done){
+    return done(null, user);
+});
+
+passport.deserializeUser(function(obj, done){
+    return done(null, obj);
+});
+
 app.use(require('./controllers'))
+app.get('*', errorhandler.handler_404);
 
-app.post('/info',function(req,res){
-  req.session.name=req.body.name;
-  res.redirect('/info');
-});
-app.get('/info',function(req,res){
-  res.send('<div style="color:red;font-size:30;">'+req.session.name+'</div>'+'<div><a href="/">back</a></div>');
-});
+app.use(errorhandler.logerror);
+app.use(errorhandler.handler_500);
+app.use(errorhandler.render_404);
+app.use(errorhandler.render_500);
 
-app.listen(port, function() {
-  logger.info('Listening on port ' + port)
-})
+sslport = 443;
+httpsServer = https.createServer(cfg.sslcert, app);
+httpsServer.listen(sslport, function(){
+	logger.info("worker " + process.pid + " is ready (:" + sslport + ")")
+});

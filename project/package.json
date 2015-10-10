@@ -26,6 +26,8 @@
     "express-session": "^1.11.3",
     "jade": "^1.9.2",
     "mongoose": "^4.1.10",
+    "passport": "^0.3.0",
+    "passport-facebook": "^2.0.0",
     "winston": "^1.1.0",
     "winston-loggly": "^1.1.0"
   },

@@ -3,6 +3,7 @@ var winston = 	require('winston');
 				require('winston-loggly');
 
 winston.emitErrs = true;
+winston.cli();
 
 var logger = new winston.Logger({
     transports: [
@@ -26,6 +27,12 @@ var logger = new winston.Logger({
 });
 
 logger.add(winston.transports.Loggly, cfg.loggly);
+
+logger.cli();
+logger.pdata = function(str, data){
+    logger.debug(str);
+    return logger.data(data);
+};
 
 module.exports = logger;
 module.exports.stream = {

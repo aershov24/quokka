@@ -3,10 +3,11 @@ var express = require('express')
 
 router.use('/comments', require('./comments'))
 router.use('/users', require('./users'))
-
+router.use('/auth', require('./facebook'))
+router.use('/lists', require('./lists'))
 
 router.get('/', function(req, res) {
   res.render('index')
-})
+});
 
-module.exports = router
+module.exports = router;
