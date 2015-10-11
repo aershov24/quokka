@@ -69,7 +69,7 @@ router.post('/', customMw.isAuthentificated, function(req, res) {
 	
 	List.create(newList, function(err, list){
 		if (!err){
-			res.send( list );
+			res.send(list);
 		}
 		else{
 			logger.error('Error create list: '+ err);
