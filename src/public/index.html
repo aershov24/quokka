@@ -34,10 +34,9 @@
     </div>
     <div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li> 
-        <li><a href="#">Page 3</a></li> 
+        <li class="active"><a href="#">Lists</a></li>
+        <li><a href="#">Search</a></li>
+        <li><a href="#">Bookmarks</a></li> 
       </ul>
     </div>
   </div>
@@ -88,7 +87,7 @@
                                                     <tr>
                                                         <td style="white-space:nowrap">
                                                             <a data-ng-hide="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-edit"></span></a>
-                                                            <a data-ng-hide="list.editMode" data-ng-click="deleteList(list)" href="javascript:;"><span class="glyphicon glyphicon-trash"></span></a>
+                                                            <a data-ng-hide="list.editMode" data-ng-click="deleteList(list._id)" href="javascript:;"><span class="glyphicon glyphicon-trash"></span></a>
 
                                                         </td>
                                                         <td style="white-space:nowrap">
@@ -131,24 +130,28 @@
 						</div>
 					</div>
 				</div>
-			
-				<ul class="list-group" ng-sortable>
-				<li class="list-group-item" data-ng-repeat="item in list.items">
-					<table>
-						<tr>
-							<td width="100%" align="left">
-								{{item.title}}
-							</td>
-							<td align="right">
-								<a data-ng-click="deleteListItem(list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
-							</td>
-						</tr>
-					</table>
-					</li>
-				</ul>
+				<p>
+						<ul class="list-group" ng-sortable>
+						<li class="list-group-item" data-ng-repeat="item in list.items">
+							<table>
+								<tr>
+									<td width="100%" align="left">
+										{{item.title}}
+									</td>
+									<td align="right">
+										<a data-ng-click="deleteListItem(list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+									</td>
+								</tr>
+							</table>
+							</li>
+						</ul>
+					</p>
 			
 				<div class="panel-footer">
-					<!--<tags-input ng-model="list.ngTags">-->
+					<tags-input placeholder="tags" ng-model="list.ngTags" 
+								maxTags="4"
+                                on-tag-added="tagAdded($tag)"
+                                on-tag-removed="tagRemoved($tag)">
 					</tags-input>
 				</div>
 			</div>

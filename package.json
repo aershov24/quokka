@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "test": "node node_modules/mocha/bin/mocha src/test/*/*",
-    "nodemon": "SET NODE_ENV=dev && nodemon -e js",
+    "nodemon": "SET NODE_ENV=dev && nodemon -e js src/app.js",
     "istanbul": "istanbul cover node_modules/mocha/bin/_mocha test/*/*"
   },
   "keywords": [

@@ -29,6 +29,17 @@ router.get('/:listId/items', customMw.isAuthentificated, function(req, res) {
 	})
 });
 
+router.post('/:listId', customMw.isAuthentificated, function(req, res) {
+	var editList = {
+		id: 	req.params.listId,
+		title:  req.body.title
+	}
+	
+	List.update(editList, function (err, items) {
+		res.send(items);
+	})
+});
+
 router.post('/:listId/items', customMw.isAuthentificated, function(req, res) {
 	var newListItem = {
 		title:        req.body.title,

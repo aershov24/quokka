@@ -17,7 +17,7 @@ var errorhandler = require('./middlewares/errorhandler.js');
 var auth = require('./helpers/auth.js');
 var customMw = require('./middlewares/middleware.js');
 
-var opt = {
+var opt = {  
   server:{
        socketOptions: { keepAlive: 1}
   } 

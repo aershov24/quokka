@@ -1,11 +1,4 @@
 angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaController', function($scope, $http) {
-	$scope.tags = [
-            { text: 'just' },
-            { text: 'some' },
-            { text: 'cool' },
-            { text: 'tags' }
-          ];
-		  
     $scope.formData = {};
 
     // when landing on the page, get all todos and show them
@@ -46,25 +39,54 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaContr
 	
 	//Edit top5list
     $scope.saveList = function () {
-        $scope.loading = true;
         var editList = this.list;
-        $http.put('/lists/' + frien._id, editList).success(function (data) {
-            frien.editMode = false;
+        $http.post('/lists/' + editList._id, editList).success(function (data) {
+            editList.editMode = false;
         }).error(function (data) {
             $scope.error = "An Error has occured while Saving list! " + data;
         });
     };
 
-    // delete a todo after checking it
+   // delete a todo after checking it
     $scope.deleteList = function(id) {
         $http.delete('/lists/' + id)
             .success(function(data) {
-                $scope.lists = data;
-                console.log(data);
+                 $.each($scope.lists, function (i) {
+                    if ($scope.lists[i]._id === id) {
+                        $scope.lists.splice(i, 1);
+                        return false;
+                    }
+                });
             })
             .error(function(data) {
                 console.log('Error: ' + data);
             });
+    };
+	
+	$scope.tagAdded = function (tag) {
+		var i = 0;
+		var tags = [];
+		for (i = 0; i < this.list.ngTags.length; ++i) {
+            tags.push(this.list.ngTags[i].text);
+		}
+        $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
+
+        }).error(function (data) {
+            $scope.error = "An Error has occured while Saving tag! " + data;
+        });
+    };
+
+    $scope.tagRemoved = function (tag) {
+		var i = 0;
+		var tags = [];
+		for (i = 0; i < this.list.ngTags.length; ++i) {
+            tags.push(this.list.ngTags[i].text);
+		}
+        $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
+
+        }).error(function (data) {
+            $scope.error = "An Error has occured while Saving tag! " + data;
+        });
     };
 }
 );
