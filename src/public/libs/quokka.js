@@ -1,4 +1,4 @@
-angular.module('quokka', ['ngTagsInput']).controller('quokkaController', function($scope, $http) {
+angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaController', function($scope, $http) {
 	$scope.tags = [
             { text: 'just' },
             { text: 'some' },

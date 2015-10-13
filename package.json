@@ -4,8 +4,8 @@
   "description": "Quokka project",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "node node_modules/mocha/bin/mocha test/*/*",
+    "start": "node src/app.js",
+    "test": "node node_modules/mocha/bin/mocha src/test/*/*",
     "nodemon": "SET NODE_ENV=dev && nodemon -e js",
     "istanbul": "istanbul cover node_modules/mocha/bin/_mocha test/*/*"
   },
@@ -26,6 +26,7 @@
     "express-session": "^1.11.3",
     "jade": "^1.9.2",
     "mongoose": "^4.1.10",
+    "morgan": "^1.6.1",
     "passport": "^0.3.0",
     "passport-facebook": "^2.0.0",
     "winston": "^1.1.0",

@@ -17,8 +17,8 @@ var mongo = {
 }
 
 var sslcert = {
-    key: fs.readFileSync('./sslcerts/server.key'),
-    cert: fs.readFileSync('./sslcerts/server.crt')
+    key: fs.readFileSync('./src/sslcerts/server.key'),
+    cert: fs.readFileSync('./src/sslcerts/server.crt')
 }
  
 var facebook = {
