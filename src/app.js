@@ -11,6 +11,7 @@ var mongoose    = require('mongoose');
 var cfg    = require('./config.js');
 var passport = require('passport');
 var https = require('https');
+var http = require('http');
 var morgan = require('morgan');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var errorhandler = require('./middlewares/errorhandler.js');
@@ -80,8 +81,12 @@ app.use(errorhandler.handler_500);
 app.use(errorhandler.render_404);
 app.use(errorhandler.render_500);
 
-sslport = 443;
-httpsServer = https.createServer(cfg.sslcert, app);
-httpsServer.listen(sslport, function(){
-	logger.info("worker " + process.pid + " is ready (:" + sslport + ")")
+//sslport = 8080;
+httpServer = http.createServer(app);
+httpServer.listen(port, function(){
+	logger.info("worker " + process.pid + " is ready (:" + port + ")")
 });
+//httpsServer = https.createServer(cfg.sslcert, app);
+//httpsServer.listen(sslport, function(){
+//	logger.info("worker " + process.pid + " is ready (:" + sslport + ")")
+//});
