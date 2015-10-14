@@ -120,8 +120,8 @@
 										<!-- FORM TO CREATE LIST -->
 										<div id="list-form" class="row">
 											<form>
-												<div class="col-sm-8"><input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title"></div>
-												<div class="col-sm-4"><button type="submit" class="btn btn-success btn-md" ng-click="createList()">Add</button></div>
+												<div class="col-sm-8"><input type="text" class="form-control input-md" placeholder="Title" ng-model="newListItem.title"></div>
+												<div class="col-sm-4"><button type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add</button></div>
 											</form>
 										</div>
 									</div>
@@ -139,7 +139,7 @@
 										{{item.title}}
 									</td>
 									<td align="right">
-										<a data-ng-click="deleteListItem(list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+										<a data-ng-click="deleteListItem(item._id)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
 									</td>
 								</tr>
 							</table>

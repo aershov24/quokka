@@ -1,5 +1,6 @@
 angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaController', function($scope, $http) {
     $scope.formData = {};
+	$scope.newListItem = {};
 
     // when landing on the page, get all todos and show them
     $http.get('/lists')
@@ -60,6 +61,36 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaContr
             })
             .error(function(data) {
                 console.log('Error: ' + data);
+            });
+    };
+	
+	// when submitting the add form, send the text to the node API
+    $scope.createListItem = function() {
+		var buf = this.list;
+        $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
+            .success(function(data) {
+                $scope.newListItem = {};
+                buf.items.push(data);
+				return false;
+            })
+            .error(function(data) {
+                return false;
+            });
+    };
+	
+    $scope.deleteListItem = function(id) {
+		var buf = this.list;
+        $http.delete('/lists/' + this.list._id+'/items/'+id)
+            .success(function(data) {
+                 $.each(buf.items, function (i) {
+                    if (buf.items[i]._id === id) {
+                        buf.items.splice(i, 1);
+                        return false;
+                    }
+                });
+            })
+            .error(function(data) {
+                return false;
             });
     };
 	
