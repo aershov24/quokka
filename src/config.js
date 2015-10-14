@@ -24,7 +24,7 @@ var sslcert = {
 var facebook = {
     apiKey: '1641569646091283',
     apiSecret: '27cc6a4c90c35c3fba25177364e9fd2f',
-    callback: 'https://localhost/auth/facebook/callback',
+	callback: 'https://quokka-the-lists.herokuapp.com/auth/facebook/callback',
     fields: ["id", "birthday", "email", "first_name", "gender", "last_name"]
 }
 
