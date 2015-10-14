@@ -70,7 +70,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaContr
         $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
             .success(function(data) {
                 $scope.newListItem = {};
-                buf.items.push(data);
+                buf.items = data;
 				return false;
             })
             .error(function(data) {
