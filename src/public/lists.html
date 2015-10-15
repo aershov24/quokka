@@ -27,16 +27,20 @@
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 <body ng-controller="quokkaController">
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Quokka</a>
     </div>
     <div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Lists</a></li>
-        <li><a href="#">Search</a></li>
-        <li><a href="#">Bookmarks</a></li> 
+        <li class="active"><a href="#"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-search"></span> Search</a></li> 
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/users/profile"><span class="glyphicon glyphicon-user"></span> {{profile.email}}</a></li>
+        <li><a href="/users/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
   </div>
@@ -57,10 +61,16 @@
 				<div class="panel-body">
 					<!-- FORM TO CREATE LIST -->
 					<div id="list-form" class="row">
-							<form>
-								<div class="col-sm-8"><input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title"></div>
-								<div class="col-sm-4"><button type="submit" class="btn btn-success btn-md" ng-click="createList()">Add</button></div>
-							</form>
+								<div class="col-sm-12">
+									<form>
+									<table width="100%">
+										<tr>
+											<td width="80%"><input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title"></td>
+											<td><button type="submit" class="btn btn-success btn-md" ng-click="createList()">Add</button></td>
+										</tr>
+									</table>
+									</form>
+								</div>
 					</div>
 				</div>
 			</div>
@@ -85,14 +95,17 @@
                                             <div class="col-md-12">
                                                 <table>
                                                     <tr>
+														<td style="white-space:nowrap">
+															<a data-ng-hide="list.editMode" data-ng-click="share(list)" href="javascript:;"><span class="glyphicon glyphicon-share"></span> </a>
+														</td>
                                                         <td style="white-space:nowrap">
-                                                            <a data-ng-hide="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-edit"></span></a>
-                                                            <a data-ng-hide="list.editMode" data-ng-click="deleteList(list._id)" href="javascript:;"><span class="glyphicon glyphicon-trash"></span></a>
+                                                            <a data-ng-hide="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-edit"></span> </a>
+                                                            <a data-ng-hide="list.editMode" data-ng-click="deleteList(list._id)" href="javascript:;"><span class="glyphicon glyphicon-trash"></span> </a>
 
                                                         </td>
                                                         <td style="white-space:nowrap">
-                                                            <a data-ng-show="list.editMode" data-ng-click="saveList(list)" href="javascript:;"><span class="glyphicon glyphicon-ok"></span></a>
-                                                            <a data-ng-show="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+                                                            <a data-ng-show="list.editMode" data-ng-click="saveList(list)" href="javascript:;"><span class="glyphicon glyphicon-ok"></span> </a>
+                                                            <a data-ng-show="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span> </a>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -119,10 +132,16 @@
 									<div class="panel-body">
 										<!-- FORM TO CREATE LIST -->
 										<div id="list-form" class="row">
+										<div class="col-sm-12">
 											<form>
-												<div class="col-sm-8"><input type="text" class="form-control input-md" placeholder="Title" ng-model="newListItem.title"></div>
-												<div class="col-sm-4"><button type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add</button></div>
+											<table width="100%">
+											<tr>
+											<td width="80%"><input type="text" class="form-control input-md" placeholder="Title" ng-model="newListItem.title"></td>
+											<td><button type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add</button></td>
+											</tr>
+											</table>
 											</form>
+										</div>
 										</div>
 									</div>
 								</div>
@@ -149,11 +168,16 @@
 				</div>
 			
 				<div class="panel-footer">
-					<tags-input placeholder="tags" ng-model="list.ngTags" 
+				    <table width="100%">
+					<tr>
+					<td width="2%"><span class="glyphicon glyphicon-tags"></span></td>
+					<td width="100%"><tags-input placeholder="tags" ng-model="list.ngTags" 
 								maxTags="4"
                                 on-tag-added="tagAdded($tag)"
                                 on-tag-removed="tagRemoved($tag)">
-					</tags-input>
+					</tags-input></td>
+					</tr>
+					</table>
 				</div>
 			</div>
 		  </div>

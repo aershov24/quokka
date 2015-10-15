@@ -1,7 +1,16 @@
 angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaController', function($scope, $http) {
     $scope.formData = {};
 	$scope.newListItem = {};
-
+	
+	// when landing on the page, get all todos and show them
+    $http.get('/users/profile')
+        .success(function(data) {
+            $scope.profile = data;
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+	
     // when landing on the page, get all todos and show them
     $http.get('/lists')
         .success(function(data) {
