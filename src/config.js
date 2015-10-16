@@ -1,6 +1,12 @@
 var fs = require('fs');
 var ENV = process.env.NODE_ENV || 'DEV';
 
+var fbcall;
+if (ENV == 'production')
+	fbcall = 'http://quokka-the-lists.herokuapp.com/auth/facebook/callback';
+else
+	fbcall = 'http://localhost:3000/auth/facebook/callback';
+
 var log = {
     file: "./logs/all-logs.log",
 };
@@ -24,7 +30,7 @@ var sslcert = {
 var facebook = {
     apiKey: '1641569646091283',
     apiSecret: '27cc6a4c90c35c3fba25177364e9fd2f',
-	callback: 'http://localhost:3000/auth/facebook/callback',
+	callback: fbcall,
     fields: ["id", "birthday", "email", "first_name", "gender", "last_name"]
 }
 
