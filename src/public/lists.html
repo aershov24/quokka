@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
 	<link rel="stylesheet" href="./css/ng-tags-input.min.css">
 	<link rel="stylesheet" href="./css/ng-tags-input.bootstrap.min.css">
+	<link rel="stylesheet" href="./css/sticky-footer-navbar.css">
 
     <!-- SPELLS -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
@@ -30,9 +31,14 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span> 
+      </button>
       <a class="navbar-brand" href="#">Quokka</a>
     </div>
-    <div>
+    <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
@@ -170,7 +176,7 @@
 				<div class="panel-footer">
 				    <table width="100%">
 					<tr>
-					<td width="2%"><span class="glyphicon glyphicon-tags"></span></td>
+					<td width="4%"><span class="glyphicon glyphicon-tags">&nbsp;</span></td>
 					<td width="100%"><tags-input placeholder="tags" ng-model="list.ngTags" 
 								maxTags="4"
                                 on-tag-added="tagAdded($tag)"
@@ -183,5 +189,10 @@
 		  </div>
 	</div>
 </div>
+<footer class="footer">
+      <div class="container">
+        <p class="text-muted">Alex Ershov - 2015</p>
+      </div>
+    </footer>
 </body>
 </html>
