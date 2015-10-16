@@ -3,7 +3,7 @@ var ENV = process.env.NODE_ENV || 'DEV';
 
 var fbcall;
 if (ENV == 'production')
-	fbcall = 'http://quokka-the-lists.herokuapp.com/auth/facebook/callback';
+	fbcall = 'https://quokka-the-lists.herokuapp.com/auth/facebook/callback';
 else
 	fbcall = 'http://localhost:3000/auth/facebook/callback';
 
