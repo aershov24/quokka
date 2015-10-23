@@ -4,19 +4,19 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , port = process.env.PORT || 3000
 
-var cookieParser = require('cookie-parser');
-var session      = require('express-session');
-var MongoStore = require('connect-mongo')(session);
-var mongoose    = require('mongoose');
-var cfg    = require('./config.js');
-var passport = require('passport');
-var https = require('https');
-var http = require('http');
-var morgan = require('morgan');
+var cookieParser 	= require('cookie-parser');
+var session      	= require('express-session');
+var MongoStore 		= require('connect-mongo')(session);
+var mongoose    	= require('mongoose');
+var cfg    			= require('./config.js');
+var passport 		= require('passport');
+var https 			= require('https');
+var http 			= require('http');
+var morgan 			= require('morgan');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var errorhandler = require('./middlewares/errorhandler.js');
-var auth = require('./helpers/auth.js');
-var customMw = require('./middlewares/middleware.js');
+var errorhandler 	= require('./middlewares/errorhandler.js');
+var auth 			= require('./helpers/auth.js');
+var customMw 		= require('./middlewares/middleware.js');
 
 var opt = {  
   server:{

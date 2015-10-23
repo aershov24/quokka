@@ -8,9 +8,10 @@ var logger = require('../helpers/logger.js');
 router.use('/users', require('./users'))
 router.use('/auth', require('./facebook'))
 router.use('/lists', require('./lists'))
+router.use('/bookmarks', require('./bookmarks'))
 
 router.get('/', customMw.isAuthentificated, function(req, res){
 		res.sendFile(path.resolve('src/public/lists.html'));
     });
 
-module.exports = router;
+module.exports = router; 
