@@ -17,6 +17,14 @@ router.post('/search/name', customMw.isAuthentificated, function(req, res) {
 	})
 });
 
+router.post('/:listId/sortItems', customMw.isAuthentificated, function(req, res) {
+	logger.debug(req.body.oldIndex);
+	logger.debug(req.body.newIndex);
+	List.sortItems(req.params.listId, req.body.oldIndex, req.body.newIndex, function (err, list) {
+		res.send(list);
+	})
+});
+
 router.post('/search/tags', customMw.isAuthentificated, function(req, res) {
 	List.searchByTags(req.body.tags, function (err, lists) {
 		res.send(lists);
@@ -44,6 +52,8 @@ router.post('/:listId/items', customMw.isAuthentificated, function(req, res) {
 	var newListItem = {
 		title:        req.body.title,
 		description:  req.body.description,
+		listId:       req.body.listId,
+		orderId:      req.body.orderId
 	}
 	List.addItem(req.params.listId, newListItem, function (err, items) {
 		res.send(items);

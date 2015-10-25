@@ -1,6 +1,22 @@
 angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaController', function($scope, $http) {
     $scope.formData = {};
 	$scope.newListItem = {};
+    $scope.sortConfig = {
+            animation: 150,
+            handle: ".my-handle",
+            // Changed sorting within list
+            // Called by any change to the list (add / update / remove)
+            onSort: function (evt) {
+                var i;
+                $http.post('/lists/'+evt.model.listId+'/sortItems', { oldIndex: evt.oldIndex, newIndex: evt.newIndex })
+                   .success(function(data) {
+                       console.log(data);
+                   })
+                   .error(function(data) {
+                       console.log('Error: ' + data);
+                   });
+            },
+        };
 	
 	// when landing on the page, get all todos and show them
     $http.get('/users/profile')
@@ -76,6 +92,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable']).controller('quokkaContr
 	// when submitting the add form, send the text to the node API
     $scope.createListItem = function() {
 		var buf = this.list;
+        $scope.newListItem.listId = buf._id;
+        $scope.newListItem.orderId = buf.items.length;
         $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
             .success(function(data) {
                 $scope.newListItem = {};

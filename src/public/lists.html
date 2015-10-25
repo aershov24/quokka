@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="./css/ng-tags-input.min.css">
 	<link rel="stylesheet" href="./css/ng-tags-input.bootstrap.min.css">
 	<link rel="stylesheet" href="./css/sticky-footer-navbar.css">
+	<link rel="stylesheet" href="./css/style.css">
 
     <!-- SPELLS -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
@@ -155,10 +156,13 @@
 						</div>
 						
 										<p>
-						<ul class="list-group" ng-sortable>
-						<li class="list-group-item" data-ng-repeat="item in list.items" >
+						<ul class="list-group" ng-sortable="sortConfig">
+						<li class="list-group-item" data-ng-repeat="item in list.items | orderBy: 'orderId'" >
 							<table>
 								<tr>
+									<td align="left">
+										<span class="my-handle"><span class="glyphicon glyphicon-move">&nbsp;</span></span>
+									</td>
 									<td width="100%" align="left">
 										{{item.title}}
 									</td>
