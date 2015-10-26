@@ -18,8 +18,6 @@ router.post('/search/name', customMw.isAuthentificated, function(req, res) {
 });
 
 router.post('/:listId/sortItems', customMw.isAuthentificated, function(req, res) {
-	logger.debug(req.body.oldIndex);
-	logger.debug(req.body.newIndex);
 	List.sortItems(req.params.listId, req.body.oldIndex, req.body.newIndex, function (err, list) {
 		res.send(list);
 	})

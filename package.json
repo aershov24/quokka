@@ -25,6 +25,7 @@
     "express": "^4.12.3",
     "express-session": "^1.11.3",
     "jade": "^1.9.2",
+    "mathjs": "^2.4.0",
     "mongoose": "^4.1.10",
     "morgan": "^1.6.1",
     "passport": "^0.3.0",

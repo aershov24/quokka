@@ -1,5 +1,6 @@
 var mongoose    = require('mongoose');
 var logger = require('../helpers/logger.js');
+var math = require('mathjs');
 
 var listItemSchema = mongoose.Schema({
   title:        String,
@@ -176,20 +177,61 @@ exports.items = function(listId, cb){
 };
 
 exports.sortItems = function(listId, oldIndex, newIndex, cb){
-	logger.debug(listId);
-	logger.debug(oldIndex);
-	logger.debug(newIndex);
 	List.findOne({ _id : listId }, 
 		function (err, list){
 			if (!err){
 				if (list)
 				{
-					/*
-					[0, 1, 2] -> [a:2,b:0] -> [2,0,1]
-					1. from (min(a,b), max(a,b)-1)
-    					1. item[i].orderId = item[i].orderId+1
-					2. item[max(a,b)].orderId = min(a,b)
-					*/
+					var i,j,k,z;
+					// sort items by id
+					list.items.sort(function (a, b) {
+					  if (a.orderId > b.orderId) {
+					    return 1;
+					  }
+					  if (a.orderId < b.orderId) {
+					    return -1;
+					  }
+					  return 0;
+					});
+
+					var min = math.min(oldIndex, newIndex);
+					var max = math.max(oldIndex, newIndex);
+
+					if (newIndex < oldIndex)
+					{
+						for (i = min; i < max; i++)
+							list.items[i].orderId = list.items[i].orderId+1;
+
+						list.items[max].orderId = min;
+
+						list.items.sort(function (a, b) {
+						  if (a.orderId > b.orderId) {
+						    return 1;
+						  }
+						  if (a.orderId < b.orderId) {
+						    return -1;
+						  }
+						  return 0;
+						});
+					}
+					else
+					{
+						for (i = min+1; i <= max; i++)
+							list.items[i].orderId = list.items[i].orderId-1;
+
+						list.items[min].orderId = max;
+
+						list.items.sort(function (a, b) {
+						  if (a.orderId > b.orderId) {
+						    return 1;
+						  }
+						  if (a.orderId < b.orderId) {
+						    return -1;
+						  }
+						  return 0;
+						});
+					}
+
 					list.save(function(err, list){
 						if(!err){
 							cb(null, list);
