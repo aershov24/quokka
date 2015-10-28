@@ -30,6 +30,16 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
             });
     };
 
+     // when submitting the add form, send the text to the node API
+    $scope.addBookmark = function() {
+        $http.post('/bookmarks', { listId: this.list._id})
+            .success(function(data) {
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+
 })
 .controller('quokkaController', function($scope, $http) {
     $scope.formData = {};

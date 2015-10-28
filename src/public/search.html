@@ -41,12 +41,12 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="#"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
+        <li><a href="/"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
         <li><a href="/bookmarks"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
         <li class="active"><a href="/search"><span class="glyphicon glyphicon-search"></span> Search</a></li> 
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/users/profile"><span class="glyphicon glyphicon-user"></span> {{profile.email}}</a></li>
+        <li><a href="/users/profile"><img width="25px" ng-src="http://graph.facebook.com/{{profile.facebookId}}/picture?type=square" class="img-circle"> {{profile.email}}</a></li>
         <li><a href="/users/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>
@@ -101,8 +101,12 @@
                                             <div class="col-md-12">
                                                 <table>
                                                     <tr>
+                                                    	<td>
+                                                    		<a href="">
+                                                    		<img width="25px" ng-src="http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square" class="img-circle"></a>
+                                                    	</td>
 														<td style="white-space:nowrap">
-															<a data-ng-hide="list.editMode" data-ng-click="bookmark(list)" href="javascript:;"><span class="glyphicon glyphicon-bookmark"></span> </a>
+															<a data-ng-click="addBookmark(list)" href="javascript:;"><span class="glyphicon glyphicon-bookmark"></span> </a>
 														</td>
 
                                                     </tr>
@@ -119,7 +123,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<p>
-						<ul class="list-group" ng-sortable="sortConfig">
+						<ul class="list-group">
 						<li class="list-group-item" data-ng-repeat="item in list.items | orderBy: 'orderId'" >
 							<table>
 								<tr>
@@ -138,7 +142,7 @@
 				    <table width="100%">
 					<tr>
 					<td width="4%"><span class="glyphicon glyphicon-tags">&nbsp;</span></td>
-					<td width="100%"><tags-input placeholder="tags" ng-model="list.ngTags" 
+					<td width="100%"><tags-input ng-model="list.ngTags" ng-disabled="true"
 								maxTags="4"
                                 on-tag-added="tagAdded($tag)"
                                 on-tag-removed="tagRemoved($tag)">

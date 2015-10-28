@@ -47,7 +47,7 @@ exports.delete = function(bookmarkId, cb) {
 };
 
 exports.findByUser = function(userId, cb){
-	Bookmark.find({ userId : userId }, 
+	Bookmark.find({ userId : userId }).populate('listId').populate('userId').exec( 
 		function (err, bookmarks){
 			if (!err){ cb(null, bookmarks); }
 			else

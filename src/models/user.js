@@ -36,3 +36,13 @@ exports.findByEmail = function(email, cb){
 		}
 	);
 };
+
+exports.getById = function(userId, cb){
+	User.find({ _id : userId }, 
+		function (err, users){
+			if (!err){ cb(null, users); }
+			else
+				cb(err, []);
+		}
+	);
+};

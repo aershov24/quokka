@@ -41,12 +41,13 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
+        <li class="active"><a href="/"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
         <li><a href="/bookmarks"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
         <li><a href="/search"><span class="glyphicon glyphicon-search"></span> Search</a></li> 
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/users/profile"><span class="glyphicon glyphicon-user"></span> {{profile.email}}</a></li>
+        <li><a href="/users/profile">
+        	<img width="25px" ng-src="http://graph.facebook.com/{{profile.facebookId}}/picture?type=square" class="img-circle"> {{profile.email}}</a></li>
         <li><a href="/users/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
       </ul>
     </div>

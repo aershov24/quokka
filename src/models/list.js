@@ -276,7 +276,9 @@ exports.findByUser = function(userId, cb){
 
 exports.searchByName = function(str, cb){
 	var re = new RegExp(str, 'i');
-	List.find({ $or:[ {'title': { $regex: re }}, {'description': { $regex: re }} ]}, function(err, lists) {
+	List.find({ $or:[ {'title': { $regex: re }}, {'description': { $regex: re }} ]})
+		.populate('userId')
+		.exec(function(err, lists) {
 		if(!err) 
 			cb(null, lists); 
 	});
