@@ -11,7 +11,7 @@
     <title>Quokka</title>
 
     <!-- SCROLLS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"><!-- load bootstrap -->
 	<link rel="stylesheet" href="./css/ng-tags-input.min.css">
 	<link rel="stylesheet" href="./css/ng-tags-input.bootstrap.min.css">
 	<link rel="stylesheet" href="./css/sticky-footer-navbar.css">
@@ -54,37 +54,26 @@
 </nav>
 
 <div class="container">
+<h3 style="
+    margin-top: 0px;
+    margin-bottom: 15px;">Search</h3>
 
-
-	<div class="panel-group">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-			  <h4 class="panel-title">
-			    <span class="glyphicon glyphicon-plus"></span>
-				<a data-toggle="collapse" href="#collapseAddList">Search</a>
-			  </h4>
-			</div>
-			<div id="collapseAddList" class="collapse">
-				<div class="panel-body">
-					<!-- FORM TO CREATE LIST -->
+    <!-- FORM TO CREATE LIST -->
 					<div id="list-form" class="row">
 								<div class="col-sm-12">
 									<form>
 									<table width="100%">
 										<tr>
-											<td width="80%"><input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.str"></td>
-											<td><button type="submit" class="btn btn-success btn-md" ng-click="searchList()">Search</button></td>
+											<td width="100%"><input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.str"></td>
+											<td  align="right" 
+											style="padding-left: 10px;"><button type="submit" class="btn btn-success btn-md" ng-click="searchList()">Search</button></td>
 										</tr>
 									</table>
 									</form>
 								</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+</br>
 	
-	<br/>
 	<div class="panel-group">
 		  <div class="panel panel-default" data-ng-repeat="list in lists">
 			<div class="panel-heading">
@@ -154,6 +143,7 @@
 		  </div>
 	</div>
 </div>
+
 <footer class="footer">
       <div class="container">
         <p class="text-muted">Alex Ershov - 2015</p>

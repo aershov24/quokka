@@ -1,4 +1,14 @@
 .my-handle {
     cursor: move;
     cursor: -webkit-grabbing;
+    color:black;
+}
+
+.top5 ul li:nth-child(-n+5){
+    font-weight:bold;
+    color:green;
+}
+
+.panel {
+    border: 0;
 }

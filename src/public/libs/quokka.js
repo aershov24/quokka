@@ -93,7 +93,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
         $http.post('/lists', $scope.formData)
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
-                $scope.lists.push(data);
+                $scope.lists.splice(0, 0, data);
                 console.log(data);
             })
             .error(function(data) {
