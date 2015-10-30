@@ -92,18 +92,24 @@
                                             <div class="col-md-12">
                                                 <table>
                                                     <tr>
-														<td style="white-space:nowrap">
-															<a data-ng-hide="list.editMode" data-ng-click="share(list)" href="javascript:;"><span class="glyphicon glyphicon-share-alt">&nbsp;</span></a>
-														</td>
-                                                        <td style="white-space:nowrap">
-                                                            <a data-ng-hide="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-pencil"></span> </a>
-                                                            <a data-ng-hide="list.editMode" data-ng-click="deleteList(list._id)" href="javascript:;"><span class="glyphicon glyphicon-remove-circle"></span> </a>
-
-                                                        </td>
-                                                        <td style="white-space:nowrap">
-                                                            <a data-ng-show="list.editMode" data-ng-click="saveList(list)" href="javascript:;"><span class="glyphicon glyphicon-ok"></span> </a>
-                                                            <a data-ng-show="list.editMode" data-ng-click="toggleEdit(list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span> </a>
-                                                        </td>
+                                                    	<td>
+													          <div data-ng-hide="list.editMode" class="dropdown">
+													          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tasks"></span></a>
+														          <ul class="dropdown-menu dropdown-menu-right">
+														            <li><a href="javascript:;" data-ng-click="toggleEdit(list)">Edit</a></li>
+														            <li><a href="javascript:;" data-ng-click="share(list)">Share</a></li>
+														            <li role="separator" class="divider"></li>
+														            <li><a href="javascript:;" data-ng-click="deleteList(list._id)">Delete</a></li>
+														          </ul>
+													      	</div>
+													      	<div data-ng-show="list.editMode" class="dropdown">
+													          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span></a>
+														          <ul class="dropdown-menu dropdown-menu-right">
+														            <li><a data-ng-click="saveList(list)" href="javascript:;">Save</a></li>
+											          				<li><a data-ng-click="toggleEdit(list)" href="javascript:;">Cancel</a></li>
+														          </ul>
+													      	</div>
+                                                    	</td>
                                                     </tr>
                                                 </table>
 
