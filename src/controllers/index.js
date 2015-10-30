@@ -22,4 +22,8 @@ router.get('/bookmarks', customMw.isAuthentificated, function(req, res){
 		res.sendFile(path.resolve('src/public/bookmarks.html'));
     });
 
+router.get('/profile', customMw.isAuthentificated, function(req, res){
+		res.sendFile(path.resolve('src/public/profile.html'));
+    });
+
 module.exports = router; 
