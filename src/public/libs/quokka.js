@@ -94,6 +94,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
             .success(function(data) {
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.lists.splice(0, 0, data);
+                $scope.lists[0].ngTags = [];
+                $scope.lists[0].editMode = false;
                 console.log(data);
             })
             .error(function(data) {
