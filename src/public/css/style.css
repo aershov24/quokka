@@ -56,3 +56,13 @@ span.tags
     font-weight: bold;
     padding: 2px 4px;
     }
+
+.listLink {
+    color: gray;
+    text-decoration: none;
+}
+.listLink:hover, 
+.listLink:focus {
+    color: #2A6496;
+    text-decoration: underline;
+}

@@ -1,4 +1,4 @@
-angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
+angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'ui.bootstrap'])
 .controller('profileController', function($scope, $http) {
     $scope.profile = {};
     // when landing on the page, get all todos and show them
@@ -53,6 +53,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
 
 })
 .controller('quokkaController', function($scope, $http) {
+
     $scope.formData = {};
 	$scope.newListItem = {};
     $scope.sortConfig = {
@@ -108,6 +109,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
                 $scope.lists[0].ngTags = [];
                 $scope.lists[0].editMode = false;
                 console.log(data);
+                $scope.dismiss();
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -203,4 +205,14 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
         });
     };
 }
-);
+).directive('myModal', function() {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attr) {
+                scope.dismiss = function() {
+                element.modal('hide');
+            };
+        }
+    } 
+    });
+;

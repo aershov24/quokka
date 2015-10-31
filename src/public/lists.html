@@ -25,9 +25,9 @@
 	<script src="./libs/ng-sortable.js"></script>
 	<script src="./libs/ng-tags-input.min.js"></script>
 	<script src="./libs/quokka.js"></script>
+	<script src="./libs/ui-bootstrap.js"></script>
 
 </head>
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
 <body ng-controller="quokkaController">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -57,170 +57,179 @@
 <div class="container">
 <table width="100%">
 	<tr>
-		<td><h3 style="
+		<td valign="bottom"><h2 style="
     margin-top: 0px;
-    margin-bottom: 15px;">My lists</h3></td>
-		<td align="right"><button type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">Add List</button></td>
+    margin-bottom: 0px;">My lists</h2></td>
+		<td align="right"><button type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#addList">Add List</button></td>
 	</tr>
 </table>
-						<div id="list-form" class="row">
-								<div class="col-sm-12">
-									<form>
-									<table width="100%">
-										<tr>
-											<td width="100%"></td>
-											<td align="right" 
-											style="padding-left: 10px;">
-											</td>
-										</tr>
-									</table>
-									</form>
-								</div>
-					</div>
-
-				</br>
-	
-
-	<div class="panel-group">
-		  <div class="panel panel-default" data-ng-repeat="list in lists">
-			<div class="panel-heading">
-			  <h4 class="panel-title">
-			   <div class="row">
-                                <table style="width: 100%">
-                                    <tr>
-                                        <td align="left">
-                                            <div class="col-md-12">
-                                                <a data-toggle="collapse" data-ng-hide="list.editMode" href="#collapse{{list._id}}"><b>{{ list.title }}</b></a>
-                                                <input  class="form-control input-md" data-ng-show="list.editMode" type="text" data-ng-model="list.title" />
-                                            </div>
-                                        </td>
-                                        <td align="right">
-                                            <div class="col-md-12">
-                                                <table>
-                                                    <tr>
-                                                    	<td>
-													          <div data-ng-hide="list.editMode" class="dropdown">
-													          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tasks"></span></a>
-														          <ul class="dropdown-menu dropdown-menu-right">
-														          	<!-- data-ng-click="toggleEdit(list)" -->
-														            <li><a href="javascript:;" data-ng-click="toggleEdit(list)">Edit</a></li>
-														            <li><a href="javascript:;" data-ng-click="share(list)">Share</a></li>
-														            <li role="separator" class="divider"></li>
-														            <li><a href="javascript:;" data-ng-click="deleteList(list._id)">Delete</a></li>
-														          </ul>
-													      	</div>
-													      	<div data-ng-show="list.editMode" class="dropdown">
-													          	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span></a>
-														          <ul class="dropdown-menu dropdown-menu-right">
-														            <li><a data-ng-click="saveList(list)" href="javascript:;">Save</a></li>
-											          				<li><a data-ng-click="toggleEdit(list)" href="javascript:;">Cancel</a></li>
-														          </ul>
-													      	</div>
-                                                    	</td>
-                                                    </tr>
-                                                </table>
-
-                                                </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-			  </h4>
-			</div>
-			<div id="collapse{{list._id}}" class="panel-collapse collapse">
-				<div class="panel panel-default">
-					<div class="panel-body">
-					<p><em>{{list.description}}</em></p>
-									<div class="panel-body" style="padding-top: 0px;">
-										<!-- FORM TO CREATE LIST -->
-										<div id="list-form" class="row">
-										<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
-											<form>
-											<table width="100%">
-											<tr>
-											<td width="100%"><input type="text" class="form-control input-md" placeholder="New item" ng-model="newListItem.title"></td>
-											<td  align="right" 
-											style="padding-left: 10px;"><button type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add Item</button></td>
-											</tr>
-											</table>
-											</form>
-										</div>
-										</div>
-									</div>
-						
-						<div class="top5">
-						<ul class="list-group" ng-sortable="sortConfig" 
-						style="margin-bottom: 0px;">
-						<li class="list-group-item" data-ng-repeat="item in list.items | orderBy: 'orderId'" >
-							<table>
-								<tr>
-									<td align="left">
-										<span class="my-handle"><span class="glyphicon glyphicon-option-horizontal">&nbsp;</span></span>
-									</td>
-									<td width="100%" align="left">
-										{{item.title}}
-									</td>
-									<td align="right">
-										<a data-ng-click="deleteListItem(item._id)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
-									</td>
-								</tr>
-							</table>
-							</li>
-						</ul>
-					</div>
-					</div>
-				</div>
-			
-				<div class="panel-footer">
-				    <table width="100%">
-					<tr>
-					<td width="4%"><span class="glyphicon glyphicon-tags">&nbsp;</span></td>
-					<td width="100%"><tags-input placeholder="tags" ng-model="list.ngTags" 
-								maxTags="4"
-                                on-tag-added="tagAdded($tag)"
-                                on-tag-removed="tagRemoved($tag)">
-					</tags-input></td>
-					</tr>
-					</table>
-				</div>
-			</div>
-		  </div>
-	</div>
-
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Add new list</h4>
-	      </div>
-	      <div class="modal-body">
-	        <form role="form">
-					<div class="form-group">
-							<label>Name:</label>
-							<input type="text" class="form-control input-md" placeholder="Name" ng-model="formData.title">
-						</div>
- 					<div class="form-group">
- 						<label>Description:</label>
-						<input type="text" class="form-control input-md" placeholder="Description" ng-model="formData.description">
-					</div>
+<div id="list-form" class="row">
+		<div class="col-sm-12">
+			<form>
+			<table width="100%">
+				<tr>
+					<td width="100%"></td>
+					<td align="right" 
+					style="padding-left: 10px;">
+					</td>
+				</tr>
+			</table>
 			</form>
-	      </div>
-	      <div class="modal-footer">
-	      	<table width="100%">
-	      		<tr>
-	      			<td align="right" width="100%"><button type="submit" class="btn btn-success btn-md" ng-click="createList()">Add</button></td>
-	      			<td align="right" style="padding-left: 10px;"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></td>
-	      		</tr>
-	      	</table>	
-	      </div>
-	    </div>
-
-	  </div>
+		</div>
 	</div>
+</br>
+<div class="panel-group">
+	  <div class="panel panel-default" data-ng-repeat="list in lists">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+		   <div class="row">
+            <table style="width: 100%">
+                <tr>
+                    <td align="left">
+                        <div class="col-md-12">
+                            <a data-toggle="collapse" data-ng-hide="list.editMode" href="#collapse{{list._id}}"><b>{{ list.title }}</b></a>
+                            <input  class="form-control input-md" data-ng-show="list.editMode" type="text" data-ng-model="list.title" />
+                        </div>
+                    </td>
+                    <td align="right">
+                        <div class="col-md-12">
+                        <table>
+                            <tr>
+                            	<td>
+                            		<div data-ng-hide="list.editMode" class="dropdown">
+							          	<a class="listLink"  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span></a>
+								          <ul class="dropdown-menu dropdown-menu-right">
+								          	<!-- data-ng-click="toggleEdit(list)" -->
+								            <li><a href="javascript:;" data-ng-click="toggleEdit(list)">Edit</a></li>
+								            <li><a href="javascript:;" data-ng-click="share(list)">Share</a></li>
+								            <li role="separator" class="divider"></li>
+								            <li><a href="javascript:;" data-ng-click="deleteList(list._id)">Delete</a></li>
+								          </ul>
+							      	</div>
+							      	<div data-ng-show="list.editMode" class="dropdown">
+							          	<a class="listLink"  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-pencil"></span></a>
+								          <ul class="dropdown-menu dropdown-menu-right">
+								            <li><a data-ng-click="saveList(list)" href="javascript:;">Save</a></li>
+					          				<li><a data-ng-click="toggleEdit(list)" href="javascript:;">Cancel</a></li>
+								          </ul>
+							      	</div>
+                            	</td>
+                            	<td>
+                            		&nbsp;
+                            	</td>
+                            	<td>
+                            		<a class="listLink" data-toggle="collapse" href="#collapse{{list._id}}"><span class="glyphicon glyphicon-tasks"></span></a>
+                            	</td>
+                            </tr>
+                        </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            </div>
+		  </h4>
+		</div>
+		<div id="collapse{{list._id}}" class="panel-collapse collapse">
+			<div class="panel panel-default">
+				<div class="panel-body">
+				<p><em>{{list.description}}</em></p>
+					<div class="panel-body" style="padding-top: 0px;">
+						<!-- FORM TO CREATE LIST -->
+						<div id="list-form" class="row">
+						<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
+							<form>
+								<table width="100%">
+								<tr>
+								<td width="100%"><input type="text" class="form-control input-md" placeholder="New item" ng-model="newListItem.title"></td>
+								<td  align="right" 
+								style="padding-left: 10px;"><button type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add Item</button></td>
+								</tr>
+								</table>
+							</form>
+						</div>
+						</div>
+					</div>
+					
+					<div class="top5">
+					<ul class="list-group" ng-sortable="sortConfig" 
+					style="margin-bottom: 0px;">
+					<li class="list-group-item" data-ng-repeat="item in list.items | orderBy: 'orderId'" >
+						<table>
+							<tr>
+								<td align="left">
+									<span class="my-handle"><span class="glyphicon glyphicon-option-horizontal">&nbsp;</span></span>
+								</td>
+								<td width="100%" align="left">
+									{{item.title}}
+								</td>
+								<td align="right">
+									<div class="dropdown">
+									<a class="listLink" class="listLink"  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-edit"></span></a>
+									<ul class="dropdown-menu dropdown-menu-right">
+								          	<!-- data-ng-click="toggleEdit(list)" -->
+								            <li><a href="javascript:;">Edit</a></li>
+								            <li role="separator" class="divider"></li>
+								            <li><a href="javascript:;" data-ng-click="deleteListItem(item._id)">Delete</a></li>
+								          </ul>
+								     </div>
+								</td>
+							</tr>
+						</table>
+						</li>
+					</ul>
+				</div>
+				</div>
+			</div>
+		
+			<div class="panel-footer">
+			    <table width="100%">
+				<tr>
+				<td width="4%"><span class="glyphicon glyphicon-tags">&nbsp;</span></td>
+				<td width="100%"><tags-input placeholder="tags" ng-model="list.ngTags" 
+							maxTags="4"
+                            on-tag-added="tagAdded($tag)"
+                            on-tag-removed="tagRemoved($tag)">
+				</tags-input></td>
+				</tr>
+				</table>
+			</div>
+		</div>
+	  </div>
+</div>
+
+<!-- Modal -->
+<div id="addList" class="modal fade" role="dialog" my-modal>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Add List</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+				<div class="form-group">
+						<input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title">
+					</div>
+					<div class="form-group">
+					<textarea class="form-control" rows="2" id="comment" ng-model="formData.description" placeholder="Description"></textarea>
+				</div>
+		</form>
+      </div>
+      <div class="modal-footer">
+      	<table width="100%">
+      		<tr>
+      			<td align="right" width="100%"><button type="submit" class="btn btn-success btn-md" ng-click="createList()">Add</button></td>
+      			<td align="right" style="padding-left: 10px;"><button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeAddList()">Close</button></td>
+      		</tr>
+      	</table>	
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </div>
 <footer class="footer">
       <div class="container">
