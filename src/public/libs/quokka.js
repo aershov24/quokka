@@ -1,4 +1,4 @@
-angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'ui.bootstrap'])
+angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
 .controller('profileController', function($scope, $http) {
     $scope.profile = {};
     // when landing on the page, get all todos and show them
