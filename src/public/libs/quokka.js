@@ -108,12 +108,18 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
                 $scope.lists.splice(0, 0, data);
                 $scope.lists[0].ngTags = [];
                 $scope.lists[0].editMode = false;
-                console.log(data);
+                $scope.addList.$setPristine();
                 $scope.dismiss();
             })
             .error(function(data) {
                 console.log('Error: ' + data);
             });
+    };
+
+    // when submitting the add form, send the text to the node API
+    $scope.closeAddList = function() {
+        $scope.formData = {};
+        $scope.user_form.$setPristine();
     };
 	
 	//by pressing toggleEdit button ng-click in html, this method will be hit

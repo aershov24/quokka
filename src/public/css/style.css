@@ -13,6 +13,10 @@
     border: 0;
 }
 
+.error {
+    color: red;
+}
+
 .profile 
 {
     min-height: 355px;

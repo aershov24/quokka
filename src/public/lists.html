@@ -137,12 +137,25 @@
 						<!-- FORM TO CREATE LIST -->
 						<div id="list-form" class="row">
 						<div class="col-sm-12" style="padding-left: 0px; padding-right: 0px;">
-							<form>
-								<table width="100%">
+							<form name="addItem" role="form" novalidate>
+								<table width="100%" valign="top">
 								<tr>
-								<td width="100%"><input type="text" class="form-control input-md" placeholder="New item" ng-model="newListItem.title"></td>
-								<td  align="right" 
-								style="padding-left: 10px;"><button type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add Item</button></td>
+								<td width="100%">
+									<input name="title" type="text" class="form-control input-md" placeholder="New item" ng-model="newListItem.title"
+									ng-minlength="4" ng-maxlength="50" required
+									>
+									 <small class="error" 
+					            		ng-show="addItem.title.$error.minlength && addItem.title.$dirty">
+					            		Title is required to be at least 4 characters
+					    			</small>
+								    <small class="error" 
+								            ng-show="addItem.title.$error.maxlength && addItem.title.$dirty">
+								            Title cannot be longer than 50 characters
+								    </small>
+								</td>
+								<td  align="right" style="vertical-align:top; padding-left: 10px;">
+									<button ng-disabled="addItem.$invalid" type="submit" class="btn btn-success btn-md" ng-click="createListItem(list)">Add Item</button>
+								</td>
 								</tr>
 								</table>
 							</form>
@@ -208,20 +221,41 @@
         <h4 class="modal-title">Add List</h4>
       </div>
       <div class="modal-body">
-        <form role="form">
+        <form name="addList" role="form" novalidate>
 				<div class="form-group">
-						<input type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title">
-					</div>
-					<div class="form-group">
-					<textarea class="form-control" rows="2" id="comment" ng-model="formData.description" placeholder="Description"></textarea>
+						<!-- NAME -->
+						<input name="title" type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title" ng-minlength="4" ng-maxlength="50" required>
+					    <small class="error" 
+					        ng-show="addList.title.$dirty && addList.title.$error.required">
+					        Title is required.</small>
+					    </small>
+					    <small class="error" 
+					            ng-show="addList.title.$error.minlength">
+					            Title is required to be at least 4 characters
+					    </small>
+					    <small class="error" 
+					            ng-show="addList.title.$error.maxlength">
+					            Title cannot be longer than 50 characters
+					    </small>
+				</div>
+				<div class="form-group">
+					<textarea name="description" class="form-control" rows="2" id="comment" ng-model="formData.description" placeholder="Description" ng-maxlength="140"></textarea>
+					<small class="error" 
+					            ng-show="addList.description.$error.maxlength">
+					            Title cannot be longer than 140 characters
+					    </small>
 				</div>
 		</form>
       </div>
       <div class="modal-footer">
       	<table width="100%">
       		<tr>
-      			<td align="right" width="100%"><button type="submit" class="btn btn-success btn-md" ng-click="createList()">Add</button></td>
-      			<td align="right" style="padding-left: 10px;"><button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeAddList()">Close</button></td>
+      			<td align="right" width="100%">
+      				<button type="submit" class="btn btn-success btn-md" ng-disabled="addList.$invalid" ng-click="createList()">Add</button>
+      			</td>
+      			<td align="right" style="padding-left: 10px;">
+      				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeAddList()">Close</button>
+      			</td>
       		</tr>
       	</table>	
       </div>
