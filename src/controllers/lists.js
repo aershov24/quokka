@@ -38,7 +38,8 @@ router.get('/:listId/items', customMw.isAuthentificated, function(req, res) {
 router.post('/:listId', customMw.isAuthentificated, function(req, res) {
 	var editList = {
 		id: 	req.params.listId,
-		title:  req.body.title
+		title:  req.body.title,
+		description: req.body.description
 	}
 	
 	List.update(editList, function (err, items) {

@@ -57,6 +57,7 @@ exports.update = function(editList, cb) {
 			cb(err, null);
 		} else {
 			list.title = editList.title;
+			list.description = editList.description;
 			list.save(function (err, list) {
 				if(!err){
 					cb(null, list)

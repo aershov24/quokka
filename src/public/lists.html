@@ -59,8 +59,8 @@
 	<tr>
 		<td valign="bottom"><h2 style="
     margin-top: 0px;
-    margin-bottom: 0px;">My lists</h2></td>
-		<td align="right"><button type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#addList">Add List</button></td>
+    margin-bottom: 0px;">My Tops</h2></td>
+		<td align="right"><button type="submit" class="btn btn-success btn-md" data-toggle="modal" data-target="#addListForm">Add List</button></td>
 	</tr>
 </table>
 <div id="list-form" class="row">
@@ -100,7 +100,7 @@
 							          	<a class="listLink"  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span></a>
 								          <ul class="dropdown-menu dropdown-menu-right">
 								          	<!-- data-ng-click="toggleEdit(list)" -->
-								            <li><a href="javascript:;" data-ng-click="toggleEdit(list)">Edit</a></li>
+								            <li><a data-ng-click="openEditList(list)" data-toggle="modal" data-target="#editListForm">Edit</a></li>
 								            <li><a href="javascript:;" data-ng-click="share(list)">Share</a></li>
 								            <li role="separator" class="divider"></li>
 								            <li><a href="javascript:;" data-ng-click="deleteList(list._id)">Delete</a></li>
@@ -211,7 +211,7 @@
 </div>
 
 <!-- Modal -->
-<div id="addList" class="modal fade" role="dialog" my-modal>
+<div id="addListForm" class="modal fade" role="dialog" my-modal>
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -221,27 +221,27 @@
         <h4 class="modal-title">Add List</h4>
       </div>
       <div class="modal-body">
-        <form name="addList" role="form" novalidate>
+        <form name="addListForm" role="form" novalidate>
 				<div class="form-group">
 						<!-- NAME -->
-						<input name="title" type="text" class="form-control input-md" placeholder="Title" ng-model="formData.title" ng-minlength="4" ng-maxlength="50" required>
+						<input name="title" type="text" class="form-control input-md" placeholder="Title" data-ng-model="formData.title" ng-minlength="4" ng-maxlength="50" required>
 					    <small class="error" 
-					        ng-show="addList.title.$dirty && addList.title.$error.required">
+					        ng-show="addListFrom.title.$dirty && addListFrom.title.$error.required">
 					        Title is required.</small>
 					    </small>
 					    <small class="error" 
-					            ng-show="addList.title.$error.minlength">
+					            ng-show="addListFrom.title.$error.minlength">
 					            Title is required to be at least 4 characters
 					    </small>
 					    <small class="error" 
-					            ng-show="addList.title.$error.maxlength">
+					            ng-show="addListFrom.title.$error.maxlength">
 					            Title cannot be longer than 50 characters
 					    </small>
 				</div>
 				<div class="form-group">
-					<textarea name="description" class="form-control" rows="2" id="comment" ng-model="formData.description" placeholder="Description" ng-maxlength="140"></textarea>
+					<textarea name="description" class="form-control" rows="2" id="comment" data-ng-model="formData.description" placeholder="Description" ng-maxlength="140"></textarea>
 					<small class="error" 
-					            ng-show="addList.description.$error.maxlength">
+					            ng-show="addListFrom.description.$error.maxlength">
 					            Title cannot be longer than 140 characters
 					    </small>
 				</div>
@@ -251,10 +251,10 @@
       	<table width="100%">
       		<tr>
       			<td align="right" width="100%">
-      				<button type="submit" class="btn btn-success btn-md" ng-disabled="addList.$invalid" ng-click="createList()">Add</button>
+      				<button type="submit" class="btn btn-success btn-md" ng-disabled="addListFrom.$invalid" ng-click="createList()">Add</button>
       			</td>
       			<td align="right" style="padding-left: 10px;">
-      				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeAddList()">Close</button>
+      				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
       			</td>
       		</tr>
       	</table>	
@@ -263,6 +263,61 @@
 
   </div>
 </div>
+
+<!-- Modal -->
+<div id="editListForm" class="modal fade" role="dialog" my-modal>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit List</h4>
+      </div>
+      <div class="modal-body">
+        <form name="editListForm" role="form" novalidate>
+				<div class="form-group">
+						<!-- NAME -->
+						<input name="title" type="text" class="form-control input-md" placeholder="Title" ng-model="editList.title" ng-minlength="4" ng-maxlength="50" required>
+					    <small class="error" 
+					        ng-show="editListForm.title.$dirty && editListForm.title.$error.required">
+					        Title is required.</small>
+					    </small>
+					    <small class="error" 
+					            ng-show="editListFrom.title.$error.minlength">
+					            Title is required to be at least 4 characters
+					    </small>
+					    <small class="error" 
+					            ng-show="editListForm.title.$error.maxlength">
+					            Title cannot be longer than 50 characters
+					    </small>
+				</div>
+				<div class="form-group">
+					<textarea name="description" class="form-control" rows="2" id="comment" ng-model="editList.description" placeholder="Description" ng-maxlength="140"></textarea>
+					<small class="error" 
+					            ng-show="editListFrom.description.$error.maxlength">
+					            Title cannot be longer than 140 characters
+					    </small>
+				</div>
+		</form>
+      </div>
+      <div class="modal-footer">
+      	<table width="100%">
+      		<tr>
+      			<td align="right" width="100%">
+      				<button type="submit" class="btn btn-success btn-md" ng-disabled="editListFrom.$invalid" ng-click="saveList()">Save</button>
+      			</td>
+      			<td align="right" style="padding-left: 10px;">
+      				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
+      			</td>
+      		</tr>
+      	</table>	
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 </div>
 <footer class="footer">

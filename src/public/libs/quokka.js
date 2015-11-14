@@ -54,6 +54,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
 })
 .controller('quokkaController', function($scope, $http) {
 
+    $scope.editList = {};
     $scope.formData = {};
 	$scope.newListItem = {};
     $scope.sortConfig = {
@@ -108,7 +109,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
                 $scope.lists.splice(0, 0, data);
                 $scope.lists[0].ngTags = [];
                 $scope.lists[0].editMode = false;
-                $scope.addList.$setPristine();
+                $scope.addListForm.$setPristine();
                 $scope.dismiss();
             })
             .error(function(data) {
@@ -117,21 +118,30 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
     };
 
     // when submitting the add form, send the text to the node API
-    $scope.closeAddList = function() {
+    $scope.closeList = function() {
         $scope.formData = {};
-        $scope.user_form.$setPristine();
+        $scope.editList = {};
+        $scope.addListForm.$setPristine();
+        $scope.editListForm.$setPristine();
     };
 	
 	//by pressing toggleEdit button ng-click in html, this method will be hit
     $scope.toggleEdit = function () {
         this.list.editMode = !this.list.editMode;
     };
+
+    //by pressing toggleEdit button ng-click in html, this method will be hit
+    $scope.openEditList = function () {
+        $scope.editList = this.list;
+    };
 	
 	//Edit top5list
     $scope.saveList = function () {
-        var editList = this.list;
+        var editList = $scope.editList;
         $http.post('/lists/' + editList._id, editList).success(function (data) {
-            editList.editMode = false;
+            $scope.editList = {};
+            $scope.editListForm.$setPristine();
+            $scope.dismiss();
         }).error(function (data) {
             $scope.error = "An Error has occured while Saving list! " + data;
         });

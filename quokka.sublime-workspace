@@ -43,7 +43,7 @@
 			"file": "src/public/lists.html",
 			"settings":
 			{
-				"buffer_size": 9643,
+				"buffer_size": 11247,
 				"line_ending": "Unix"
 			}
 		},
@@ -51,7 +51,7 @@
 			"file": "src/public/libs/quokka.js",
 			"settings":
 			{
-				"buffer_size": 6856,
+				"buffer_size": 7342,
 				"line_ending": "Unix"
 			}
 		},
@@ -59,7 +59,7 @@
 			"file": "src/public/css/style.css",
 			"settings":
 			{
-				"buffer_size": 796,
+				"buffer_size": 973,
 				"line_ending": "Unix"
 			}
 		},
@@ -290,7 +290,7 @@
 					"file": "src/public/lists.html",
 					"settings":
 					{
-						"buffer_size": 9643,
+						"buffer_size": 11247,
 						"regions":
 						{
 						},
@@ -316,7 +316,7 @@
 					"file": "src/public/libs/quokka.js",
 					"settings":
 					{
-						"buffer_size": 6856,
+						"buffer_size": 7342,
 						"regions":
 						{
 						},
@@ -344,7 +344,7 @@
 					"file": "src/public/css/style.css",
 					"settings":
 					{
-						"buffer_size": 796,
+						"buffer_size": 973,
 						"regions":
 						{
 						},
