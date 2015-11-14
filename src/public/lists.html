@@ -226,22 +226,22 @@
 						<!-- NAME -->
 						<input name="title" type="text" class="form-control input-md" placeholder="Title" data-ng-model="formData.title" ng-minlength="4" ng-maxlength="50" required>
 					    <small class="error" 
-					        ng-show="addListFrom.title.$dirty && addListFrom.title.$error.required">
+					        ng-show="addListForm.title.$dirty && addListForm.title.$error.required">
 					        Title is required.</small>
 					    </small>
 					    <small class="error" 
-					            ng-show="addListFrom.title.$error.minlength">
+					            ng-show="addListForm.title.$error.minlength">
 					            Title is required to be at least 4 characters
 					    </small>
 					    <small class="error" 
-					            ng-show="addListFrom.title.$error.maxlength">
+					            ng-show="addListForm.title.$error.maxlength">
 					            Title cannot be longer than 50 characters
 					    </small>
 				</div>
 				<div class="form-group">
 					<textarea name="description" class="form-control" rows="2" id="comment" data-ng-model="formData.description" placeholder="Description" ng-maxlength="140"></textarea>
 					<small class="error" 
-					            ng-show="addListFrom.description.$error.maxlength">
+					            ng-show="addListForm.description.$error.maxlength">
 					            Title cannot be longer than 140 characters
 					    </small>
 				</div>
@@ -251,7 +251,7 @@
       	<table width="100%">
       		<tr>
       			<td align="right" width="100%">
-      				<button type="submit" class="btn btn-success btn-md" ng-disabled="addListFrom.$invalid" ng-click="createList()">Add</button>
+      				<button type="submit" class="btn btn-success btn-md" ng-disabled="addListForm.$invalid" ng-click="createList()">Add</button>
       			</td>
       			<td align="right" style="padding-left: 10px;">
       				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
@@ -284,7 +284,7 @@
 					        Title is required.</small>
 					    </small>
 					    <small class="error" 
-					            ng-show="editListFrom.title.$error.minlength">
+					            ng-show="editListForm.title.$error.minlength">
 					            Title is required to be at least 4 characters
 					    </small>
 					    <small class="error" 
@@ -295,7 +295,7 @@
 				<div class="form-group">
 					<textarea name="description" class="form-control" rows="2" id="comment" ng-model="editList.description" placeholder="Description" ng-maxlength="140"></textarea>
 					<small class="error" 
-					            ng-show="editListFrom.description.$error.maxlength">
+					            ng-show="editListForm.description.$error.maxlength">
 					            Title cannot be longer than 140 characters
 					    </small>
 				</div>
@@ -305,7 +305,7 @@
       	<table width="100%">
       		<tr>
       			<td align="right" width="100%">
-      				<button type="submit" class="btn btn-success btn-md" ng-disabled="editListFrom.$invalid" ng-click="saveList()">Save</button>
+      				<button type="submit" class="btn btn-success btn-md" ng-disabled="editListForm.$invalid" ng-click="saveList()">Save</button>
       			</td>
       			<td align="right" style="padding-left: 10px;">
       				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
