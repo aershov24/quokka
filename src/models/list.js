@@ -139,6 +139,47 @@ exports.addItem = function(listId, item, cb){
 	);
 }
 
+exports.updateItem = function(editListItem, cb) {
+	logger.pdata("listItem: ", editListItem);
+	List.findOne({ _id : editListItem.listId } , function (err, list) {
+		if(err){
+			cb(err, null);
+		} 
+		else 
+		{
+			if (list){
+				var item = list.items.id(editListItem._id);
+				/*for (i = 0; i < list.items.length; i++)
+				{
+					logger.pdata("real item: ", list.items[i]._id);
+					if (list.items[i]._id === editListItem._id)
+						item = list.items[i];
+				}*/
+
+				logger.pdata("real item: ", item._id);
+				if (item)
+				{
+					item.title = editListItem.title;
+					item.description = editListItem.description;
+					item.url = editListItem.url;
+					list.save(function(err, list){
+						if(!err){
+							cb(null, list.items);
+						}
+						else
+							cb(err, null);
+						});
+				}
+				else
+					cb(null, null);
+			}
+			else
+				cb(null, null);
+		}
+	}	
+);
+}
+
 exports.updateTags = function(listId, tags, cb){
 	List.findOne({ _id : listId }, 
 		function (err, list){

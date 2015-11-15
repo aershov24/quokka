@@ -180,7 +180,7 @@
 									<a class="listLink" class="listLink"  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-edit"></span></a>
 									<ul class="dropdown-menu dropdown-menu-right">
 								          	<!-- data-ng-click="toggleEdit(list)" -->
-								            <li><a href="javascript:;">Edit</a></li>
+								            <li><a data-ng-click="openEditListItem(item)" data-toggle="modal" data-target="#editListItemForm">Edit</a></li>
 								            <li role="separator" class="divider"></li>
 								            <li><a href="javascript:;" data-ng-click="deleteListItem(item._id)">Delete</a></li>
 								          </ul>
@@ -210,7 +210,7 @@
 	  </div>
 </div>
 
-<!-- Modal -->
+<!-- Add List Modal -->
 <div id="addListForm" class="modal fade" role="dialog" my-modal>
   <div class="modal-dialog">
 
@@ -242,7 +242,7 @@
 					<textarea name="description" class="form-control" rows="2" id="comment" data-ng-model="formData.description" placeholder="Description" ng-maxlength="140"></textarea>
 					<small class="error" 
 					            ng-show="addListForm.description.$error.maxlength">
-					            Title cannot be longer than 140 characters
+					            Description cannot be longer than 140 characters
 					    </small>
 				</div>
 		</form>
@@ -264,7 +264,7 @@
   </div>
 </div>
 
-<!-- Modal -->
+<!--Edit List Modal -->
 <div id="editListForm" class="modal fade" role="dialog" my-modal>
   <div class="modal-dialog">
 
@@ -282,7 +282,6 @@
 					    <small class="error" 
 					        ng-show="editListForm.title.$dirty && editListForm.title.$error.required">
 					        Title is required.</small>
-					    </small>
 					    <small class="error" 
 					            ng-show="editListForm.title.$error.minlength">
 					            Title is required to be at least 4 characters
@@ -296,7 +295,7 @@
 					<textarea name="description" class="form-control" rows="2" id="comment" ng-model="editList.description" placeholder="Description" ng-maxlength="140"></textarea>
 					<small class="error" 
 					            ng-show="editListForm.description.$error.maxlength">
-					            Title cannot be longer than 140 characters
+					            Description cannot be longer than 140 characters
 					    </small>
 				</div>
 		</form>
@@ -309,6 +308,71 @@
       			</td>
       			<td align="right" style="padding-left: 10px;">
       				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
+      			</td>
+      		</tr>
+      	</table>	
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Edit ListItem Modal -->
+<div id="editListItemForm" class="modal fade" role="dialog" my-modal>
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit List Item</h4>
+      </div>
+      <div class="modal-body">
+        <form name="editListItemForm" role="form" novalidate>
+				<div class="form-group">
+						<!-- title -->
+						<input name="title" type="text" class="form-control input-md" placeholder="Title" ng-model="editListItem.title" ng-minlength="4" ng-maxlength="50" required>
+					    <small class="error" 
+					        ng-show="editListitemForm.title.$dirty && editListItemForm.title.$error.required">
+					        Title is required.</small>
+					    <small class="error" 
+					            ng-show="editListItemForm.title.$error.minlength">
+					            Title is required to be at least 4 characters
+					    </small>
+					    <small class="error" 
+					            ng-show="editListItemForm.title.$error.maxlength">
+					            Title cannot be longer than 50 characters
+					    </small>
+				</div>
+				<div class="form-group">
+					<textarea name="description" class="form-control" rows="2" id="comment" ng-model="editListItem.description" placeholder="Description" ng-maxlength="140"></textarea>
+					<small class="error" 
+					            ng-show="editListItemForm.description.$error.maxlength">
+					            Description cannot be longer than 140 characters
+					    </small>
+				</div>
+				<div class="form-group">
+						<!-- url -->
+						<input name="url" type="text" class="form-control input-md" placeholder="Url" ng-model="editListItem.url" ng-minlength="4" ng-maxlength="50">
+					    <small class="error" 
+					            ng-show="editListItemForm.url.$error.minlength">
+					            Url is required to be at least 4 characters
+					    </small>
+					    <small class="error" 
+					            ng-show="editListItemForm.url.$error.maxlength">
+					            Url cannot be longer than 50 characters
+					    </small>
+				</div>
+		</form>
+      </div>
+      <div class="modal-footer">
+      	<table width="100%">
+      		<tr>
+      			<td align="right" width="100%">
+      				<button type="submit" class="btn btn-success btn-md" ng-disabled="editListItemForm.$invalid" ng-click="saveListItem()">Save</button>
+      			</td>
+      			<td align="right" style="padding-left: 10px;">
+      				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeListItem()">Cancel</button>
       			</td>
       		</tr>
       	</table>	

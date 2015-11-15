@@ -77,6 +77,21 @@ router.get('/:listId/items/:itemId', customMw.isAuthentificated, function(req, r
 		res.send(item);
 	})
 });
+
+router.post('/:listId/items/:itemId', customMw.isAuthentificated, function(req, res) {
+	logger.pdata('Body: ', req.body);
+	var editListItem = {
+		_id: 	req.params.itemId,
+		listId: req.body.listId,
+		title:  req.body.title,
+		description: req.body.description,
+		url: req.body.url
+	}
+	
+	List.updateItem(editListItem, function (err, items) {
+		res.send(items);
+	})
+});
   
 router.post('/', customMw.isAuthentificated, function(req, res) {
 	var newList = {
