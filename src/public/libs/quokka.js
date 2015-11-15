@@ -123,6 +123,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
         $scope.editList = {};
         $scope.addListForm.$setPristine();
         $scope.editListForm.$setPristine();
+        $scope.dismiss();
     };
 	
 	//by pressing toggleEdit button ng-click in html, this method will be hit
@@ -132,11 +133,25 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
 
     //by pressing toggleEdit button ng-click in html, this method will be hit
     $scope.openEditList = function () {
-        $scope.editList = this.list;
+        $scope.editList._id = this.list._id;
+        $scope.editList.title = this.list.title;
+        $scope.editList.description = this.list.description;
+    };
+
+    //by pressing toggleEdit button ng-click in html, this method will be hit
+    $scope.openAddList = function () {
+        $scope.formData.title = "";
+        $scope.formData.description = "";
     };
 	
 	//Edit top5list
     $scope.saveList = function () {
+        for (i = 0; i < $scope.lists.length; ++i) {
+            if ($scope.lists[i]._id === $scope.editList._id) {
+                $scope.lists[i].title = $scope.editList.title;
+                $scope.lists[i].description = $scope.editList.description;
+            }
+        }
         var editList = $scope.editList;
         $http.post('/lists/' + editList._id, editList).success(function (data) {
             $scope.editList = {};
@@ -226,6 +241,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
             restrict: 'A',
             link: function(scope, element, attr) {
                 scope.dismiss = function() {
+                scope.editList = {};
+                scope.formData = {};
                 element.modal('hide');
             };
         }
