@@ -106,10 +106,10 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
     $scope.createList = function() {
         $http.post('/lists', $scope.formData)
             .success(function(data) {
-                $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.lists.splice(0, 0, data);
                 $scope.lists[0].ngTags = [];
                 $scope.lists[0].editMode = false;
+                $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.addListForm.$setPristine();
                 $scope.dismiss();
             })
@@ -280,10 +280,10 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
             restrict: 'A',
             link: function(scope, element, attr) {
                 scope.dismiss = function() {
+                element.modal('hide');
                 scope.editList = {};
                 scope.formData = {};
                 scope.editListItem = {};
-                element.modal('hide');
             };
         }
     } 

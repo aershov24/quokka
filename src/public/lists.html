@@ -251,7 +251,7 @@
       	<table width="100%">
       		<tr>
       			<td align="right" width="100%">
-      				<button type="submit" class="btn btn-success btn-md" ng-disabled="addListForm.$invalid" ng-click="createList()">Add</button>
+      				<button type="submit" class="btn btn-success btn-md" data-dismiss="modal" ng-disabled="addListForm.$invalid" ng-click="createList()">Add</button>
       			</td>
       			<td align="right" style="padding-left: 10px;">
       				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
@@ -304,7 +304,7 @@
       	<table width="100%">
       		<tr>
       			<td align="right" width="100%">
-      				<button type="submit" class="btn btn-success btn-md" ng-disabled="editListForm.$invalid" ng-click="saveList()">Save</button>
+      				<button type="submit" class="btn btn-success btn-md" data-dismiss="modal" ng-disabled="editListForm.$invalid" ng-click="saveList()">Save</button>
       			</td>
       			<td align="right" style="padding-left: 10px;">
       				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeList()">Cancel</button>
@@ -369,7 +369,7 @@
       	<table width="100%">
       		<tr>
       			<td align="right" width="100%">
-      				<button type="submit" class="btn btn-success btn-md" ng-disabled="editListItemForm.$invalid" ng-click="saveListItem()">Save</button>
+      				<button type="submit" class="btn btn-success btn-md" data-dismiss="modal" ng-disabled="editListItemForm.$invalid" ng-click="saveListItem()">Save</button>
       			</td>
       			<td align="right" style="padding-left: 10px;">
       				<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="closeListItem()">Cancel</button>
@@ -386,7 +386,7 @@
 </div>
 <footer class="footer">
       <div class="container">
-        <p class="text-muted">Alex Ershov - 2015</p>
+        <p class="text-muted">Quokka - 2015</p>
       </div>
     </footer>
 </body>
