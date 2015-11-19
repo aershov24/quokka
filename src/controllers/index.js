@@ -18,7 +18,7 @@ router.get('/search', customMw.isAuthentificated, function(req, res){
 		res.sendFile(path.resolve('src/public/search.html'));
     });
 
-router.get('/bookmarks', customMw.isAuthentificated, function(req, res){
+router.get('/mybookmarks', customMw.isAuthentificated, function(req, res){
 		res.sendFile(path.resolve('src/public/bookmarks.html'));
     });
 

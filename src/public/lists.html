@@ -42,7 +42,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/"><span class="glyphicon glyphicon-list"></span> Lists</a></li>
-        <li><a href="/bookmarks"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
+        <li><a href="/mybookmarks"><span class="glyphicon glyphicon-bookmark"></span> Bookmarks</a></li>
         <li><a href="/search"><span class="glyphicon glyphicon-search"></span> Search</a></li> 
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -87,7 +87,7 @@
                 <tr>
                     <td align="left">
                         <div class="col-md-12">
-                            <a data-toggle="collapse" data-ng-hide="list.editMode" href="#collapse{{list._id}}"><b>{{ list.title }}</b></a>
+                            <a data-toggle="collapse" data-ng-hide="list.editMode" href="#collapse{{list._id}}">{{ list.title }}</a>
                             <input  class="form-control input-md" data-ng-show="list.editMode" type="text" data-ng-model="list.title" />
                         </div>
                     </td>
@@ -209,7 +209,7 @@
 		</div>
 	  </div>
 </div>
-
+<div class="loader" data-loading>Loading...</div>
 <!-- Add List Modal -->
 <div id="addListForm" class="modal fade" role="dialog" my-modal>
   <div class="modal-dialog">
