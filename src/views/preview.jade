@@ -65,18 +65,23 @@ block body
         .col-md-12.col-xs-12
           table(style='width:100%')
             tr
-              td(style='width:80%')
-                h2 #{list.title}
+              td
+                table(style='width:100%')
+                  tr
+                    td
+                      h1 #{list.title}
+                    td(style='width:30%; vertical-align: text-top; text-align: center;')
+                      img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
+                      br
+                      .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
+            tr
+              td
                 ul 
                   each item in list.items
                     li
                       h3 #{item.title}
                       a(href='#{item.url}') #{item.title}
                       p #{item.description}
-              td(style='vertical-align: text-top')
-                img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
-                br
-                .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
         // /col
       // /row
     // /container
