@@ -5,7 +5,8 @@ block opengraph
   meta(property='og:type', content='article')
   meta(property='og:title', content='#{list.title}')
   meta(property='og:description', content='#{list.description}')
-
+  meta(property='og:description', content='#{list.description}')
+  meta(property='og:image', content='http://quokka-the-lists.herokuapp.com/img/logo.png')
 block body
   body(ng-controller='previewController')
     nav.navbar.navbar-inverse
