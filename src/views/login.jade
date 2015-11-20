@@ -1,0 +1,32 @@
+extends ./layout.jade
+
+block body
+  body
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Quokka
+        #myNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/auth/facebook')
+                span.glyphicon.glyphicon-log-in
+                |  Login
+    .container
+      .jumbotron(style='\
+      padding-left: 20px;\
+      padding-right: 20px;\
+      ')
+        h1 Quokka. Share your best.
+        p
+          | Quokka helps you to create, manage and share your 'bests' and 'tops' with the world.
+        .row
+          .col-sm-12
+            a.btn.btn-primary.btn-block(href='/auth/facebook')
+              i.fa.fa-facebook
+              |   Sign in with Facebook
+    include ./footer.jade

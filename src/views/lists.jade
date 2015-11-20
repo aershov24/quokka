@@ -1,0 +1,239 @@
+extends ./layout.jade
+
+block body
+  body(ng-controller='quokkaController')
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Quokka
+        #myNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='/')
+                span.glyphicon.glyphicon-list
+                |  Lists
+            li
+              a(href='/mybookmarks')
+                span.glyphicon.glyphicon-bookmark
+                |  Bookmarks
+            li
+              a(href='/search')
+                span.glyphicon.glyphicon-search
+                |  Search
+          ul.nav.navbar-nav.navbar-right
+            li
+              a(href='/profile')
+                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
+                |  {{profile.email}}
+            li
+              a(href='/users/logout')
+                span.glyphicon.glyphicon-log-in
+                |  Logout
+    .container
+      table(width='100%')
+        tr
+          td(valign='bottom')
+            h2(style='\
+            margin-top: 0px;\
+            margin-bottom: 0px;') My Tops
+          td(align='right')
+            button.btn.btn-success.btn-md(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
+      #list-form.row
+        .col-sm-12
+          form
+            table(width='100%')
+              tr
+                td(width='100%')
+                td(align='right', style='padding-left: 10px;')
+      br
+      .panel-group
+        .panel.panel-default(data-ng-repeat='list in lists')
+          .panel-heading
+            h4.panel-title
+              .row
+                table(style='width: 100%')
+                  tr
+                    td(align='left')
+                      .col-md-12
+                        a(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
+                        input.form-control.input-md(data-ng-show='list.editMode', type='text', data-ng-model='list.title')
+                    td(align='right')
+                      .col-md-12
+                        table
+                          tr
+                            td
+                              .dropdown(data-ng-hide='list.editMode')
+                                a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                                  span.glyphicon.glyphicon-cog
+                                ul.dropdown-menu.dropdown-menu-right
+                                  // data-ng-click="toggleEdit(list)"
+                                  li
+                                    a(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm') Edit
+                                  li
+                                    a(href='javascript:;', data-ng-click='share(list)') Share
+                                  li.divider(role='separator')
+                                  li
+                                    a(href='javascript:;', data-ng-click='deleteList(list._id)') Delete
+                              .dropdown(data-ng-show='list.editMode')
+                                a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                                  span.glyphicon.glyphicon-pencil
+                                ul.dropdown-menu.dropdown-menu-right
+                                  li
+                                    a(data-ng-click='saveList(list)', href='javascript:;') Save
+                                  li
+                                    a(data-ng-click='toggleEdit(list)', href='javascript:;') Cancel
+                            td
+                            td
+                              a.listLink(data-toggle='collapse', href='#collapse{{list._id}}')
+                                span.glyphicon.glyphicon-tasks
+          .panel-collapse.collapse(id='collapse{{list._id}}')
+            .panel.panel-default
+              .panel-body
+                p
+                  em {{list.description}}
+                .panel-body(style='padding-top: 0px;')
+                  // FORM TO CREATE LIST
+                  #list-form.row
+                    .col-sm-12(style='padding-left: 0px; padding-right: 0px;')
+                      form(name='addItem', role='form', novalidate='')
+                        table(width='100%', valign='top')
+                          tr
+                            td(width='100%')
+                              input.form-control.input-md(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                              small.error(ng-show='addItem.title.$error.minlength && addItem.title.$dirty')
+                                | Title is required to be at least 4 characters
+                              small.error(ng-show='addItem.title.$error.maxlength && addItem.title.$dirty')
+                                | Title cannot be longer than 50 characters
+                            td(align='right', style='vertical-align:top; padding-left: 10px;')
+                              button.btn.btn-success.btn-md(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
+                .top5
+                  ul.list-group(ng-sortable='sortConfig', style='margin-bottom: 0px;')
+                    li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId'")
+                      table
+                        tr
+                          td(align='left')
+                            span.my-handle
+                              span.glyphicon.glyphicon-option-horizontal  
+                          td(width='100%', align='left')
+                            | {{item.title}}
+                          td(align='right')
+                            .dropdown
+                              a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+                                span.glyphicon.glyphicon-edit
+                              ul.dropdown-menu.dropdown-menu-right
+                                // data-ng-click="toggleEdit(list)"
+                                li
+                                  a(data-ng-click='openEditListItem(item)', data-toggle='modal', data-target='#editListItemForm') Edit
+                                li.divider(role='separator')
+                                li
+                                  a(href='javascript:;', data-ng-click='deleteListItem(item._id)') Delete
+            .panel-footer
+              table(width='100%')
+                tr
+                  td(width='4%')
+                    span.glyphicon.glyphicon-tags  
+                  td(width='100%')
+                    tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
+      .loader(data-loading='') Loading...
+      // Add List Modal
+      #addListForm.modal.fade(role='dialog', my-modal='')
+        .modal-dialog
+          // Modal content
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Add List
+            .modal-body
+              form(name='addListForm', role='form', novalidate='')
+                .form-group
+                  // NAME
+                  input.form-control.input-md(name='title', type='text', placeholder='Title', data-ng-model='formData.title', ng-minlength='4', ng-maxlength='50', required='')
+                  small.error(ng-show='addListForm.title.$dirty && addListForm.title.$error.required')
+                    | Title is required.
+                  small.error(ng-show='addListForm.title.$error.minlength')
+                    | Title is required to be at least 4 characters
+                  small.error(ng-show='addListForm.title.$error.maxlength')
+                    | Title cannot be longer than 50 characters
+                .form-group
+                  textarea#comment.form-control(name='description', rows='2', data-ng-model='formData.description', placeholder='Description', ng-maxlength='140')
+                  small.error(ng-show='addListForm.description.$error.maxlength')
+                    | Description cannot be longer than 140 characters
+            .modal-footer
+              table(width='100%')
+                tr
+                  td(align='right', width='100%')
+                    button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='addListForm.$invalid', ng-click='createList()') Add
+                  td(align='right', style='padding-left: 10px;')
+                    button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeList()') Cancel
+      // Edit List Modal
+      #editListForm.modal.fade(role='dialog', my-modal='')
+        .modal-dialog
+          // Modal content
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Edit List
+            .modal-body
+              form(name='editListForm', role='form', novalidate='')
+                .form-group
+                  // NAME
+                  input.form-control.input-md(name='title', type='text', placeholder='Title', ng-model='editList.title', ng-minlength='4', ng-maxlength='50', required='')
+                  small.error(ng-show='editListForm.title.$dirty && editListForm.title.$error.required')
+                    | Title is required.
+                  small.error(ng-show='editListForm.title.$error.minlength')
+                    | Title is required to be at least 4 characters
+                  small.error(ng-show='editListForm.title.$error.maxlength')
+                    | Title cannot be longer than 50 characters
+                .form-group
+                  textarea#comment.form-control(name='description', rows='2', ng-model='editList.description', placeholder='Description', ng-maxlength='140')
+                  small.error(ng-show='editListForm.description.$error.maxlength')
+                    | Description cannot be longer than 140 characters
+            .modal-footer
+              table(width='100%')
+                tr
+                  td(align='right', width='100%')
+                    button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='editListForm.$invalid', ng-click='saveList()') Save
+                  td(align='right', style='padding-left: 10px;')
+                    button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeList()') Cancel
+      // Edit ListItem Modal
+      #editListItemForm.modal.fade(role='dialog', my-modal='')
+        .modal-dialog
+          // Modal content
+          .modal-content
+            .modal-header
+              button.close(type='button', data-dismiss='modal') ×
+              h4.modal-title Edit List Item
+            .modal-body
+              form(name='editListItemForm', role='form', novalidate='')
+                .form-group
+                  // title
+                  input.form-control.input-md(name='title', type='text', placeholder='Title', ng-model='editListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                  small.error(ng-show='editListitemForm.title.$dirty && editListItemForm.title.$error.required')
+                    | Title is required.
+                  small.error(ng-show='editListItemForm.title.$error.minlength')
+                    | Title is required to be at least 4 characters
+                  small.error(ng-show='editListItemForm.title.$error.maxlength')
+                    | Title cannot be longer than 50 characters
+                .form-group
+                  textarea#comment.form-control(name='description', rows='2', ng-model='editListItem.description', placeholder='Description', ng-maxlength='140')
+                  small.error(ng-show='editListItemForm.description.$error.maxlength')
+                    | Description cannot be longer than 140 characters
+                .form-group
+                  // url
+                  input.form-control.input-md(name='url', type='text', placeholder='Url', ng-model='editListItem.url', ng-minlength='4', ng-maxlength='50')
+                  small.error(ng-show='editListItemForm.url.$error.minlength')
+                    | Url is required to be at least 4 characters
+                  small.error(ng-show='editListItemForm.url.$error.maxlength')
+                    | Url cannot be longer than 50 characters
+            .modal-footer
+              table(width='100%')
+                tr
+                  td(align='right', width='100%')
+                    button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='editListItemForm.$invalid', ng-click='saveListItem()') Save
+                  td(align='right', style='padding-left: 10px;')
+                    button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeListItem()') Cancel
+    include ./footer.jade

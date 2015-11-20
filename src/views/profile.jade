@@ -1,0 +1,91 @@
+extends ./layout.jade
+
+block body
+  body(ng-controller='profileController')
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Quokka
+        #myNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/')
+                span.glyphicon.glyphicon-list
+                |  Lists
+            li
+              a(href='/bookmarks')
+                span.glyphicon.glyphicon-bookmark
+                |  Bookmarks
+            li
+              a(href='/search')
+                span.glyphicon.glyphicon-search
+                |  Search
+          ul.nav.navbar-nav.navbar-right
+            li.active
+              a(href='/profile')
+                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
+                |  {{profile.email}}
+            li
+              a(href='/users/logout')
+                span.glyphicon.glyphicon-log-in
+                |  Logout
+    .container
+      .row
+        .col-md-12.col-xs-12
+          .well.panel.panel-default
+            .panel-body
+              .row
+                .col-xs-12.col-sm-4.text-center
+                  img.center-block.img-circle.img-thumbnail.img-responsive(ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?width=120&height=120', alt='')
+                // /col
+                .col-xs-12.col-sm-8
+                  h2 {{profile.name}}
+                  p
+                    strong Email: 
+                    | {{profile.email}}
+                  p
+                    strong Tags: 
+                    span.label.label-info.tags html5
+                    span.label.label-info.tags css3
+                    span.label.label-info.tags jquery
+                    span.label.label-info.tags bootstrap3
+                // /col
+                .clearfix
+                .col-xs-12.col-sm-4
+                  h2
+                    strong  20,7K 
+                  p
+                    small Followers
+                  button.btn.btn-success.btn-block
+                    span.fa.fa-plus-circle
+                    |  Follow
+                // /col
+                .col-xs-12.col-sm-4
+                  h2
+                    strong 245
+                  p
+                    small Following
+                  button.btn.btn-info.btn-block
+                    span.fa.fa-user
+                    |  View Profile
+                // /col
+                .col-xs-12.col-sm-4
+                  h2
+                    strong 43
+                  p
+                    small Lists
+                  button.btn.btn-primary.btn-block(type='button')
+                    span.fa.fa-gear
+                    |  Options
+                // /col
+              // /row
+            // /panel-body
+          // /panel
+        // /col
+      // /row
+    // /container
+    include ./footer.jade

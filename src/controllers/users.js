@@ -19,17 +19,13 @@ router.get('/profile/:userId', customMw.isAuthentificated, function(req, res) {
 router.get('/logout', customMw.isAuthentificated, function(req, res) {
 	req.session.destroy(function(err) {
 		if (!err){
-			res.redirect('/users/login');
+			res.redirect('/login');
 		}
 		else {
 			logger.warn(err);
-			res.redirect('/users/login');
+			res.redirect('/login');
 		}
 	})
 });
-
-router.get('/login', function(req, res) {
-        res.sendFile(path.resolve('src/public/login.html')); // load the single view file (angular will handle the page changes on the front-end)
-    });
 
 module.exports = router

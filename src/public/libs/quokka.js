@@ -53,6 +53,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable'])
             console.log('Error: ' + data);
         });
 })
+.controller('loginController', function($scope, $http) {
+})
 .controller('searchController', function($scope, $http) {
     $scope.formData = {};
     $scope.lists = {};
