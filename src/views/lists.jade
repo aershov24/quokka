@@ -74,7 +74,7 @@ block body
                                   li
                                     a(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm') Edit
                                   li
-                                    a(href='javascript:;', data-ng-click='share(list)') Share
+                                    a(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);',target='_blank') Share
                                   li.divider(role='separator')
                                   li
                                     a(href='javascript:;', data-ng-click='deleteList(list._id)') Delete

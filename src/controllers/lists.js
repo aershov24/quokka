@@ -11,6 +11,12 @@ router.get('/', customMw.isAuthentificated, function(req, res) {
 	})
 });
 
+router.get('/preview/:listId', customMw.isAuthentificated, function(req, res) {
+	List.getById(req.params.listId, function (err, list) {
+		res.render('preview', {list: list});
+	})
+});
+
 router.post('/search/name', customMw.isAuthentificated, function(req, res) {
 	List.searchByName(req.body.str, function (err, lists) {
 		res.send(lists);

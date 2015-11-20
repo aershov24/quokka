@@ -1,0 +1,56 @@
+extends ./layout.jade
+
+block body
+  body(ng-controller='previewController')
+    meta(property='og:url', content='/lists/preview/#{list.id}')
+    meta(property='og:type', content='article')
+    meta(property='og:title', content='#{list.title}')
+    meta(property='og:description', content='#{list.description}')
+    meta(property='og:image', content='')
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Quokka
+        #myNavbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/')
+                span.glyphicon.glyphicon-list
+                |  Lists
+            li
+              a(href='/bookmarks')
+                span.glyphicon.glyphicon-bookmark
+                |  Bookmarks
+            li
+              a(href='/search')
+                span.glyphicon.glyphicon-search
+                |  Search
+          ul.nav.navbar-nav.navbar-right
+            li.active
+              a(href='/profile')
+                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
+                |  {{profile.email}}
+            li
+              a(href='/users/logout')
+                span.glyphicon.glyphicon-log-in
+                |  Logout
+    .container(class='preview')
+      .row
+        .col-md-12.col-xs-12
+          a(href='https://www.facebook.com/dialog/share?app_id=1641569646091283&display=popup&href=http://quokka-the-lists.herokuapp.com//lists/preview/#{list.id}&redirect_uri=http://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}') Share
+          img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
+          h2 #{list.title}
+          ul 
+            each item in list.items
+              li
+                h3 #{item.title}
+                p #{item.url}
+                p #{item.description}
+        // /col
+      // /row
+    // /container
+    include ./footer.jade

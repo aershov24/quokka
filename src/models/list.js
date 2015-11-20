@@ -334,7 +334,7 @@ exports.searchByTags = function(tags, cb){
 };
 
 exports.getById = function(listId, cb){
-	List.findOne({ _id : listId }, 
+	List.findOne({ _id : listId }).populate('userId').exec( 
 		function (err, list){
 			if (!err){
 				if (list) 		
