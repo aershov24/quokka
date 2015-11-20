@@ -60,7 +60,6 @@ block body
                     td(align='left')
                       .col-md-12
                         a(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
-                        input.form-control.input-md(data-ng-show='list.editMode', type='text', data-ng-model='list.title')
                     td(align='right')
                       .col-md-12
                         table
@@ -86,7 +85,7 @@ block body
                                     a(data-ng-click='saveList(list)', href='javascript:;') Save
                                   li
                                     a(data-ng-click='toggleEdit(list)', href='javascript:;') Cancel
-                            td
+                            td &nbsp;
                             td
                               a.listLink(data-toggle='collapse', href='#collapse{{list._id}}')
                                 span.glyphicon.glyphicon-tasks

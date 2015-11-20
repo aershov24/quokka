@@ -11,7 +11,7 @@ router.get('/', customMw.isAuthentificated, function(req, res) {
 	})
 });
 
-router.get('/preview/:listId', customMw.isAuthentificated, function(req, res) {
+router.get('/preview/:listId', function(req, res) {
 	List.getById(req.params.listId, function (err, list) {
 		res.render('preview', {list: list});
 	})
