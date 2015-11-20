@@ -1,12 +1,11 @@
 extends ./layout.jade
 
 block opengraph
-  meta(property='og:url', content='http://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}')
+  meta(property='og:url', content='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}')
   meta(property='og:type', content='article')
   meta(property='og:title', content='#{list.title}')
   meta(property='og:description', content='#{list.description}')
-  meta(property='og:description', content='#{list.description}')
-  meta(property='og:image', content='http://quokka-the-lists.herokuapp.com/img/logo.png')
+  meta(property='og:image', content='https://quokka-the-lists.herokuapp.com/img/logo.png')
 
 block js
   script(src='/libs/fb.js')
@@ -48,8 +47,8 @@ block body
     .container(class='preview')
       .row
         .col-md-12.col-xs-12
-          .fb-share-button(data-href='http://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
-          a(href='https://www.facebook.com/dialog/share?app_id=1641569646091283&display=popup&href=http://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}&redirect_uri=http://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}') Share
+          .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
+          a(href='https://www.facebook.com/dialog/share?app_id=1641569646091283&display=popup&href=https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}&redirect_uri=https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}') Share
           img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
           h2 #{list.title}
           ul 
