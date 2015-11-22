@@ -191,6 +191,15 @@ block body
                   textarea#comment.form-control(name='description', rows='2', ng-model='editList.description', placeholder='Description', ng-maxlength='140')
                   small.error(ng-show='editListForm.description.$error.maxlength')
                     | Description cannot be longer than 140 characters
+                .form-group
+                  .fileinput.fileinput-new(data-provides="fileinput")
+                    .fileinput-preview.thumbnail(data-trigger="fileinput", style="width: 200px; height: 150px;")
+                    div
+                      span.btn.btn-default.btn-file
+                        span.fileinput-new Select image
+                        span.fileinput-exists Change
+                        input(type="file", name="...")
+                      a.btn.btn-default.fileinput-exists(href="#", data-dismiss="fileinput") Remove
             .modal-footer
               table(width='100%')
                 tr
@@ -228,6 +237,15 @@ block body
                     | Url is required to be at least 4 characters
                   small.error(ng-show='editListItemForm.url.$error.maxlength')
                     | Url cannot be longer than 50 characters
+                .form-group
+                  .fileinput.fileinput-new(data-provides="fileinput")
+                    .fileinput-preview.thumbnail(data-trigger="fileinput", style="width: 200px; height: 150px;")
+                    div
+                      span.btn.btn-default.btn-file
+                        span.fileinput-new Select image
+                        span.fileinput-exists Change
+                        input(type="file", name="...")
+                      a.btn.btn-default.fileinput-exists(href="#", data-dismiss="fileinput") Remove
             .modal-footer
               table(width='100%')
                 tr

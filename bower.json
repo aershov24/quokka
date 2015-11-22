@@ -1,0 +1,32 @@
+{
+  "name": "Quokka",
+  "description": "Quokka project",
+  "main": "app.js",
+  "authors": [
+    "Alex Ershov"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "base",
+    "project",
+    "node",
+    "express",
+    "structure"
+  ],
+  "homepage": "https://github.com/aershov24/quokka",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.14.3",
+    "cloudinary-core": "~2.0.0",
+    "cloudinary-jquery": "~2.0.0",
+    "cloudinary-jquery-file-upload": "~2.0.0",
+    "jasny-bootstrap": "~3.1.3"
+  }
+}
