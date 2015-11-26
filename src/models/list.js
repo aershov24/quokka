@@ -6,8 +6,10 @@ var listItemSchema = mongoose.Schema({
   title:        String,
   url:          String, 
   description:  String,
-  image:        { data: Buffer, contentType: String },
+  image:        String,
   listId:       { type: mongoose.Schema.Types.ObjectId, ref: 'List' },
+  location:     { type: [Number], index: '2dsphere'},
+  locationName: String,
   orderId:      Number
 });
 
@@ -19,7 +21,7 @@ var listSchema = mongoose.Schema({
   userId:       { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   created: 		{ type: Date },
   updated: 		{ type: Date },
-  image:        { data: Buffer, contentType: String }
+  image:        String
 });
 
 listSchema.pre('save', function(next){
@@ -149,19 +151,13 @@ exports.updateItem = function(editListItem, cb) {
 		{
 			if (list){
 				var item = list.items.id(editListItem._id);
-				/*for (i = 0; i < list.items.length; i++)
-				{
-					logger.pdata("real item: ", list.items[i]._id);
-					if (list.items[i]._id === editListItem._id)
-						item = list.items[i];
-				}*/
-
-				logger.pdata("real item: ", item._id);
 				if (item)
 				{
 					item.title = editListItem.title;
 					item.description = editListItem.description;
 					item.url = editListItem.url;
+					item.location = editListItem.location;
+					item.locationName = editListItem.locationName;
 					list.save(function(err, list){
 						if(!err){
 							cb(null, list.items);

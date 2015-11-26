@@ -2,7 +2,7 @@ extends ./layout.jade
 
 block js
   script(src='/libs/fileUpload.js')
-
+  script(src='/libs/cloudinary.js')
 block body
   body(ng-controller='quokkaController')
     nav.navbar.navbar-inverse
@@ -62,7 +62,8 @@ block body
                   tr
                     td(align='left')
                       .col-md-12
-                        a(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
+                        strong
+                          a(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
                     td(align='right')
                       .col-md-12
                         table
@@ -121,7 +122,14 @@ block body
                             span.my-handle
                               span.glyphicon.glyphicon-option-horizontal  
                           td(width='100%', align='left')
-                            | {{item.title}}
+                            strong.list-group-item-heading
+                              | {{item.title}}
+                            p.list-group-item-text
+                              | {{item.description}}
+                            p.list-group-item-text
+                              a(href='http://maps.google.com/?ie=UTF8&hq=&ll={{item.location[1]}},{{item.location[0]}}&z=15', target='_blank') {{item.locationName}}
+                            p
+                              a(href='{{item.url}}', target='_blank') {{item.url}}
                           td(align='right')
                             .dropdown
                               a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -202,7 +210,7 @@ block body
                         span.btn.btn-default.btn-file
                           span.fileinput-new Select image
                           span.fileinput-exists Change
-                          input(type="file", name="...")
+                          input(type="file", name="file",class="cloudinary-fileupload", data-cloudinary-field="image_upload", data-form-data=" ... html-escaped JSON data ... " )
                         a.btn.btn-default.fileinput-exists(href="#", data-dismiss="fileinput") Remove
             .modal-footer
               table(width='100%')
@@ -211,7 +219,7 @@ block body
                     button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='editListForm.$invalid', ng-click='saveList()') Save
                   td(align='right', style='padding-left: 10px;')
                     button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeList()') Cancel
-      // Edit ListItem Modal
+      // EditListItem Modal
       #editListItemForm.modal.fade(role='dialog', my-modal='')
         .modal-dialog
           // Modal content
@@ -221,36 +229,52 @@ block body
               h4.modal-title Edit List Item
             .modal-body
               form(name='editListItemForm', role='form', novalidate='')
-                .form-group
-                  // title
-                  input.form-control.input-md(name='title', type='text', placeholder='Title', ng-model='editListItem.title', ng-minlength='4', ng-maxlength='50', required='')
-                  small.error(ng-show='editListitemForm.title.$dirty && editListItemForm.title.$error.required')
-                    | Title is required.
-                  small.error(ng-show='editListItemForm.title.$error.minlength')
-                    | Title is required to be at least 4 characters
-                  small.error(ng-show='editListItemForm.title.$error.maxlength')
-                    | Title cannot be longer than 50 characters
-                .form-group
-                  textarea#comment.form-control(name='description', rows='2', ng-model='editListItem.description', placeholder='Description', ng-maxlength='140')
-                  small.error(ng-show='editListItemForm.description.$error.maxlength')
-                    | Description cannot be longer than 140 characters
-                .form-group
-                  // url
-                  input.form-control.input-md(name='url', type='text', placeholder='Url', ng-model='editListItem.url', ng-minlength='4', ng-maxlength='50')
-                  small.error(ng-show='editListItemForm.url.$error.minlength')
-                    | Url is required to be at least 4 characters
-                  small.error(ng-show='editListItemForm.url.$error.maxlength')
-                    | Url cannot be longer than 50 characters
-                .form-group
-                  div(id='file-upload')
-                    .fileinput.fileinput-new(data-provides="fileinput")
-                      .fileinput-preview.thumbnail(data-trigger="fileinput", style="width: 200px; height: 150px;")
-                      div
-                        span.btn.btn-default.btn-file
-                          span.fileinput-new Select image
-                          span.fileinput-exists Change
-                          input(type="file", name="...")
-                        a.btn.btn-default.fileinput-exists(href="#", data-dismiss="fileinput") Remove
+                p
+                  ul.nav.nav-tabs
+                    li.active
+                      a(data-toggle='tab', href='#general' ng-click="selected = 'first'") Properties
+                    li
+                      a(data-toggle='tab', href='#additional' ng-click="selected = 'first'") Location
+                .tab-content
+                  #general.tab-pane.fade.in.active
+                    .form-group
+                      // title
+                      input.form-control.input-md(name='title', type='text', placeholder='Title', ng-model='editListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                      small.error(ng-show='editListitemForm.title.$dirty && editListItemForm.title.$error.required')
+                        | Title is required.
+                      small.error(ng-show='editListItemForm.title.$error.minlength')
+                        | Title is required to be at least 4 characters
+                      small.error(ng-show='editListItemForm.title.$error.maxlength')
+                        | Title cannot be longer than 50 characters
+                    .form-group
+                      textarea#comment.form-control(name='description', rows='2', ng-model='editListItem.description', placeholder='Description', ng-maxlength='140')
+                      small.error(ng-show='editListItemForm.description.$error.maxlength')
+                        | Description cannot be longer than 140 characters
+                    .form-group
+                      // url
+                      input.form-control.input-md(name='url', type='text', placeholder='Url', ng-model='editListItem.url', ng-minlength='4', ng-maxlength='255')
+                      small.error(ng-show='editListItemForm.url.$error.minlength')
+                        | Url is required to be at least 4 characters
+                      small.error(ng-show='editListItemForm.url.$error.maxlength')
+                        | Url cannot be longer than 255 characters
+                  #additional.tab-pane.fade
+                    .form-group
+                      p(ng-if='lookedUpLocation')
+                        span.muted {{lookedUpLocation.name}}
+                      map(id='map', center='[{{lookedUpLocation.latitude}},{{lookedUpLocation.longitude}}]', zoom='15')
+                        marker(position='[{{lookedUpLocation.latitude}},{{lookedUpLocation.longitude}}]')
+                      .lookup
+                        location-lookup(ng-model='lookedUpLocation', limit-to='4')
+                    //.form-group
+                      div(id='file-upload')
+                        .fileinput.fileinput-new(data-provides="fileinput")
+                          .fileinput-preview.thumbnail(data-trigger="fileinput", style="width: 200px; height: 150px;")
+                          div
+                            span.btn.btn-default.btn-file
+                              span.fileinput-new Select image
+                              span.fileinput-exists Change
+                              input(type="file", name="...")
+                            a.btn.btn-default.fileinput-exists(href="#", data-dismiss="fileinput") Remove
             .modal-footer
               table(width='100%')
                 tr
@@ -259,3 +283,5 @@ block body
                   td(align='right', style='padding-left: 10px;')
                     button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeListItem()') Cancel
     include ./footer.jade
+
+

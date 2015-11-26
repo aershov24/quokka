@@ -58,7 +58,9 @@ router.post('/:listId/items', customMw.isAuthentificated, function(req, res) {
 		title:        req.body.title,
 		description:  req.body.description,
 		listId:       req.body.listId,
-		orderId:      req.body.orderId
+		orderId:      req.body.orderId,
+		location:     req.body.location,
+		locationName: req.body.locationName
 	}
 	List.addItem(req.params.listId, newListItem, function (err, items) {
 		res.send(items);
@@ -91,7 +93,9 @@ router.post('/:listId/items/:itemId', customMw.isAuthentificated, function(req, 
 		listId: req.body.listId,
 		title:  req.body.title,
 		description: req.body.description,
-		url: req.body.url
+		url: req.body.url,
+		location: req.body.location,
+		locationName: req.body.locationName
 	}
 	
 	List.updateItem(editListItem, function (err, items) {

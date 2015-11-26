@@ -1,0 +1,1 @@
+$.cloudinary.config({"api_key":"128924843972333","cloud_name":"quokka"});
