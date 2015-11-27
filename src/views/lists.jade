@@ -126,10 +126,16 @@ block body
                               | {{item.title}}
                             p.list-group-item-text
                               | {{item.description}}
-                            p.list-group-item-text
-                              a(href='http://maps.google.com/?ie=UTF8&hq=&ll={{item.location[1]}},{{item.location[0]}}&z=15', target='_blank') {{item.locationName}}
-                            p
-                              a(href='{{item.url}}', target='_blank') {{item.url}}
+                            table
+                              tr
+                                td
+                                  p(ng-if='item.locationName')
+                                    a.listLink(href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank')
+                                      span.glyphicon.glyphicon-map-marker
+                                td
+                                  p(ng-if='item.url')
+                                    a.listLink(href='{{item.url}}', target='_blank') 
+                                      span.glyphicon.glyphicon-link
                           td(align='right')
                             .dropdown
                               a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -259,10 +265,10 @@ block body
                         | Url cannot be longer than 255 characters
                   #additional.tab-pane.fade
                     .form-group
-                      p(ng-if='lookedUpLocation')
+                      p(ng-if='lookedUpLocation.name') Current location: 
                         span.muted {{lookedUpLocation.name}}
-                      map(id='map', center='[{{lookedUpLocation.latitude}},{{lookedUpLocation.longitude}}]', zoom='15')
-                        marker(position='[{{lookedUpLocation.latitude}},{{lookedUpLocation.longitude}}]')
+                        a.clear(ng-click='clearLocation(editListItem)') 
+                          span.glyphicon.glyphicon-remove
                       .lookup
                         location-lookup(ng-model='lookedUpLocation', limit-to='4')
                     //.form-group

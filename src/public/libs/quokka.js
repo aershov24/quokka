@@ -218,26 +218,23 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
         $scope.editListItem.title = this.item.title;
         $scope.editListItem.description = this.item.description;
         $scope.editListItem.url = this.item.url;
-        /*var latlng = new google.maps.LatLng(this.item.location[0], this.item.location[1]);
-        var myOptions = {
-            zoom: 15,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-        $scope.map = new google.maps.Map(document.getElementById('map'), myOptions);*/
+        $scope.editListItem.locationName = this.item.locationName;
         $scope.lookedUpLocation.name = this.item.locationName;
+        $scope.results = {};    
         $scope.lookedUpLocation.latitude = this.item.location[1];
         $scope.lookedUpLocation.longitude = this.item.location[0];
+        $(".inputLocation").val("");
+        $(".ulLocation").empty();
         $('a[data-toggle="tab"]:first').tab('show');
-        //$scope.map.center = [$scope.lookedUpLocation.latitude, $scope.lookedUpLocation.longitude];
-        //$scope.map.zoom = 13;
     };
 
-    $scope.$watch('selected', function () {
-                window.setTimeout(function(){                                  
-                google.maps.event.trigger(map, 'resize');
-                                                     },100);
-    });
+    $scope.clearLocation = function (item) {
+        $scope.lookedUpLocation={}; 
+        item.locationName = ""; 
+        item.location = [0, 0]; 
+        $scope.lookedUpLocation.latitude=0; 
+        $scope.lookedUpLocation.longitude=0;
+    };
 
     //by pressing toggleEdit button ng-click in html, this method will be hit
     $scope.openAddList = function () {
@@ -264,8 +261,12 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
     };
 
     $scope.saveListItem = function () {
-        $scope.editListItem.location = [$scope.lookedUpLocation.longitude, $scope.lookedUpLocation.latitude];
-        $scope.editListItem.locationName = $scope.lookedUpLocation.name;
+        if ($scope.lookedUpLocation.longitude != 0 && $scope.lookedUpLocation.latitude != 0)
+        {
+            $scope.editListItem.locationName = $scope.lookedUpLocation.name;
+            $scope.editListItem.location = [$scope.lookedUpLocation.longitude, $scope.lookedUpLocation.latitude];
+        }
+
         var editListItem = $scope.editListItem;
         $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
             var i, j;
@@ -310,7 +311,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
 		var buf = this.list;
         $scope.newListItem.listId = buf._id;
         $scope.newListItem.orderId = buf.items.length;
-        $scope.newListItem.location = [0, 0];
+        $scope.newListItem.location = '[0, 0]';
         $scope.newListItem.locationName = '';
         $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
             .success(function(data) {
