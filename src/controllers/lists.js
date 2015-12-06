@@ -62,6 +62,7 @@ router.post('/:listId/items', customMw.isAuthentificated, function(req, res) {
 		location:     req.body.location,
 		locationName: req.body.locationName
 	}
+	logger.pdata('item', newListItem);
 	List.addItem(req.params.listId, newListItem, function (err, items) {
 		res.send(items);
 	})

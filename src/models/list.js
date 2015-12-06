@@ -126,17 +126,24 @@ exports.addItem = function(listId, item, cb){
 					list.items.push(item);
 					list.save(function(err, list){
 						if(!err){
+							logger.pdata(list);
 							cb(null, list.items);
 						}
 						else
+						{
+							logger.error(err);
 							cb(err, null);
+						}
 					});
 				}
 				else
 					cb(null, null);
 			}
 			else
+			{
+				logger.error(err);
 				cb(err, []);
+			}
 		}
 	);
 }
