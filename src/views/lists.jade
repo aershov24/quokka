@@ -175,9 +175,9 @@ block body
                   small.error(ng-show='addListForm.title.$error.maxlength')
                     | Title cannot be longer than 50 characters
                 .form-group
-                  textarea#comment.form-control(name='description', rows='2', data-ng-model='formData.description', placeholder='Description', ng-maxlength='140')
+                  textarea#comment.form-control(name='description', rows='2', data-ng-model='formData.description', placeholder='Description', ng-maxlength='500')
                   small.error(ng-show='addListForm.description.$error.maxlength')
-                    | Description cannot be longer than 140 characters
+                    | Description cannot be longer than 500 characters
             .modal-footer
               table(width='100%')
                 tr
@@ -205,9 +205,9 @@ block body
                   small.error(ng-show='editListForm.title.$error.maxlength')
                     | Title cannot be longer than 50 characters
                 .form-group
-                  textarea#comment.form-control(name='description', rows='2', ng-model='editList.description', placeholder='Description', ng-maxlength='140')
+                  textarea#comment.form-control(name='description', rows='2', ng-model='editList.description', placeholder='Description', ng-maxlength='500')
                   small.error(ng-show='editListForm.description.$error.maxlength')
-                    | Description cannot be longer than 140 characters
+                    | Description cannot be longer than 500 characters
                 .form-group
                   div(id='file-upload')
                     .fileinput.fileinput-new(data-provides="fileinput")
@@ -253,9 +253,9 @@ block body
                       small.error(ng-show='editListItemForm.title.$error.maxlength')
                         | Title cannot be longer than 50 characters
                     .form-group
-                      textarea#comment.form-control(name='description', rows='2', ng-model='editListItem.description', placeholder='Description', ng-maxlength='140')
+                      textarea#comment.form-control(name='description', rows='2', ng-model='editListItem.description', placeholder='Description', ng-maxlength='500')
                       small.error(ng-show='editListItemForm.description.$error.maxlength')
-                        | Description cannot be longer than 140 characters
+                        | Description cannot be longer than 500 characters
                     .form-group
                       // url
                       input.form-control.input-md(name='url', type='text', placeholder='Url', ng-model='editListItem.url', ng-minlength='4', ng-maxlength='255')
