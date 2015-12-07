@@ -312,8 +312,9 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
         $scope.newListItem.listId = buf._id;
         $scope.newListItem.orderId = buf.items.length;
         //$scope.newListItem.location = '[0, 0]';
-		//$scope.newListItem.description = '';
-        //$scope.newListItem.locationName = '';
+		$scope.newListItem.description = '';
+        $scope.newListItem.url = '';
+        $scope.newListItem.locationName = '';
         $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
             .success(function(data) {
                 $scope.newListItem = {};

@@ -149,7 +149,7 @@ exports.addItem = function(listId, item, cb){
 }
 
 exports.updateItem = function(editListItem, cb) {
-	logger.pdata("listItem: ", editListItem);
+	logger.pdata("update listItem: ", editListItem);
 	List.findOne({ _id : editListItem.listId } , function (err, list) {
 		if(err){
 			cb(err, null);
