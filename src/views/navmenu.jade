@@ -1,4 +1,4 @@
-div(ng-if='profile')
+div(ng-if='profile.facebookId')
   nav.navbar.navbar-inverse
     .container-fluid
       .navbar-header
@@ -30,7 +30,7 @@ div(ng-if='profile')
             a(href='/users/logout')
               span.glyphicon.glyphicon-log-in
               |  Logout
-div(ng-if='!profile')
+div(ng-if='!profile.facebookId')
   nav.navbar.navbar-inverse
     .container-fluid
       .navbar-header
