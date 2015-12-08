@@ -81,21 +81,23 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
 
     // when submitting the add form, send the text to the node API
     $scope.searchList = function() {
-        $http.post('/lists/search/name', $scope.formData)
-            .success(function(data) {
-                $scope.lists = data;
-                var i, j;
-                for (i = 0; i < $scope.lists.length; ++i) {
-                    $scope.lists[i].ngTags = [];
-                    $scope.lists[i].editMode = false;
-                    for (j = 0; j < $scope.lists[i].tags.length; ++j) {
-                        $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
+        if ($scope.formData.str){
+            $http.post('/lists/search/name', $scope.formData)
+                .success(function(data) {
+                    $scope.lists = data;
+                    var i, j;
+                    for (i = 0; i < $scope.lists.length; ++i) {
+                        $scope.lists[i].ngTags = [];
+                        $scope.lists[i].editMode = false;
+                        for (j = 0; j < $scope.lists[i].tags.length; ++j) {
+                            $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
+                        }
                     }
-                }
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
+                })
+                .error(function(data) {
+                    console.log('Error: ' + data);
+                });
+        }
     };
 
      // when submitting the add form, send the text to the node API
@@ -137,10 +139,10 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
         var i = 0;
         var tags = [];
         for (i = 0; i < $scope.searchTags.length; ++i) {
-            tags.push($scope.searchTags[i].text);
+            tags.push($scope.searchTags[i].text.toLowerCase());
         }
 
-        $http.post('/lists/search/tags', tags)
+        $http.post('/lists/search/tags', { tags: tags} )
             .success(function(data) {
                 $scope.lists = data;
                 var i, j;

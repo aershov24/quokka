@@ -330,6 +330,7 @@ exports.searchByName = function(str, cb){
 };
 
 exports.searchByTags = function(tags, cb){
+	logger.pdata('search tags', tags);
 	List.find({ tags: { "$all" : tags} })
 		.populate('userId') 
 		.exec(function(err, lists) {
