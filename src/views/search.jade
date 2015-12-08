@@ -2,54 +2,25 @@ extends ./layout.jade
 
 block body
   body(ng-controller='searchController')
-    nav.navbar.navbar-inverse
-      .container-fluid
-        .navbar-header
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='#') Quokka
-        #myNavbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li
-              a(href='/')
-                span.glyphicon.glyphicon-list
-                |  Lists
-            li
-              a(href='/mybookmarks')
-                span.glyphicon.glyphicon-bookmark
-                |  Bookmarks
-            li.active
-              a(href='/search')
-                span.glyphicon.glyphicon-search
-                |  Search
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/users/profile')
-                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
-                |  {{profile.email}}
-            li
-              a(href='/users/logout')
-                span.glyphicon.glyphicon-log-in
-                |  Logout
+    include ./navmenu.jade
     .container
       h3(style='\
       margin-top: 0px;\
       margin-bottom: 15px;') Search
-      // FORM TO CREATE LIST
       #list-form.row
         .col-sm-12
           form
             table(width='100%')
-              tr
+              tr  
                 td(width='100%')
                   input.form-control.input-md(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchList()')
-                td(align='right', style='padding-left: 10px;')
-                  button.btn.btn-success.btn-md(type='submit', ng-click='searchList()') Search
+                  br
+              tr
+                td(width='100%')
+                  tags-input(placeholder='Tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
       br
       .panel-group
-        .panel.panel-default(data-ng-repeat='list in lists')
+        .panel.panel-default(data-ng-repeat='list in lists | limitTo: 10')
           .panel-heading
             h4.panel-title
               .row
@@ -57,7 +28,8 @@ block body
                   tr
                     td(align='left')
                       .col-md-12
-                        a(data-toggle='collapse', href='#collapse{{list._id}}') {{ list.title }}
+                        strong
+                          a(data-toggle='collapse', href='#collapse{{list._id}}') {{ list.title }}
                     td(align='right')
                       .col-md-12
                         table
@@ -73,7 +45,7 @@ block body
               .panel-body
                 p
                   ul.list-group
-                    li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId'")
+                    li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId' | limitTo: 5")
                       table
                         tr
                           td(width='100%', align='left')

@@ -5,44 +5,14 @@ block js
   script(src='/libs/cloudinary.js')
 block body
   body(ng-controller='quokkaController')
-    nav.navbar.navbar-inverse
-      .container-fluid
-        .navbar-header
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='#') Quokka
-        #myNavbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li.active
-              a(href='/')
-                span.glyphicon.glyphicon-list
-                |  Lists
-            li
-              a(href='/mybookmarks')
-                span.glyphicon.glyphicon-bookmark
-                |  Bookmarks
-            li
-              a(href='/search')
-                span.glyphicon.glyphicon-search
-                |  Search
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/profile')
-                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
-                |  {{profile.email}}
-            li
-              a(href='/users/logout')
-                span.glyphicon.glyphicon-log-in
-                |  Logout
+    include ./navmenu.jade
     .container
       table(width='100%')
         tr
           td(valign='bottom')
             h2(style='\
             margin-top: 0px;\
-            margin-bottom: 0px;') My Tops
+            margin-bottom: 0px;') Tops
           td(align='right')
             button.btn.btn-success.btn-md(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
       #list-form.row

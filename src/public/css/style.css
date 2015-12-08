@@ -92,11 +92,6 @@ span.tags
   overflow: auto;
 }
 
-.preview li:hover {
-  background: #eee;
-  cursor: pointer;
-}
-
 .angular-google-map-container { height: 150px; }
 
 .search-box input {

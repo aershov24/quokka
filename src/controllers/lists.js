@@ -13,11 +13,14 @@ router.get('/', customMw.isAuthentificated, function(req, res) {
 
 router.get('/preview/:listId', function(req, res) {
 	List.getById(req.params.listId, function (err, list) {
+		if (list.items.length > 5)
+			list.items =  list.items.slice(0,5);
 		res.render('preview', {list: list});
 	})
 });
 
 router.post('/search/name', customMw.isAuthentificated, function(req, res) {
+	logger.pdata('Search string: ', req.body.str);
 	List.searchByName(req.body.str, function (err, lists) {
 		res.send(lists);
 	})

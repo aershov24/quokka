@@ -2,41 +2,11 @@ extends ./layout.jade
 
 block body
   body(ng-controller='bookmarksController')
-    nav.navbar.navbar-inverse
-      .container-fluid
-        .navbar-header
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a.navbar-brand(href='#') Quokka
-        #myNavbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li
-              a(href='/')
-                span.glyphicon.glyphicon-list
-                |  Lists
-            li.active
-              a(href='/mybookmarks')
-                span.glyphicon.glyphicon-bookmark
-                |  Bookmarks
-            li
-              a(href='/search')
-                span.glyphicon.glyphicon-search
-                |  Search
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/users/profile')
-                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
-                |  {{profile.email}}
-            li
-              a(href='/users/logout')
-                span.glyphicon.glyphicon-log-in
-                |  Logout
+    include ./navmenu.jade
     .container
       h3(style='\
       margin-top: 0px;\
-      margin-bottom: 15px;') My Bookmarks
+      margin-bottom: 15px;') Bookmarks
       br
       .panel-group
         .panel.panel-default(data-ng-repeat='bookmark in bookmarks')
@@ -47,7 +17,8 @@ block body
                   tr
                     td(align='left')
                       .col-md-12
-                        a(data-toggle='collapse', href='#collapse{{bookmark.listId._id}}') {{ bookmark.listId.title }}
+                        strong
+                          a(data-toggle='collapse', href='#collapse{{bookmark.listId._id}}') {{ bookmark.listId.title }}
                     td(align='right')
                       .col-md-12
                         table
@@ -63,7 +34,7 @@ block body
               .panel-body
                 p
                   ul.list-group
-                    li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId'")
+                    li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId' | limitTo: 5")
                       table
                         tr
                           td(width='100%', align='left')

@@ -69,6 +69,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
 .controller('searchController', function($scope, $http) {
     $scope.formData = {};
     $scope.lists = {};
+    $scope.searchTags = [];
     // when landing on the page, get all todos and show them
     $http.get('/users/profile')
         .success(function(data) {
@@ -101,6 +102,55 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
     $scope.addBookmark = function() {
         $http.post('/bookmarks', { listId: this.list._id, userId: this.list.userId._id })
             .success(function(data) {
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    $scope.tagAdded = function (tag) {
+        var i = 0;
+        var tags = [];
+        for (i = 0; i < $scope.searchTags.length; ++i) {
+            $scope.searchTags[i].text = $scope.searchTags[i].text.toLowerCase();
+            tags.push($scope.searchTags[i].text.toLowerCase());
+        }
+
+        $http.post('/lists/search/tags', { tags: tags} )
+            .success(function(data) {
+                $scope.lists = data;
+                var i, j;
+                for (i = 0; i < $scope.lists.length; ++i) {
+                    $scope.lists[i].ngTags = [];
+                    $scope.lists[i].editMode = false;
+                    for (j = 0; j < $scope.lists[i].tags.length; ++j) {
+                        $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
+                    }
+                }
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    $scope.tagRemoved = function (tag) {
+        var i = 0;
+        var tags = [];
+        for (i = 0; i < $scope.searchTags.length; ++i) {
+            tags.push($scope.searchTags[i].text);
+        }
+
+        $http.post('/lists/search/tags', tags)
+            .success(function(data) {
+                $scope.lists = data;
+                var i, j;
+                for (i = 0; i < $scope.lists.length; ++i) {
+                    $scope.lists[i].ngTags = [];
+                    $scope.lists[i].editMode = false;
+                    for (j = 0; j < $scope.lists[i].tags.length; ++j) {
+                        $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
+                    }
+                }
             })
             .error(function(data) {
                 console.log('Error: ' + data);
@@ -346,7 +396,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
 		var i = 0;
 		var tags = [];
 		for (i = 0; i < this.list.ngTags.length; ++i) {
-            tags.push(this.list.ngTags[i].text);
+            this.list.ngTags[i].text = this.list.ngTags[i].text.toLowerCase();
+            tags.push(this.list.ngTags[i].text.toLowerCase());
 		}
         $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
 

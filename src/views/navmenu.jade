@@ -1,0 +1,47 @@
+div(ng-if='profile')
+  nav.navbar.navbar-inverse
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='#') Quokka
+      #myNavbar.collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li
+            a(href='/')
+              span.glyphicon.glyphicon-list
+              |  Tops
+          li
+            a(href='/mybookmarks')
+              span.glyphicon.glyphicon-bookmark
+              |  Bookmarks
+          li
+            a(href='/search')
+              span.glyphicon.glyphicon-search
+              |  Search
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='/users/profile')
+              img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
+              |  {{profile.email}}
+          li
+            a(href='/users/logout')
+              span.glyphicon.glyphicon-log-in
+              |  Logout
+div(ng-if='!profile')
+  nav.navbar.navbar-inverse
+    .container-fluid
+      .navbar-header
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.navbar-brand(href='#') Quokka
+      #myNavbar.collapse.navbar-collapse
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='/auth/facebook')
+              span.glyphicon.glyphicon-log-in
+              |  Login

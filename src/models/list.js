@@ -330,7 +330,9 @@ exports.searchByName = function(str, cb){
 };
 
 exports.searchByTags = function(tags, cb){
-	List.find({ tags: { "$all" : tags} }, function(err, lists) {
+	List.find({ tags: { "$all" : tags} })
+		.populate('userId') 
+		.exec(function(err, lists) {
 		if(!err) 
 			cb(null, lists); 
 	});
