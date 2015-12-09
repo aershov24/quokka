@@ -6,3 +6,4 @@ npm-debug.*
 coverage
 /bower_components
 *sublime*
+/uploads
