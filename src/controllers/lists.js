@@ -11,6 +11,13 @@ router.get('/', customMw.isAuthentificated, function(req, res) {
 	})
 });
 
+router.get('/random', function(req, res) {
+	logger.debug('random');
+	List.random(function (err, lists) {
+		res.send(lists);
+	})
+});
+
 router.get('/preview/:listId', function(req, res) {
 	List.getById(req.params.listId, function (err, list) {
 		if (list.items.length > 5)

@@ -29,9 +29,14 @@ block body
                             td(style='white-space:nowrap')
                               a(data-ng-click='deleteBookmark(bookmark._id)', href='javascript:;')
                                 span.glyphicon.glyphicon-trash
+                            td(style='white-space:nowrap')
+                              a(href='/lists/preview/{{bookmark.listId._id}}',target='_blank') 
+                                span.glyphicon.glyphicon-share-alt
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
               .panel-body
+                p
+                  em {{bookmark.listId.description}}
                 p
                   ul.list-group
                     li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId' | limitTo: 5")

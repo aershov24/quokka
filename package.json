@@ -29,6 +29,7 @@
     "jade": "^1.11.0",
     "mathjs": "^2.5.0",
     "mongoose": "^4.1.10",
+    "mongoose-simple-random": "^0.3.3",
     "morgan": "^1.6.1",
     "passport": "^0.3.0",
     "passport-facebook": "^2.0.0",

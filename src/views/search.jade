@@ -44,6 +44,8 @@ block body
             .panel.panel-default
               .panel-body
                 p
+                  em {{list.description}}
+                p
                   ul.list-group
                     li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId' | limitTo: 5")
                       table

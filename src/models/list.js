@@ -1,5 +1,6 @@
 var mongoose    = require('mongoose');
 var logger = require('../helpers/logger.js');
+var random = require('mongoose-simple-random');
 var math = require('mathjs');
 
 var listItemSchema = mongoose.Schema({
@@ -23,6 +24,8 @@ var listSchema = mongoose.Schema({
   updated: 		{ type: Date },
   image:        String
 });
+
+listSchema.plugin(random);
 
 listSchema.pre('save', function(next){
   now = new Date();
@@ -326,6 +329,12 @@ exports.searchByName = function(str, cb){
 		.exec(function(err, lists) {
 		if(!err) 
 			cb(null, lists); 
+	});
+};
+
+exports.random = function(cb){
+	List.findRandom({}, {}, {limit: 3, populate:'userId'}, function(err, results) {
+  		cb(err, results)
 	});
 };
 
