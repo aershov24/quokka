@@ -1,4 +1,4 @@
-angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
+angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload'])
 .controller('bookmarksController', function($scope, $http) {
     $scope.bookmarks = {};
     // when landing on the page, get all todos and show them
@@ -177,7 +177,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
     };
 
 })
-.controller('quokkaController', ['$scope', '$http', 'location', function($scope, $http, location) {
+.controller('quokkaController', ['$scope', '$http', 'location','Upload', function($scope, $http, location, Upload) {
     $scope.selected = 'first';
     //var latlng = new google.maps.LatLng(-34.397, 150.644);
     //var myOptions = {
@@ -217,6 +217,12 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
         .error(function(data) {
             console.log('Error: ' + data);
         });
+
+    $scope.file = {};
+    // upload on file select or drop
+    $scope.upload = function (file) {
+        $scope.file = file;
+    };
 	
     // when landing on the page, get all todos and show them
     $http.get('/lists')
@@ -321,12 +327,32 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap'])
         }
         var editList = $scope.editList;
         $http.post('/lists/' + editList._id, editList).success(function (data) {
+            Upload.upload({
+                url: '/lists/'+ editList._id+'/upload',
+                data: {file: $scope.file}
+            }).then(function (resp) {
+                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                for (i = 0; i < $scope.lists.length; ++i) {
+                    if ($scope.lists[i]._id === editList._id) {
+                        $scope.lists[i].image = resp.data.image;
+                    }
+                }
+                editList.image = resp.data.image;
+            }, function (resp) {
+                console.log('Error status: ' + resp.status);
+            }, function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            });
+
             $scope.editList = {};
             $scope.editListForm.$setPristine();
             $scope.dismiss();
         }).error(function (data) {
             $scope.error = "An Error has occured while Saving list! " + data;
         });
+
+     
     };
 
     $scope.saveListItem = function () {

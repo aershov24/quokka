@@ -75,6 +75,24 @@ exports.update = function(editList, cb) {
 	);
 };
 
+exports.updateImage = function(editList, cb) {
+	List.findOne({ _id : editList.id } , function (err, list) {
+		if(err){
+			cb(err, null);
+		} else {
+			list.image = editList.image;
+			list.save(function (err, list) {
+				if(!err){
+					cb(null, list)
+				}
+				else
+					cb(err, null);
+				});
+			}
+		}	
+	);
+};
+
 exports.delete = function(listId, cb) {
 	List.findOne({ _id : listId }, 
 		function (err, list){

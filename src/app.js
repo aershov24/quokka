@@ -17,6 +17,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var errorhandler 	= require('./middlewares/errorhandler.js');
 var auth 			= require('./helpers/auth.js');
 var customMw 		= require('./middlewares/middleware.js');
+var multer = require('multer');
 
 var opt = {  
   server:{
@@ -47,6 +48,7 @@ app.set('views', __dirname + '/views')
 app.engine('jade', require('jade').__express)
 app.set('view engine', 'jade')
 
+app.use(multer({dest:'./uploads/'}).single('file'));
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
 app.use(cookieParser());

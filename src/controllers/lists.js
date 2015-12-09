@@ -1,9 +1,14 @@
 var express = require('express')
   , router = express.Router()
+  , cloudinary = require('cloudinary')
+  , cfg = require('../config.js')
   , List = require('../models/list')
+  , logger = require('../helpers/logger.js')
+  , customMw = require('../middlewares/middleware.js')
 
-var logger = require('../helpers/logger.js');
-var customMw = require('../middlewares/middleware.js');
+var multer = require('multer');
+
+var upload = multer({ dest: './uploads/' })
   
 router.get('/', customMw.isAuthentificated, function(req, res) {
     List.findByUser(req.session.user._id, function (err, lists) {
@@ -30,13 +35,44 @@ router.post('/search/name', customMw.isAuthentificated, function(req, res) {
     logger.pdata('Search string: ', req.body.str);
     List.searchByName(req.body.str, function (err, lists) {
         res.send(lists);
-    })
+    });
 });
 
 router.post('/:listId/sortItems', customMw.isAuthentificated, function(req, res) {
     List.sortItems(req.params.listId, req.body.oldIndex, req.body.newIndex, function (err, list) {
         res.send(list);
-    })
+    });
+});
+
+router.post('/:listId/upload', customMw.isAuthentificated, upload.single('file'), function(req, res) {
+    logger.pdata('load file', req.file);
+    console.dir(req.file);
+     if(req.file) {
+        cloudinary.config({ 
+          cloud_name: cfg.cloudinary.cloud_name, 
+          api_key: cfg.cloudinary.api_key, 
+          api_secret: cfg.cloudinary.api_secret
+        });
+
+        cloudinary.uploader.upload(req.file.path, function(result) {
+           if (result.url) {
+              logger.pdata('file uploaded', result.url);
+                var editList = {
+                    id:     req.params.listId,
+                    image:  result.url,
+                }
+          
+                List.updateImage(editList, function (err, item) {
+                    res.send(item);
+                });
+            } 
+            else {
+              res.send({});
+            }
+       });
+    } else {
+       res.send({});
+    }
 });
 
 router.post('/search/tags', customMw.isAuthentificated, function(req, res) {

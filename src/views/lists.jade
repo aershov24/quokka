@@ -66,6 +66,7 @@ block body
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body
+                img(ng-src='{{list.image}}', style='width: 50px;') 
                 p
                   em {{list.description}}
                 .panel-body(style='padding-top: 0px;')
@@ -181,15 +182,10 @@ block body
                   small.error(ng-show='editListForm.description.$error.maxlength')
                     | Description cannot be longer than 500 characters
                 .form-group
-                  div(id='file-upload')
-                    .fileinput.fileinput-new(data-provides="fileinput")
-                      .fileinput-preview.thumbnail(data-trigger="fileinput", style="width: 200px; height: 150px;")
-                      div
-                        span.btn.btn-default.btn-file
-                          span.fileinput-new Select image
-                          span.fileinput-exists Change
-                          input(type="file", name="file",class="cloudinary-fileupload", data-cloudinary-field="image_upload", data-form-data=" ... html-escaped JSON data ... " )
-                        a.btn.btn-default.fileinput-exists(href="#", data-dismiss="fileinput") Remove
+                  div
+                    .button(ngf-select='upload($file)') Select image
+                    | Image thumbnail: 
+                    img(style='width: 40px;', ngf-thumbnail="file || '/img/logo.png'")
             .modal-footer
               table(width='100%')
                 tr

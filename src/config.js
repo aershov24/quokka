@@ -34,9 +34,16 @@ var facebook = {
     fields: ["id", "birthday", "email", "first_name", "gender", "last_name"]
 }
 
+var cloudinary = ({ 
+  cloud_name: 'quokka', 
+  api_key: '128924843972333', 
+  api_secret: 'yQkx4lCLTBW0mNKnkBoPlHHrAzQ' 
+});
+
 exports.ENV = ENV;
 exports.facebook = facebook;
 exports.sslcert = sslcert;
 exports.log = log;
 exports.loggly = loggly;
 exports.mongo = mongo;
+exports.cloudinary = cloudinary;
