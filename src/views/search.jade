@@ -35,11 +35,16 @@ block body
                         table
                           tr
                             td
-                              a(href='')
+                              a(href='/users/profile/{{list.userId._id}}')
                                 img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square')
+                              &nbsp;
                             td(style='white-space:nowrap')
                               a(data-ng-click='addBookmark(list)', href='javascript:;')
                                 span.glyphicon.glyphicon-bookmark
+                              &nbsp;
+                            td(style='white-space:nowrap')
+                              a(href='/lists/preview/{{list._id}}',target='_blank') 
+                                span.glyphicon.glyphicon-share-alt
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body

@@ -363,6 +363,21 @@ exports.getById = function(listId, cb){
 	);
 };
 
+exports.checkUserPermission = function(listId, userId, cb){
+	List.findOne({ _id : listId }).populate('userId').exec(
+		function (err, list){
+			if (!err){
+				if (list.userId.facebookId === userId)
+					cb(null);
+				else
+					cb('Permission error'); 
+			}
+			else
+				cb('Error');
+		}
+	);
+};
+
 exports.getItemById = function(listId, itemId, cb){
 	List.findOne({ _id : listId }, 
 		function (err, list){

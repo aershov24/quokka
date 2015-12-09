@@ -24,14 +24,16 @@ block body
                         table
                           tr
                             td
-                              a(href='')
+                              a(href='/users/profile/{{bookmark.listId.userId._id}}')
                                 img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{bookmark.listId.userId.facebookId}}/picture?type=square')
-                            td(style='white-space:nowrap')
-                              a(data-ng-click='deleteBookmark(bookmark._id)', href='javascript:;')
-                                span.glyphicon.glyphicon-trash
+                              &nbsp;
                             td(style='white-space:nowrap')
                               a(href='/lists/preview/{{bookmark.listId._id}}',target='_blank') 
                                 span.glyphicon.glyphicon-share-alt
+                              &nbsp;
+                            td(style='white-space:nowrap')
+                              a(data-ng-click='deleteBookmark(bookmark._id)', href='javascript:;')
+                                span.glyphicon.glyphicon-remove
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
               .panel-body

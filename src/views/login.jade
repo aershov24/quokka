@@ -18,17 +18,24 @@ block body
             .col-sm-12
               a.btn.btn-primary.btn-block(href='/auth/facebook')
                 i.fa.fa-facebook
-                | Sign in with Facebook
+                |  Sign in with Facebook
       .row
         .div(data-ng-repeat='list in lists | limitTo: 3')
           .col-sm-6.col-md-4
-            .thumbnail
-              img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?width=80&height=80', alt='')
+            .well
               .caption
-                h3 {{list.title}}
-                p {{list.description}}
-                p
-                  a.btn.btn-primary(href='#', role='button') View
-                  &nbsp;
-                  a.btn.btn-default(href='#', role='button') Share
+                .row
+                  .col-md-8
+                    h3 {{list.title}}
+                    p {{list.description}}
+                    ul(data-ng-repeat='item in list.items | orderBy: orderId | limitTo: 5')
+                      li {{item.title}}
+                  .col-md-4
+                    img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?width=80&height=80', alt='')
+                .row
+                  .col-md-12
+                    p
+                      a.btn.btn-primary(href='/lists/preview/{{list._id}}', role='button') View
+                      &nbsp;
+                      a.btn.btn-default(href='/lists/preview/{{list._id}}', role='button') Share
     include ./footer.jade

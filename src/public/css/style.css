@@ -1,7 +1,13 @@
 .my-handle {
     cursor: move;
-    cursor: -webkit-grabbing;
-    color:black;
+    cursor: -webkit-move;
+    color: gray;
+}
+
+.my-handle:hover, 
+.my-handle:focus {
+    color: #2A6496;
+    text-decoration: underline;
 }
 
 .top5 ul li:nth-child(-n+5) strong{

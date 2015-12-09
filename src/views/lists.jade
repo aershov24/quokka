@@ -88,9 +88,11 @@ block body
                     li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId'")
                       table
                         tr
-                          td(align='left')
+                          td(align='left' nowrap)
                             span.my-handle
-                              span.glyphicon.glyphicon-option-horizontal  
+                              span.glyphicon.glyphicon-option-horizontal
+                            &nbsp;
+                            &nbsp;
                           td(width='100%', align='left')
                             strong.list-group-item-heading
                               | {{item.title}}
