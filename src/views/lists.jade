@@ -38,7 +38,7 @@ block body
                       .col-md-12
                         table
                           tr
-                            td
+                            //td
                               .dropdown(data-ng-hide='list.editMode')
                                 a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                                   span.glyphicon.glyphicon-cog
@@ -59,6 +59,19 @@ block body
                                     a(data-ng-click='saveList(list)', href='javascript:;') Save
                                   li
                                     a(data-ng-click='toggleEdit(list)', href='javascript:;') Cancel
+                            
+                            td
+                              a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);',target='_blank')
+                                span.glyphicon.glyphicon-share-alt
+                            //td
+                              a.listLink(href='javascript:;', data-ng-click='deleteList(list._id)')
+                                span.glyphicon.glyphicon-remove
+                            td &nbsp;
+                            td &nbsp;
+                            td
+                              a.listLink(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm')
+                                span.glyphicon.glyphicon-pencil
+                            td &nbsp;
                             td &nbsp;
                             td
                               a.listLink(data-toggle='collapse', href='#collapse{{list._id}}')
@@ -66,9 +79,14 @@ block body
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body
-                img(ng-src='{{list.image}}', style='width: 50px;') 
-                p
-                  em {{list.description}}
+                table
+                  tr
+                    td
+                      img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:50px') 
+                    td(style='padding-left: 10px;')
+                      p
+                        em {{list.description}}
+                br
                 .panel-body(style='padding-top: 0px;')
                   // FORM TO CREATE LIST
                   #list-form.row
@@ -110,7 +128,15 @@ block body
                                     a.listLink(href='{{item.url}}', target='_blank') 
                                       span.glyphicon.glyphicon-link
                           td(align='right')
-                            .dropdown
+                            td
+                              a.listLink(data-ng-click='openEditListItem(list)', data-toggle='modal', data-target='#editListItemForm')
+                                span.glyphicon.glyphicon-pencil
+                            td &nbsp;
+                            td &nbsp;
+                            td
+                              a.listLink(data-ng-click='deleteListItem(item._id)')
+                                span.glyphicon.glyphicon-remove
+                            //.dropdown
                               a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                                 span.glyphicon.glyphicon-edit
                               ul.dropdown-menu.dropdown-menu-right
@@ -123,10 +149,12 @@ block body
             .panel-footer
               table(width='100%')
                 tr
-                  td(width='4%')
+                  td(width='3%')
                     span.glyphicon.glyphicon-tags  
-                  td(width='100%')
+                  td(width='87%')
                     tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
+                  td(align='right')
+                    button.btn.btn-danger(data-ng-click='deleteList(list._id)') Delete list
       .loader(data-loading='') Loading...
       // Add List Modal
       #addListForm.modal.fade(role='dialog', my-modal='')
@@ -182,10 +210,19 @@ block body
                   small.error(ng-show='editListForm.description.$error.maxlength')
                     | Description cannot be longer than 500 characters
                 .form-group
-                  div
-                    .button(ngf-select='upload($file)') Select image
-                    | Image thumbnail: 
-                    img(style='width: 40px;', ngf-thumbnail="file || '/img/logo.png'")
+                    table(width='100%')
+                      tr
+                        td(align='left', width='100%')
+                          div(ng-if='file')
+                            img(ngf-thumbnail="file" width='50')
+                          div(ng-if='editList.image')
+                            img.img-thumbnail(ng-src='{{editList.image}}')
+                        td(align='right', style='padding-left: 10px;')
+                          button.btn.btn-success.btn-md(ngf-select='upload($file)' ngf-max-size="20MB"
+                            ngf-resize="{width: 50, height: 50}") Select image
+                        td(align='right', style='padding-left: 10px;')
+                          div(ng-if='editList.image || file')
+                            button.btn.btn-danger(ng-click='removeImage(editList)') Remove
             .modal-footer
               table(width='100%')
                 tr

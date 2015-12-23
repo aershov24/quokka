@@ -1,23 +1,23 @@
-var logger = require('./helpers/logger.js');
-var express = require('express')
-  , app = express()
+var logger    = require('./helpers/logger.js');
+var express   = require('express')
+  , app       = express()
   , bodyParser = require('body-parser')
-  , port = process.env.PORT || 3000
+  , port      = process.env.PORT || 3000
 
-var cookieParser 	= require('cookie-parser');
-var session      	= require('express-session');
-var MongoStore 		= require('connect-mongo')(session);
-var mongoose    	= require('mongoose');
-var cfg    			= require('./config.js');
-var passport 		= require('passport');
-var https 			= require('https');
-var http 			= require('http');
-var morgan 			= require('morgan');
+var cookieParser  = require('cookie-parser');
+var session       = require('express-session');
+var MongoStore    = require('connect-mongo')(session);
+var mongoose      = require('mongoose');
+var cfg           = require('./config.js');
+var passport      = require('passport');
+var https         = require('https');
+var http          = require('http');
+var morgan        = require('morgan');
 var FacebookStrategy = require('passport-facebook').Strategy;
-var errorhandler 	= require('./middlewares/errorhandler.js');
-var auth 			= require('./helpers/auth.js');
-var customMw 		= require('./middlewares/middleware.js');
-var multer = require('multer');
+var errorhandler  = require('./middlewares/errorhandler.js');
+var auth          = require('./helpers/auth.js');
+var customMw      = require('./middlewares/middleware.js');
+var multer        = require('multer');
 
 var opt = {  
   server:{
@@ -33,14 +33,14 @@ mongoose.connect(cfg.mongo.connectionString, function(err) {
       logger.error(err);
         throw err;
     }
-	else
-		logger.debug("Connection to DB established...");
+  else
+    logger.debug("Connection to DB established...");
 });
 
 app.use(session({
-	secret: 'foo',
+  secret: 'foo',
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
-	resave: false,
+  resave: false,
     saveUninitialized: true
 }));
   
@@ -86,9 +86,9 @@ app.use(errorhandler.render_500);
 //sslport = 8080;
 httpServer = http.createServer(app);
 httpServer.listen(port, function(){
-	logger.info("worker " + process.pid + " is ready (:" + port + ")")
+  logger.info("worker " + process.pid + " is ready (:" + port + ")")
 });
 //httpsServer = https.createServer(cfg.sslcert, app);
 //httpsServer.listen(sslport, function(){
-//	logger.info("worker " + process.pid + " is ready (:" + sslport + ")")
+//  logger.info("worker " + process.pid + " is ready (:" + sslport + ")")
 //});

@@ -222,6 +222,14 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
     // upload on file select or drop
     $scope.upload = function (file) {
         $scope.file = file;
+        $scope.editList.image = '';
+    };
+
+    $scope.removeImage = function (editList) {
+        editList.image = '';
+        if ($scope.file)
+          $scope.file = '';
+        // remove image on server
     };
 	
     // when landing on the page, get all todos and show them
@@ -281,9 +289,11 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
 
     //by pressing toggleEdit button ng-click in html, this method will be hit
     $scope.openEditList = function () {
+        $scope.file = {};
         $scope.editList._id = this.list._id;
         $scope.editList.title = this.list.title;
         $scope.editList.description = this.list.description;
+        $scope.editList.image = this.list.image;
     };
 
     //by pressing toggleEdit button ng-click in html, this method will be hit
