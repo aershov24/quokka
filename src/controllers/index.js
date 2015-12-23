@@ -11,19 +11,19 @@ router.use('/lists', require('./lists'))
 router.use('/bookmarks', require('./bookmarks'))
 
 router.get('/', customMw.isAuthentificated, function(req, res){
-		res.render('lists');
+    res.render('lists');
     });
 
 router.get('/search', customMw.isAuthentificated, function(req, res){
-		res.render('search');
+    res.render('search');
     });
 
 router.get('/mybookmarks', customMw.isAuthentificated, function(req, res){
-		res.render('bookmarks');
+    res.render('bookmarks');
     });
 
 router.get('/profile', customMw.isAuthentificated, function(req, res){
-		res.render('profile');
+    res.render('profile');
     });
 
 router.get('/login', function(req, res) {
