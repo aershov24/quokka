@@ -191,7 +191,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
     $scope.editList = {};
     $scope.editListItem = {};
     $scope.formData = {};
-	$scope.newListItem = {};
+    $scope.newListItem = {};
     $scope.sortConfig = {
             animation: 150,
             handle: ".my-handle",
@@ -208,8 +208,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
                    });
             },
         };
-	
-	// when landing on the page, get all todos and show them
+  
+  // when landing on the page, get all todos and show them
     $http.get('/users/profile')
         .success(function(data) {
             $scope.profile = data;
@@ -222,28 +222,41 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
     // upload on file select or drop
     $scope.upload = function (file) {
         $scope.file = file;
-        $scope.editList.image = '';
+        $scope.editList.image = null;
     };
 
     $scope.removeImage = function (editList) {
-        editList.image = '';
         if ($scope.file)
-          $scope.file = '';
+          $scope.file = null;
         // remove image on server
+        $http.delete('/lists/'+editList._id+'/image/'+editList.imageId)
+        .success(function(data) {
+          editList.image = null;
+          editList.imageId = null;
+          for (i = 0; i < $scope.lists.length; ++i) {
+            if ($scope.lists[i]._id === editList._id){
+              $scope.lists[i].image = null;
+              $scope.lists[i].imageId = null;
+            }
+          }
+        })
+        .error(function(data) {
+          console.log('Error: ' + data);
+        });
     };
-	
+  
     // when landing on the page, get all todos and show them
     $http.get('/lists')
         .success(function(data) {
             $scope.lists = data;
-			var i, j;
-			for (i = 0; i < $scope.lists.length; ++i) {
-				$scope.lists[i].ngTags = [];
-				$scope.lists[i].editMode = false;
-				for (j = 0; j < $scope.lists[i].tags.length; ++j) {
-					$scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
-				}
-			}
+      var i, j;
+      for (i = 0; i < $scope.lists.length; ++i) {
+        $scope.lists[i].ngTags = [];
+        $scope.lists[i].editMode = false;
+        for (j = 0; j < $scope.lists[i].tags.length; ++j) {
+          $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
+        }
+      }
             console.log(data);
         })
         .error(function(data) {
@@ -281,8 +294,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
         $scope.editListItemForm.$setPristine();
         $scope.dismiss();
     };
-	
-	//by pressing toggleEdit button ng-click in html, this method will be hit
+  
+  //by pressing toggleEdit button ng-click in html, this method will be hit
     $scope.toggleEdit = function () {
         this.list.editMode = !this.list.editMode;
     };
@@ -294,6 +307,7 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
         $scope.editList.title = this.list.title;
         $scope.editList.description = this.list.description;
         $scope.editList.image = this.list.image;
+        $scope.editList.imageId = this.list.imageId;
     };
 
     //by pressing toggleEdit button ng-click in html, this method will be hit
@@ -326,8 +340,8 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
         $scope.formData.title = "";
         $scope.formData.description = "";
     };
-	
-	//Edit top5list
+  
+  //Edit top5list
     $scope.saveList = function () {
         for (i = 0; i < $scope.lists.length; ++i) {
             if ($scope.lists[i]._id === $scope.editList._id) {
@@ -345,9 +359,11 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
                 for (i = 0; i < $scope.lists.length; ++i) {
                     if ($scope.lists[i]._id === editList._id) {
                         $scope.lists[i].image = resp.data.image;
+                        $scope.lists[i].imageId = resp.data.imageId;
                     }
                 }
                 editList.image = resp.data.image;
+                editList.imageId = resp.data.imageId;
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
@@ -410,29 +426,29 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
                 console.log('Error: ' + data);
             });
     };
-	
-	// when submitting the add form, send the text to the node API
+  
+  // when submitting the add form, send the text to the node API
     $scope.createListItem = function() {
-		var buf = this.list;
+    var buf = this.list;
         $scope.newListItem.listId = buf._id;
         $scope.newListItem.orderId = buf.items.length;
         //$scope.newListItem.location = '[0, 0]';
-		$scope.newListItem.description = '';
+    $scope.newListItem.description = '';
         $scope.newListItem.url = '';
         $scope.newListItem.locationName = '';
         $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
             .success(function(data) {
                 $scope.newListItem = {};
                 buf.items = data;
-				return false;
+        return false;
             })
             .error(function(data) {
                 return false;
             });
     };
-	
+  
     $scope.deleteListItem = function(id) {
-		var buf = this.list;
+    var buf = this.list;
         $http.delete('/lists/' + this.list._id+'/items/'+id)
             .success(function(data) {
                  $.each(buf.items, function (i) {
@@ -446,14 +462,14 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
                 return false;
             });
     };
-	
-	$scope.tagAdded = function (tag) {
-		var i = 0;
-		var tags = [];
-		for (i = 0; i < this.list.ngTags.length; ++i) {
+  
+  $scope.tagAdded = function (tag) {
+    var i = 0;
+    var tags = [];
+    for (i = 0; i < this.list.ngTags.length; ++i) {
             this.list.ngTags[i].text = this.list.ngTags[i].text.toLowerCase();
             tags.push(this.list.ngTags[i].text.toLowerCase());
-		}
+    }
         $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
 
         }).error(function (data) {
@@ -462,11 +478,11 @@ angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngF
     };
 
     $scope.tagRemoved = function (tag) {
-		var i = 0;
-		var tags = [];
-		for (i = 0; i < this.list.ngTags.length; ++i) {
+    var i = 0;
+    var tags = [];
+    for (i = 0; i < this.list.ngTags.length; ++i) {
             tags.push(this.list.ngTags[i].text);
-		}
+    }
         $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
 
         }).error(function (data) {

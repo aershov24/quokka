@@ -222,7 +222,7 @@ block body
                           button.btn.btn-success.btn-md(ngf-select='upload($file)' ngf-max-size="20MB"
                             ngf-resize="{width: 50, height: 50}") Select image
                         td(align='right', style='padding-left: 10px;')
-                          div(ng-if='editList.image || file')
+                          div(ng-if='editList.image != null || file')
                             button.btn.btn-danger(ng-click='removeImage(editList)') Remove
             .modal-footer
               table(width='100%')

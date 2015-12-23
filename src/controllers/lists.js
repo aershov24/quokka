@@ -57,9 +57,11 @@ router.post('/:listId/upload', customMw.isAuthentificated, upload.single('file')
         cloudinary.uploader.upload(req.file.path, function(result) {
            if (result.url) {
               logger.pdata('file uploaded', result.url);
+              logger.pdata('image id', result.public_id);
                 var editList = {
-                    id:     req.params.listId,
-                    image:  result.url,
+                    id:       req.params.listId,
+                    imageId:  result.public_id,
+                    image:    result.url
                 }
           
                 List.updateImage(editList, function (err, item) {
@@ -73,6 +75,29 @@ router.post('/:listId/upload', customMw.isAuthentificated, upload.single('file')
     } else {
        res.send({});
     }
+});
+
+router.delete('/:listId/image/:imageId', customMw.isAuthentificated, function(req, res) {
+    logger.pdata('delete image', req.params.imageId);
+
+    cloudinary.config({ 
+          cloud_name: cfg.cloudinary.cloud_name, 
+          api_key: cfg.cloudinary.api_key, 
+          api_secret: cfg.cloudinary.api_secret
+        });
+
+    cloudinary.uploader.destroy(req.params.imageId, function(result) { 
+        logger.pdata('image deleted', result);
+        var editList = {
+            id:       req.params.listId,
+            imageId:  null,
+            image:    null
+        }
+
+        List.updateImage(editList, function (err, item) {
+            res.send(item);
+        });
+    });
 });
 
 router.post('/search/tags', customMw.isAuthentificated, function(req, res) {
