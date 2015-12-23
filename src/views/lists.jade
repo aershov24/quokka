@@ -154,7 +154,8 @@ block body
                   td
                     tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
                   td(align='right' width='10%' style="padding-left: 10px;")
-                    button.btn.btn-danger(data-ng-click='deleteList(list._id)') Delete
+                    button.btn.btn-danger(data-ng-click='deleteList(list._id)') 
+                      span.glyphicon.glyphicon-remove
       .loader(data-loading='') Loading...
       // Add List Modal
       #addListForm.modal.fade(role='dialog', my-modal='')
