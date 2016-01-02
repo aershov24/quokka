@@ -1,5 +1,6 @@
 extends ./layout.jade
-
+block js
+  script(src='/app/login.js')
 block body
   body(ng-controller='loginController')
     include ./navmenu.jade

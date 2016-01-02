@@ -1,5 +1,6 @@
 extends ./layout.jade
-
+block js
+  script(src='/app/profile.js')
 block body
   body(ng-controller='profileController')
     include ./navmenu.jade

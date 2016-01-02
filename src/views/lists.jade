@@ -3,6 +3,7 @@ extends ./layout.jade
 block js
   script(src='/libs/fileUpload.js')
   script(src='/libs/cloudinary.js')
+  script(src='/app/lists.js')
 block body
   body(ng-controller='quokkaController')
     include ./navmenu.jade
@@ -12,7 +13,7 @@ block body
           td(valign='bottom')
             h2(style='\
             margin-top: 0px;\
-            margin-bottom: 0px;') Tops
+            margin-bottom: 0px;') My Tops
           td(align='right')
             button.btn.btn-success.btn-md(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
       #list-form.row
@@ -79,29 +80,15 @@ block body
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body
-                table
-                  tr
-                    td
-                      img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:50px') 
-                    td(style='padding-left: 10px;')
-                      p
-                        em {{list.description}}
-                br
+                p(ng-if='list.description')
+                  table
+                    tr
+                      td
+                        img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:70px') 
+                      td(style='padding-left: 10px;')
+                        p
+                          em {{list.description}}
                 .panel-body(style='padding-top: 0px;')
-                  // FORM TO CREATE LIST
-                  #list-form.row
-                    .col-sm-12(style='padding-left: 0px; padding-right: 0px;')
-                      form(name='addItem', role='form', novalidate='')
-                        table(width='100%', valign='top')
-                          tr
-                            td(width='100%')
-                              input.form-control.input-md(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
-                              small.error(ng-show='addItem.title.$error.minlength && addItem.title.$dirty')
-                                | Title is required to be at least 4 characters
-                              small.error(ng-show='addItem.title.$error.maxlength && addItem.title.$dirty')
-                                | Title cannot be longer than 50 characters
-                            td(align='right', style='vertical-align:top; padding-left: 10px;')
-                              button.btn.btn-success.btn-md(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
                 .top5
                   ul.list-group(ng-sortable='sortConfig', style='margin-bottom: 0px;')
                     li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId'")
@@ -117,17 +104,19 @@ block body
                               | {{item.title}}
                             p.list-group-item-text
                               | {{item.description}}
-                            table
-                              tr
-                                td
-                                  p(ng-if='item.locationName')
-                                    a.listLink(href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank')
-                                      span.glyphicon.glyphicon-map-marker
-                                td
-                                  p(ng-if='item.url')
-                                    a.listLink(href='{{item.url}}', target='_blank') 
-                                      span.glyphicon.glyphicon-link
                           td(align='right')
+                            td
+                              div(ng-if='item.locationName')
+                                  a.listLink(href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank')
+                                    span.glyphicon.glyphicon-map-marker
+                            td(ng-if='item.locationName') &nbsp;
+                            td(ng-if='item.locationName') &nbsp;
+                            td
+                              div(ng-if='item.url')
+                                a.listLink(href='{{item.url}}', target='_blank') 
+                                  span.glyphicon.glyphicon-link
+                            td(ng-if='item.url') &nbsp;
+                            td(ng-if='item.url') &nbsp;
                             td
                               a.listLink(data-ng-click='openEditListItem(list)', data-toggle='modal', data-target='#editListItemForm')
                                 span.glyphicon.glyphicon-pencil
@@ -146,6 +135,22 @@ block body
                                 li.divider(role='separator')
                                 li
                                   a(href='javascript:;', data-ng-click='deleteListItem(item._id)') Delete
+                              // FORM TO CREATE LIST
+                
+                #list-form.row
+                p
+                  .col-sm-12(style='padding-left: 0px; padding-right: 0px;')
+                    form(name='addItem', role='form', novalidate='')
+                      table(width='100%', valign='top')
+                        tr
+                          td(width='100%')
+                            input.form-control.input-md(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                            small.error(ng-show='addItem.title.$error.minlength && addItem.title.$dirty')
+                              | Title is required to be at least 4 characters
+                            small.error(ng-show='addItem.title.$error.maxlength && addItem.title.$dirty')
+                              | Title cannot be longer than 50 characters
+                          td(align='right', style='vertical-align:top; padding-left: 10px;')
+                            button.btn.btn-success.btn-md(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
             .panel-footer
               table(width='100%')
                 tr
@@ -155,7 +160,7 @@ block body
                     tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
                   td(align='right' width='10%' style="padding-left: 10px;")
                     button.btn.btn-danger(data-ng-click='deleteList(list._id)') 
-                      span.glyphicon.glyphicon-remove
+                      span.glyphicon.glyphicon-trash
       .loader(data-loading='') Loading...
       // Add List Modal
       #addListForm.modal.fade(role='dialog', my-modal='')
@@ -215,12 +220,11 @@ block body
                       tr
                         td(align='left', width='100%')
                           div(ng-if='file')
-                            img(ngf-thumbnail="file" width='50')
+                            img(ngf-thumbnail="file" width='100')
                           div(ng-if='editList.image')
                             img.img-thumbnail(ng-src='{{editList.image}}')
                         td(align='right', style='padding-left: 10px;')
-                          button.btn.btn-success.btn-md(ngf-select='upload($file)' ngf-max-size="20MB"
-                            ngf-resize="{width: 50, height: 50}") Select image
+                          button.btn.btn-success.btn-md(ngf-select='upload($file)' ngf-max-size="20MB") Select image
                         td(align='right', style='padding-left: 10px;')
                           div(ng-if='editList.image != null || file')
                             button.btn.btn-danger(ng-click='removeImage(editList)') Remove

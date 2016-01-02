@@ -1,5 +1,6 @@
 extends ./layout.jade
-
+block js
+  script(src='/app/search.js')
 block body
   body(ng-controller='searchController')
     include ./navmenu.jade

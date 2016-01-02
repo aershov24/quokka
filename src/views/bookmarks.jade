@@ -1,5 +1,6 @@
 extends ./layout.jade
-
+block js
+  script(src='/app/bookmarks.js')
 block body
   body(ng-controller='bookmarksController')
     include ./navmenu.jade

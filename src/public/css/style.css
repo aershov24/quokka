@@ -1,3 +1,8 @@
+table a:not(.btn), .table a:not(.btn) {
+    text-decoration: none; 
+	color: #333333;
+}
+
 .my-handle {
     cursor: move;
     cursor: -webkit-move;
@@ -12,10 +17,6 @@
 
 .top5 ul li:nth-child(-n+5) strong{
     color:green;
-}
-
-.panel {
-    border: 0;
 }
 
 .error {
