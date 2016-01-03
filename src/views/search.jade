@@ -38,21 +38,29 @@ block body
                             td
                               a(href='/users/profile/{{list.userId._id}}')
                                 img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square')
-                              &nbsp;
+                            td &nbsp;
+                            td &nbsp;
                             td(style='white-space:nowrap')
                               a(data-ng-click='addBookmark(list)', href='javascript:;')
                                 span.glyphicon.glyphicon-bookmark
-                              &nbsp;
+                            td &nbsp;
+                            td &nbsp;
                             td(style='white-space:nowrap')
                               a(href='/lists/preview/{{list._id}}',target='_blank') 
                                 span.glyphicon.glyphicon-share-alt
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body
+                div(ng-if='list.description != null')
+                  table
+                    tr
+                      td
+                        img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:70px') 
+                      td(style='padding-left: 10px;')
+                        p
+                          em {{list.description}}
                 p
-                  em {{list.description}}
-                p
-                  ul.list-group
+                  ul.list-group(style='margin-bottom: 0px;')
                     li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId' | limitTo: 5")
                       table
                         tr

@@ -27,21 +27,30 @@ block body
                             td
                               a(href='/users/profile/{{bookmark.listId.userId._id}}')
                                 img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{bookmark.listId.userId.facebookId}}/picture?type=square')
-                              &nbsp;
+                            td &nbsp;
+                            td &nbsp;
                             td(style='white-space:nowrap')
                               a(href='/lists/preview/{{bookmark.listId._id}}',target='_blank') 
                                 span.glyphicon.glyphicon-share-alt
-                              &nbsp;
+                                                        td &nbsp;
+                            td &nbsp;
+                            td &nbsp;
                             td(style='white-space:nowrap')
                               a(data-ng-click='deleteBookmark(bookmark._id)', href='javascript:;')
                                 span.glyphicon.glyphicon-remove
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
               .panel-body
+                div(ng-if='bookmark.listId.description != null')
+                  table
+                    tr
+                      td
+                        img.img-thumbnail(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:70px') 
+                      td(style='padding-left: 10px;')
+                        p
+                          em {{bookmark.listId.description}}
                 p
-                  em {{bookmark.listId.description}}
-                p
-                  ul.list-group
+                  ul.list-group(style='margin-bottom: 0px;')
                     li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId' | limitTo: 5")
                       table
                         tr
