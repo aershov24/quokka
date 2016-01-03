@@ -5,7 +5,7 @@ block opengraph
   meta(property='og:type', content='article')
   meta(property='og:title', content='#{list.title}')
   meta(property='og:description', content='#{list.description}')
-  meta(property='og:image', content='https://quokka-the-lists.herokuapp.com/img/logo.png')
+  meta(property='og:image', content='#{list.image}')
 
 block js
   script(src='/libs/fb.js')
@@ -22,6 +22,7 @@ block body
           table(style='width:100%')
             tr
               td(style='vertical-align: bottom;')
+                img.img-thumbnail(src='#{list.image}' style='width:70px') 
                 h1 
                   b #{list.title}
                 div
@@ -33,17 +34,19 @@ block body
                               td
                                 h3
                                   b #{item.title}
+                              td &nbsp;
                               td
                                 if (item.locationName)
                                   h4 
                                     a.listLink(href='http://maps.google.com/maps?q=loc:#{item.location[1]},#{item.location[0]}&z=15', target='_blank')
                                       span.glyphicon.glyphicon-map-marker
+                              td &nbsp;
                               td
                                 if (item.url)
                                   h4
                                     a.listLink(href='#{item.url}', target='_blank') 
                                       span.glyphicon.glyphicon-link
-                            p #{item.description}
+                          p #{item.description}
               td(style='width:30%; vertical-align: text-top; text-align: center;')
                 img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
                 br
