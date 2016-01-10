@@ -157,7 +157,7 @@ block body
                   td(width='3%')
                     span.glyphicon.glyphicon-tags  
                   td
-                    tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
+                    tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)', on-tag-clicked='tagClicked($tag)')
                   td(align='right' width='10%' style="padding-left: 10px;")
                     button.btn.btn-danger(data-ng-click='deleteList(list._id)') 
                       span.glyphicon.glyphicon-trash

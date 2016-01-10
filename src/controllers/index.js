@@ -18,6 +18,10 @@ router.get('/search', customMw.isAuthentificated, function(req, res){
     res.render('search');
     });
 
+router.get('/search/tag/:searchTag', customMw.isAuthentificated, function(req, res){
+    res.render('search', {searchTag: req.params.searchTag});
+    });
+
 router.get('/mybookmarks', customMw.isAuthentificated, function(req, res){
     res.render('bookmarks');
     });

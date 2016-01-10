@@ -2,7 +2,7 @@ extends ./layout.jade
 block js
   script(src='/app/search.js')
 block body
-  body(ng-controller='searchController')
+  body(ng-controller='searchController', ng-init='init(#{JSON.stringify(searchTag)})')
     include ./navmenu.jade
     .container
       h3(style='\
