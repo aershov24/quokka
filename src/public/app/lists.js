@@ -13,22 +13,22 @@
         $scope.formData = {};
         $scope.newListItem = {};
         $scope.sortConfig = {
-                animation: 150,
-                handle: ".my-handle",
-                // Changed sorting within list
-                // Called by any change to the list (add / update / remove)
-                onSort: function (evt) {
-                    var i;
-                    $http.post('/lists/'+evt.model.listId+'/sortItems', { oldIndex: evt.oldIndex, newIndex: evt.newIndex })
-                       .success(function(data) {
-                           console.log(data);
-                       })
-                       .error(function(data) {
-                           console.log('Error: ' + data);
-                       });
-                },
-            };
-      
+            animation: 150,
+            handle: ".my-handle",
+            // Changed sorting within list
+            // Called by any change to the list (add / update / remove)
+            onSort: function (evt) {
+                var i;
+                $http.post('/lists/'+evt.model.listId+'/sortItems', { oldIndex: evt.oldIndex, newIndex: evt.newIndex })
+                   .success(function(data) {
+                       console.log(data);
+                   })
+                   .error(function(data) {
+                       console.log('Error: ' + data);
+                   });
+            },
+        };
+  
       // when landing on the page, get all todos and show them
         $http.get('/users/profile')
             .success(function(data) {
@@ -43,6 +43,15 @@
         $scope.upload = function (file) {
             $scope.file = file;
             $scope.editList.image = null;
+        };
+
+        $scope.updateTitle = function(list, title) {
+          // TODO: implement list saving
+          var x = list;
+          var t = title;
+        };
+
+        $scope.cancelEdit = function(value) {
         };
 
         $scope.removeImage = function (editList) {
@@ -169,6 +178,7 @@
                     $scope.lists[i].description = $scope.editList.description;
                 }
             }
+            
             var editList = $scope.editList;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
                 if ($scope.file){
@@ -200,8 +210,6 @@
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
             });
-
-         
         };
 
         $scope.saveListItem = function () {

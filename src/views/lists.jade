@@ -38,35 +38,10 @@ block body
                     td(align='right')
                       .col-md-12
                         table
-                          tr
-                            //td
-                              .dropdown(data-ng-hide='list.editMode')
-                                a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                                  span.glyphicon.glyphicon-cog
-                                ul.dropdown-menu.dropdown-menu-right
-                                  // data-ng-click="toggleEdit(list)"
-                                  li
-                                    a(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm') Edit
-                                  li
-                                    a(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);',target='_blank') Share
-                                  li.divider(role='separator')
-                                  li
-                                    a(href='javascript:;', data-ng-click='deleteList(list._id)') Delete
-                              .dropdown(data-ng-show='list.editMode')
-                                a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                                  span.glyphicon.glyphicon-pencil
-                                ul.dropdown-menu.dropdown-menu-right
-                                  li
-                                    a(data-ng-click='saveList(list)', href='javascript:;') Save
-                                  li
-                                    a(data-ng-click='toggleEdit(list)', href='javascript:;') Cancel
-                            
+                          tr      
                             td
                               a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);',target='_blank')
                                 span.glyphicon.glyphicon-share-alt
-                            //td
-                              a.listLink(href='javascript:;', data-ng-click='deleteList(list._id)')
-                                span.glyphicon.glyphicon-remove
                             td &nbsp;
                             td &nbsp;
                             td
@@ -81,13 +56,14 @@ block body
             .panel.panel-default
               .panel-body
                 p(ng-if='list.description')
-                  table
+                  table(style='width: 100%')
                     tr
-                      td
+                      td(style='min-width:70px')
                         img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:70px') 
-                      td(style='padding-left: 10px;')
+                      td(style='padding-left: 10px; width: 100%')
                         p
-                          em {{list.description}}
+                          em 
+                            .div(inline-edit="list.description" on-save="updateTitle(list, list.description)" on-cancel="cancelEdit()") {{list.description}}
                 .panel-body(style='padding-top: 0px;')
                 .top5
                   ul.list-group(ng-sortable='sortConfig', style='margin-bottom: 0px;')
