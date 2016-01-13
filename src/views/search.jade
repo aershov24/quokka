@@ -14,7 +14,7 @@ block body
             table(width='100%')
               tr  
                 td(width='100%')
-                  input.form-control.input-md(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchList()')
+                  input.form-control.input-sm(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchList()')
                   br
               tr
                 td(width='100%')
@@ -37,35 +37,39 @@ block body
                           tr
                             td
                               a(href='/users/profile/{{list.userId._id}}')
-                                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square')
+                                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square', data-toggle='tooltip', title='{{list.userId.name}}')
                             td &nbsp;
                             td &nbsp;
                             td(style='white-space:nowrap')
-                              a(data-ng-click='addBookmark(list)', href='javascript:;')
+                              a.listLink(data-ng-click='addBookmark(list)', href='javascript:;' data-toggle='tooltip', title='Add to bookmarks')
                                 span.glyphicon.glyphicon-bookmark
                             td &nbsp;
                             td &nbsp;
                             td(style='white-space:nowrap')
-                              a(href='/lists/preview/{{list._id}}',target='_blank') 
+                              a.listLink(href='/lists/preview/{{list._id}}',target='_blank' data-toggle='tooltip' title='Share list') 
                                 span.glyphicon.glyphicon-share-alt
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body
-                div(ng-if='list.description != null')
-                  table
-                    tr
-                      td
-                        img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:70px') 
-                      td(style='padding-left: 10px;')
-                        p
-                          em {{list.description}}
-                p
-                  ul.list-group(style='margin-bottom: 0px;')
-                    li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId' | limitTo: 5")
-                      table
-                        tr
-                          td(width='100%', align='left')
-                            | {{item.title}}
+                 .top5
+                  div(ng-if='list.description != null')
+                    table
+                      tr
+                        td
+                          img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:70px') 
+                        td(style='padding-left: 10px;')
+                          p
+                            {{list.description}}
+                  p
+                    ul.list-group(style='margin-bottom: 0px;')
+                      li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId' | limitTo: 5")
+                        strong.list-group-item-heading
+                          table
+                            tr
+                              td(width='100%', align='left')
+                                | {{item.title}}
+                        p.list-group-item-text
+                          | {{item.description}}
             .panel-footer
               table(width='100%')
                 tr

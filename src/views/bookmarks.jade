@@ -8,7 +8,6 @@ block body
       h3(style='\
       margin-top: 0px;\
       margin-bottom: 15px;') Bookmarks
-      br
       .panel-group
         .panel.panel-default(data-ng-repeat='bookmark in bookmarks')
           .panel-heading
@@ -25,37 +24,40 @@ block body
                         table
                           tr
                             td
-                              a(href='/users/profile/{{bookmark.listId.userId._id}}')
+                              a(href='/users/profile/{{bookmark.listId.userId._id}}' data-toggle='tooltip' title='{{bookmark.listId.userId.name}}')
                                 img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{bookmark.listId.userId.facebookId}}/picture?type=square')
                             td &nbsp;
                             td &nbsp;
                             td(style='white-space:nowrap')
-                              a(href='/lists/preview/{{bookmark.listId._id}}',target='_blank') 
+                              a.listLink(href='/lists/preview/{{bookmark.listId._id}}' target='_blank' data-toggle='tooltip' title='Share list') 
                                 span.glyphicon.glyphicon-share-alt
-                                                        td &nbsp;
                             td &nbsp;
                             td &nbsp;
                             td(style='white-space:nowrap')
-                              a(data-ng-click='deleteBookmark(bookmark._id)', href='javascript:;')
+                              a.listLink(data-ng-click='deleteBookmark(bookmark._id)' href='javascript:;' data-toggle='tooltip' title='Delete')
                                 span.glyphicon.glyphicon-remove
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
               .panel-body
-                div(ng-if='bookmark.listId.description != null')
-                  table
-                    tr
-                      td
-                        img.img-thumbnail(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:70px') 
-                      td(style='padding-left: 10px;')
-                        p
-                          em {{bookmark.listId.description}}
-                p
-                  ul.list-group(style='margin-bottom: 0px;')
-                    li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId' | limitTo: 5")
-                      table
-                        tr
-                          td(width='100%', align='left')
-                            | {{item.title}}
+                .top5
+                  div(ng-if='bookmark.listId.description != null')
+                    table
+                      tr
+                        td
+                          img.img-thumbnail(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:70px') 
+                        td(style='padding-left: 10px;')
+                          p
+                            {{bookmark.listId.description}}
+                  p
+                    ul.list-group(style='margin-bottom: 0px;')
+                      li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId' | limitTo: 5")
+                        strong.list-group-item-heading
+                          table
+                            tr
+                              td(width='100%', align='left')
+                                | {{item.title}}
+                        p.list-group-item-text
+                          | {{item.description}}
             .panel-footer
               table(width='100%')
                 tr

@@ -6,7 +6,7 @@ div(ng-if='profile.facebookId')
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href='#') Quokka
+        a.navbar-brand(href='/') Quokka
       #myNavbar.collapse.navbar-collapse
         ul.nav.navbar-nav
           li
@@ -23,7 +23,7 @@ div(ng-if='profile.facebookId')
               |  Search
         ul.nav.navbar-nav.navbar-right
           li
-            a(href='/users/profile')
+            a(href='/users/profile/{{profile._id}}')
               img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{profile.facebookId}}/picture?type=square')
               | &nbsp;&nbsp;{{profile.name}}
           li

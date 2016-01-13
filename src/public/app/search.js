@@ -11,8 +11,10 @@
 
         $scope.searchTag = null;  
         $scope.init = function(tag) {
+          if (tag){
             $scope.searchTags.push({text: tag});
             $scope.tagAdded({text: tag});
+          }
         }
 
         // when landing on the page, get all todos and show them

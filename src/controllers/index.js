@@ -26,10 +26,6 @@ router.get('/mybookmarks', customMw.isAuthentificated, function(req, res){
     res.render('bookmarks');
     });
 
-router.get('/profile', customMw.isAuthentificated, function(req, res){
-    res.render('profile');
-    });
-
 router.get('/login', function(req, res) {
         res.render('login');
     });

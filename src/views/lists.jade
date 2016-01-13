@@ -11,7 +11,7 @@ block body
       table(width='100%')
         tr
           td(valign='bottom')
-            h2(style='\
+            h3(style='\
             margin-top: 0px;\
             margin-bottom: 0px;') My Tops
           td(align='right')
@@ -40,17 +40,17 @@ block body
                         table
                           tr      
                             td
-                              a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);',target='_blank')
+                              a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);',target='_blank' title="Share")
                                 span.glyphicon.glyphicon-share-alt
                             td &nbsp;
                             td &nbsp;
                             td
-                              a.listLink(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm')
+                              a.listLink(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm', title='Edit list')
                                 span.glyphicon.glyphicon-pencil
                             td &nbsp;
                             td &nbsp;
                             td
-                              a.listLink(data-toggle='collapse', href='#collapse{{list._id}}')
+                              a.listLink(data-toggle='collapse', href='#collapse{{list._id}}', title='Show items')
                                 span.glyphicon.glyphicon-tasks
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
@@ -245,7 +245,7 @@ block body
                     .form-group
                       p(ng-if='lookedUpLocation.name') Current location: 
                         span.muted {{lookedUpLocation.name}}
-                        a.clear(ng-click='clearLocation(editListItem)') 
+                        a.listLink(ng-click='clearLocation(editListItem)') 
                           span.glyphicon.glyphicon-remove
                       .lookup
                         location-lookup(ng-model='lookedUpLocation', limit-to='4')
