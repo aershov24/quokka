@@ -15,7 +15,7 @@ block body
             margin-top: 0px;\
             margin-bottom: 0px;') My Tops
           td(align='right')
-            button.btn.btn-success.btn-md(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
+            button.btn.btn-success.btn-sm(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
       #list-form.row
         .col-sm-12
           form
@@ -34,7 +34,7 @@ block body
                     td(align='left')
                       .col-md-12
                         strong
-                          a(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
+                          a.listTitle(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
                     td(align='right')
                       .col-md-12
                         table
@@ -54,7 +54,7 @@ block body
                                 span.glyphicon.glyphicon-tasks
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
-              .panel-body
+              .panel-body(style='padding-bottom: 5px;')
                 p(ng-if='list.description')
                   table(style='width: 100%')
                     tr
@@ -62,9 +62,9 @@ block body
                         img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:70px') 
                       td(style='padding-left: 10px; width: 100%')
                         p
-                          em 
-                            .div(inline-edit="list.description" on-save="updateTitle(list, list.description)" on-cancel="cancelEdit()") {{list.description}}
-                .panel-body(style='padding-top: 0px;')
+                          .div(inline-edit="list.description" on-save="updateInlineListDescription(list, list.description)" on-cancel="cancelEdit()")
+                            em {{list.description}}
+                .panel-body(style='padding-top: 0px; padding-bottom: 5px;')
                 .top5
                   ul.list-group(ng-sortable='sortConfig', style='margin-bottom: 0px;')
                     li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId'")
@@ -77,42 +77,34 @@ block body
                             &nbsp;
                           td(width='100%', align='left')
                             strong.list-group-item-heading
-                              | {{item.title}}
+                              table(style='width: 100%')
+                                tr
+                                  td(style='width: 100%')
+                                    .div(inline-edit="item.title" on-save="updateInlineItemTitle(item, item.title)" on-cancel="cancelEdit()")
+                                  td &nbsp;
+                                  td &nbsp;
+                                  td
+                                    div(ng-if='item.locationName')
+                                        a.listLink(href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank' data-toggle='tooltip' title='Open location')
+                                          span.glyphicon.glyphicon-map-marker
+                                  td(ng-if='item.locationName') &nbsp;
+                                  td(ng-if='item.locationName') &nbsp;
+                                  td
+                                    div(ng-if='item.url')
+                                      a.listLink(href='{{item.url}}', target='_blank' data-toggle='tooltip' title='{{item.url}}') 
+                                        span.glyphicon.glyphicon-link
+                                  td(ng-if='item.url') &nbsp;
+                                  td(ng-if='item.url') &nbsp;
+                                  td
+                                    a.listLink(data-ng-click='openEditListItem(list)', data-toggle='modal', data-target='#editListItemForm')
+                                      span.glyphicon.glyphicon-pencil
+                                  td &nbsp;
+                                  td &nbsp;
+                                  td
+                                    a.listLink(data-ng-click='deleteListItem(item._id)' data-toggle='tooltip' title='Delete')
+                                      span.glyphicon.glyphicon-remove
                             p.list-group-item-text
-                              | {{item.description}}
-                          td(align='right')
-                            td
-                              div(ng-if='item.locationName')
-                                  a.listLink(href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank')
-                                    span.glyphicon.glyphicon-map-marker
-                            td(ng-if='item.locationName') &nbsp;
-                            td(ng-if='item.locationName') &nbsp;
-                            td
-                              div(ng-if='item.url')
-                                a.listLink(href='{{item.url}}', target='_blank') 
-                                  span.glyphicon.glyphicon-link
-                            td(ng-if='item.url') &nbsp;
-                            td(ng-if='item.url') &nbsp;
-                            td
-                              a.listLink(data-ng-click='openEditListItem(list)', data-toggle='modal', data-target='#editListItemForm')
-                                span.glyphicon.glyphicon-pencil
-                            td &nbsp;
-                            td &nbsp;
-                            td
-                              a.listLink(data-ng-click='deleteListItem(item._id)')
-                                span.glyphicon.glyphicon-remove
-                            //.dropdown
-                              a.listLink(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
-                                span.glyphicon.glyphicon-edit
-                              ul.dropdown-menu.dropdown-menu-right
-                                // data-ng-click="toggleEdit(list)"
-                                li
-                                  a(data-ng-click='openEditListItem(item)', data-toggle='modal', data-target='#editListItemForm') Edit
-                                li.divider(role='separator')
-                                li
-                                  a(href='javascript:;', data-ng-click='deleteListItem(item._id)') Delete
-                              // FORM TO CREATE LIST
-                
+                              .div(inline-edit="item.description" on-save="updateInlineItemDescription(item, item.description)" on-cancel="cancelEdit()")
                 #list-form.row
                 p
                   .col-sm-12(style='padding-left: 0px; padding-right: 0px;')
@@ -120,13 +112,13 @@ block body
                       table(width='100%', valign='top')
                         tr
                           td(width='100%')
-                            input.form-control.input-md(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                            input.form-control.input-sm(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
                             small.error(ng-show='addItem.title.$error.minlength && addItem.title.$dirty')
                               | Title is required to be at least 4 characters
                             small.error(ng-show='addItem.title.$error.maxlength && addItem.title.$dirty')
                               | Title cannot be longer than 50 characters
                           td(align='right', style='vertical-align:top; padding-left: 10px;')
-                            button.btn.btn-success.btn-md(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
+                            button.btn.btn-success.btn-sm(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
             .panel-footer
               table(width='100%')
                 tr
@@ -135,7 +127,7 @@ block body
                   td
                     tags-input(placeholder='tags', ng-model='list.ngTags', maxtags='4', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)', on-tag-clicked='tagClicked($tag)')
                   td(align='right' width='10%' style="padding-left: 10px;")
-                    button.btn.btn-danger(data-ng-click='deleteList(list._id)') 
+                    button.btn.btn-danger.btn-sm(data-ng-click='deleteList(list._id)') 
                       span.glyphicon.glyphicon-trash
       .loader(data-loading='') Loading...
       // Add List Modal
@@ -150,7 +142,7 @@ block body
               form(name='addListForm', role='form', novalidate='')
                 .form-group
                   // NAME
-                  input.form-control.input-md(name='title', type='text', placeholder='Title', data-ng-model='formData.title', ng-minlength='4', ng-maxlength='50', required='')
+                  input.form-control.input-sm(name='title', type='text', placeholder='Title', data-ng-model='formData.title', ng-minlength='4', ng-maxlength='50', required='')
                   small.error(ng-show='addListForm.title.$dirty && addListForm.title.$error.required')
                     | Title is required.
                   small.error(ng-show='addListForm.title.$error.minlength')
@@ -165,7 +157,7 @@ block body
               table(width='100%')
                 tr
                   td(align='right', width='100%')
-                    button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='addListForm.$invalid', ng-click='createList()') Add
+                    button.btn.btn-success.btn-sm(type='submit', data-dismiss='modal', ng-disabled='addListForm.$invalid', ng-click='createList()') Add
                   td(align='right', style='padding-left: 10px;')
                     button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeList()') Cancel
       // Edit List Modal
@@ -180,7 +172,7 @@ block body
               form(name='editListForm', role='form', novalidate='')
                 .form-group
                   // NAME
-                  input.form-control.input-md(name='title', type='text', placeholder='Title', ng-model='editList.title', ng-minlength='4', ng-maxlength='50', required='')
+                  input.form-control.input-sm(name='title', type='text', placeholder='Title', ng-model='editList.title', ng-minlength='4', ng-maxlength='50', required='')
                   small.error(ng-show='editListForm.title.$dirty && editListForm.title.$error.required')
                     | Title is required.
                   small.error(ng-show='editListForm.title.$error.minlength')
@@ -200,7 +192,7 @@ block body
                           div(ng-if='editList.image')
                             img.img-thumbnail(ng-src='{{editList.image}}')
                         td(align='right', style='padding-left: 10px;')
-                          button.btn.btn-success.btn-md(ngf-select='upload($file)' ngf-max-size="20MB") Select image
+                          button.btn.btn-success.btn-sm(ngf-select='upload($file)' ngf-max-size="20MB") Select image
                         td(align='right', style='padding-left: 10px;')
                           div(ng-if='editList.image != null || file')
                             button.btn.btn-danger(ng-click='removeImage(editList)') Remove
@@ -208,7 +200,7 @@ block body
               table(width='100%')
                 tr
                   td(align='right', width='100%')
-                    button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='editListForm.$invalid', ng-click='saveList()') Save
+                    button.btn.btn-success.btn-sm(type='submit', data-dismiss='modal', ng-disabled='editListForm.$invalid', ng-click='saveList()') Save
                   td(align='right', style='padding-left: 10px;')
                     button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeList()') Cancel
       // EditListItem Modal
@@ -231,7 +223,7 @@ block body
                   #general.tab-pane.fade.in.active
                     .form-group
                       // title
-                      input.form-control.input-md(name='title', type='text', placeholder='Title', ng-model='editListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                      input.form-control.input-sm(name='title', type='text', placeholder='Title', ng-model='editListItem.title', ng-minlength='4', ng-maxlength='50', required='')
                       small.error(ng-show='editListitemForm.title.$dirty && editListItemForm.title.$error.required')
                         | Title is required.
                       small.error(ng-show='editListItemForm.title.$error.minlength')
@@ -244,7 +236,7 @@ block body
                         | Description cannot be longer than 500 characters
                     .form-group
                       // url
-                      input.form-control.input-md(name='url', type='text', placeholder='Url', ng-model='editListItem.url', ng-minlength='4', ng-maxlength='255')
+                      input.form-control.input-sm(name='url', type='text', placeholder='Url', ng-model='editListItem.url', ng-minlength='4', ng-maxlength='255')
                       small.error(ng-show='editListItemForm.url.$error.minlength')
                         | Url is required to be at least 4 characters
                       small.error(ng-show='editListItemForm.url.$error.maxlength')
@@ -271,7 +263,7 @@ block body
               table(width='100%')
                 tr
                   td(align='right', width='100%')
-                    button.btn.btn-success.btn-md(type='submit', data-dismiss='modal', ng-disabled='editListItemForm.$invalid', ng-click='saveListItem()') Save
+                    button.btn.btn-success.btn-sm(type='submit', data-dismiss='modal', ng-disabled='editListItemForm.$invalid', ng-click='saveListItem()') Save
                   td(align='right', style='padding-left: 10px;')
                     button.btn.btn-default(type='button', data-dismiss='modal', ng-click='closeListItem()') Cancel
     include ./footer.jade

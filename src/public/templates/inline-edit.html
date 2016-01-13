@@ -1,9 +1,19 @@
 <div>
-  <input style="width:100%;" type="text" on-enter="save()" on-esc="cancel()" ng-model="model" ng-show="editMode">
-  <button class="btn btn-success btn-sm" ng-click="save()" ng-show="editMode">Save</button>
-  <button class="btn btn-info btn-sm" ng-click="cancel()" ng-show="editMode">Cancel</button>
+  <table style="width: 100%">
+  <tr>
+  <td>
+    <textarea style="width:100%;" type="text" on-enter="save()" on-esc="cancel()" ng-model="model" ng-show="editMode"/>
+  </td>
+  </tr>
+  <tr>
+  <td>
+  <a class="inlineSave" href="" ng-click="save()" ng-show="editMode">Save</a>
+  <a class="inlineCancel" href="" ng-click="cancel()" ng-show="editMode">Cancel</a>
+  </td>
+  </tr>
+  </table>
   <span ng-mouseenter="showEdit = true" ng-mouseleave="showEdit = false">
     <span ng-hide="editMode" ng-click="edit()">{{model}}</span>
-    <a ng-show="showEdit" ng-click="edit()"><span class="glyphicon glyphicon-pencil"></a>
+    <a class="listLink" ng-show="showEdit" ng-click="edit()"><span class="glyphicon glyphicon-pencil"></a>
   </span>
 </div>

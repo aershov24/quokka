@@ -45,10 +45,48 @@
             $scope.editList.image = null;
         };
 
-        $scope.updateTitle = function(list, title) {
-          // TODO: implement list saving
-          var x = list;
-          var t = title;
+        $scope.updateInlineListDescription = function(list, description) {
+            list.description = description;
+            var editList = list;
+            $http.post('/lists/' + editList._id, editList).success(function (data) {
+                if ($scope.file){
+                 Upload.upload({
+                    url: '/lists/'+ editList._id+'/upload',
+                    data: {file: $scope.file}
+                }).then(function (resp) {
+                    console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                }, function (resp) {
+                    console.log('Error status: ' + resp.status);
+                }, function (evt) {
+                });
+                }
+            }).error(function (data) {
+                $scope.error = "An Error has occured while Saving list! " + data;
+            });
+        };
+
+        $scope.updateInlineItemTitle = function(item, title) {
+            item.title = title;
+            var editListItem = item;
+            $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
+                $scope.editListItem = {};
+                $scope.editListItemForm.$setPristine();
+                $scope.dismiss();
+            }).error(function (data) {
+                $scope.error = "An Error has occured while Saving list! " + data;
+            });
+        };
+
+        $scope.updateInlineItemDescription = function(item, description) {
+            item.description = description;
+            var editListItem = item;
+            $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
+                $scope.editListItem = {};
+                $scope.editListItemForm.$setPristine();
+                $scope.dismiss();
+            }).error(function (data) {
+                $scope.error = "An Error has occured while Saving list! " + data;
+            });
         };
 
         $scope.cancelEdit = function(value) {
@@ -178,7 +216,7 @@
                     $scope.lists[i].description = $scope.editList.description;
                 }
             }
-            
+
             var editList = $scope.editList;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
                 if ($scope.file){
@@ -218,22 +256,22 @@
                 $scope.editListItem.locationName = $scope.lookedUpLocation.name;
                 $scope.editListItem.location = [$scope.lookedUpLocation.longitude, $scope.lookedUpLocation.latitude];
             }
-
             var editListItem = $scope.editListItem;
-            $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
-                var i, j;
-                for (var i = 0; i < $scope.lists.length; ++i) {
-                    for (var j = 0; j < $scope.lists[i].items.length; ++j) {
-                        if ($scope.lists[i].items[j]._id === editListItem._id)
-                        {
-                            $scope.lists[i].items[j].title = editListItem.title;
-                            $scope.lists[i].items[j].description = editListItem.description;
-                            $scope.lists[i].items[j].url = editListItem.url;
-                            $scope.lists[i].items[j].location = editListItem.location;
-                            $scope.lists[i].items[j].locationName = editListItem.locationName;
-                        }
+            var i, j;
+            for (var i = 0; i < $scope.lists.length; ++i) {
+                for (var j = 0; j < $scope.lists[i].items.length; ++j) {
+                    if ($scope.lists[i].items[j]._id === editListItem._id)
+                    {
+                        $scope.lists[i].items[j].title = editListItem.title;
+                        $scope.lists[i].items[j].description = editListItem.description;
+                        $scope.lists[i].items[j].url = editListItem.url;
+                        $scope.lists[i].items[j].location = editListItem.location;
+                        $scope.lists[i].items[j].locationName = editListItem.locationName;
                     }
                 }
+            }
+
+            $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
