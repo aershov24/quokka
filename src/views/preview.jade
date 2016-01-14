@@ -26,6 +26,8 @@ block body
                 img.img-thumbnail(src='#{list.image}' style='width:70px') 
                 h1 
                   b #{list.title}
+                p
+                  | #{list.description}
                 div
                     ul
                       each item in list.items
