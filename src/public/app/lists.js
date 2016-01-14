@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app= angular.module('quokka');  
-    app.controller('quokkaController', ['$scope', '$http', '$window', 'location','Upload', function($scope, $http, $window, location, Upload) {
+    app.controller('quokkaController', ['$scope', '$http', '$window', '$timeout', 'location','Upload', function($scope, $http, $window, $timeout, location, Upload) {
         $scope.selected = 'first';
         location.get(angular.noop, angular.noop);
         $scope.lookedUpLocation = { name: '', latitude: 0, longitude: 0};
@@ -12,6 +12,12 @@
         $scope.editListItem = {};
         $scope.formData = {};
         $scope.newListItem = {};
+
+        $scope.listSuccess = false;
+        $scope.listError = false;
+        $scope.itemSuccess = false;
+        $scope.itemError = false;
+
         $scope.sortConfig = {
             animation: 150,
             handle: ".my-handle",
@@ -28,6 +34,49 @@
                    });
             },
         };
+
+        $scope.showListError = function(error){
+          //reset
+          $scope.listError = false;
+          $scope.doFade = false;
+          $scope.listError = true;
+          $scope.errorMessage = error;
+          $timeout(function(){
+            $scope.listError = false;
+          }, 2500);
+        };
+
+        $scope.showListSuccess = function(){
+          //reset
+          $scope.listSuccess = false;
+          $scope.doFade = false;
+          $scope.listSuccess = true;
+          $timeout(function(){
+            $scope.listSuccess = false;
+          }, 2500);
+        };
+
+        $scope.showItemError = function(error){
+          //reset
+          $scope.itemError = false;
+          $scope.doFade = false;
+          $scope.itemError = true;
+          $scope.errorMessage = error;
+          $timeout(function(){
+            $scope.listError = false;
+          }, 2500);
+        };
+
+        $scope.showItemSuccess = function(){
+          //reset
+          $scope.itemSuccess = false;
+          $scope.doFade = false;
+          $scope.itemSuccess = true;
+          $timeout(function(){
+            $scope.itemSuccess = false;
+          }, 2500);
+        };
+  
   
       // when landing on the page, get all todos and show them
         $http.get('/users/profile')
@@ -49,19 +98,10 @@
             list.description = description;
             var editList = list;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
-                if ($scope.file){
-                 Upload.upload({
-                    url: '/lists/'+ editList._id+'/upload',
-                    data: {file: $scope.file}
-                }).then(function (resp) {
-                    console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-                }, function (resp) {
-                    console.log('Error status: ' + resp.status);
-                }, function (evt) {
-                });
-                }
+              $scope.showListSuccess();
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving list! " + data;
+              $scope.error = "An Error has occured while Saving list! " + data;
+              $scope.showListError(data);
             });
         };
 
@@ -69,11 +109,13 @@
             item.title = title;
             var editListItem = item;
             $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
+                $scope.showItemSuccess();
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
+                $scope.showItemError(data);
             });
         };
 
@@ -81,11 +123,13 @@
             item.description = description;
             var editListItem = item;
             $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
+                $scope.showItemSuccess();
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
+                $scope.showItemError(data);
             });
         };
 
@@ -140,9 +184,11 @@
                     $scope.formData = {}; // clear the form so our user is ready to enter another
                     $scope.addListForm.$setPristine();
                     $scope.dismiss();
+                    $scope.showListSuccess();
                 })
                 .error(function(data) {
                     console.log('Error: ' + data);
+                    $scope.showListError(data);
                 });
         };
 
@@ -245,8 +291,10 @@
                 $scope.editList = {};
                 $scope.editListForm.$setPristine();
                 $scope.dismiss();
+                $scope.showListSuccess();
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
+                $scope.showListError(data);
             });
         };
 
@@ -275,8 +323,10 @@
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
+                $scope.showItemSuccess();
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
+                $scope.showItemError();
             });
         };
 
@@ -298,22 +348,24 @@
       
       // when submitting the add form, send the text to the node API
         $scope.createListItem = function() {
-        var buf = this.list;
+            var buf = this.list;
             $scope.newListItem.listId = buf._id;
             $scope.newListItem.orderId = buf.items.length;
             //$scope.newListItem.location = '[0, 0]';
-        $scope.newListItem.description = '';
+            $scope.newListItem.description = '';
             $scope.newListItem.url = '';
             $scope.newListItem.locationName = '';
+
             $http.post('/lists/'+this.list._id+'/items/', $scope.newListItem)
-                .success(function(data) {
-                    $scope.newListItem = {};
-                    buf.items = data;
-            return false;
-                })
-                .error(function(data) {
-                    return false;
-                });
+              .success(function(data) {
+                  $scope.newListItem = {};
+                  buf.items = data;
+                  $scope.showItemSuccess();
+              })
+              .error(function(data) {
+                console.log('Error:', data);
+                $scope.showItemError(data);
+              });
         };
       
         $scope.deleteListItem = function(id) {

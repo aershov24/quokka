@@ -8,22 +8,23 @@ block body
   body(ng-controller='quokkaController')
     include ./navmenu.jade
     .container
-      table(width='100%')
-        tr
-          td(valign='bottom')
-            h3(style='\
-            margin-top: 0px;\
-            margin-bottom: 0px;') My Tops
-          td(align='right')
-            button.btn.btn-success.btn-sm(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
-      #list-form.row
-        .col-sm-12
-          form
-            table(width='100%')
-              tr
-                td(width='100%')
-                td(align='right', style='padding-left: 10px;')
-      br
+      p
+        table(width='100%')
+          tr
+            td(valign='bottom')
+              h3(style='\
+              margin-top: 0px;\
+              margin-bottom: 0px;') My Tops
+            td(align='right')
+              button.btn.btn-success.btn-sm(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
+      .alert.alert-dismissible.alert-success(data-ng-show="listSuccess" ng-class="{fade:doFade}")
+        button.close(type='button', data-dismiss='alert') x
+        strong Success. 
+        | List saved.
+      .alert.alert-dismissible.alert-danger(data-ng-show="listError" ng-class="{fade:doFade}")
+        button.close(type='button', data-dismiss='alert') x
+        strong Error. 
+        | {{errorMessage}}.
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists')
           .panel-heading
@@ -64,6 +65,14 @@ block body
                         p
                           .div(inline-edit="list.description" on-save="updateInlineListDescription(list, list.description)" on-cancel="cancelEdit()")
                             em {{list.description}}
+                .alert.alert-dismissible.alert-success(data-ng-show="itemSuccess" ng-class="{fade:doFade}")
+                  button.close(type='button', data-dismiss='alert') x
+                  strong Success. 
+                  | Item saved.
+                .alert.alert-dismissible.alert-danger(data-ng-show="itemError" ng-class="{fade:doFade}")
+                  button.close(type='button', data-dismiss='alert') x
+                  strong Error. 
+                  | {{errorMessage}}.
                 .panel-body(style='padding-top: 0px; padding-bottom: 5px;')
                 .top5
                   ul.list-group(ng-sortable='sortConfig', style='margin-bottom: 0px;')

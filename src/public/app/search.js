@@ -4,10 +4,12 @@
 (function () {
     'use strict';
     var app= angular.module('quokka');  
-    app.controller('searchController', function($scope, $http) {
+    app.controller('searchController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
         $scope.formData = {};
         $scope.lists = {};
         $scope.searchTags = [];
+        $scope.bookSuccess = false;
+        $scope.bookError = false;
 
         $scope.searchTag = null;  
         $scope.init = function(tag) {
@@ -16,6 +18,25 @@
             $scope.tagAdded({text: tag});
           }
         }
+
+        $scope.showBookError = function(error){
+          //reset
+          $scope.bookError = false;
+          $scope.bookError = true;
+          $scope.errorMessage = error;
+          $timeout(function(){
+            $scope.bookError = false;
+          }, 2500);
+        };
+
+        $scope.showBookSuccess = function(){
+          //reset
+          $scope.bookSuccess = false;
+          $scope.bookSuccess = true;
+          $timeout(function(){
+            $scope.bookSuccess = false;
+          }, 2500);
+        };
 
         // when landing on the page, get all todos and show them
         $http.get('/users/profile')
@@ -51,9 +72,11 @@
         $scope.addBookmark = function() {
             $http.post('/bookmarks', { listId: this.list._id, userId: this.list.userId._id })
                 .success(function(data) {
+                  $scope.showBookSuccess();
                 })
                 .error(function(data) {
                     console.log('Error: ' + data);
+                    $scope.showBookError(data);
                 });
         };
 
@@ -105,5 +128,5 @@
                     console.log('Error: ' + data);
                 });
         };
-    });
+    }]);
 }());

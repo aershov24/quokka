@@ -8,18 +8,26 @@ block body
       h3(style='\
       margin-top: 0px;\
       margin-bottom: 15px;') Search
-      #list-form.row
-        .col-sm-12
-          form
-            table(width='100%')
-              tr  
-                td(width='100%')
-                  input.form-control.input-sm(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchList()')
-                  br
-              tr
-                td(width='100%')
-                  tags-input(placeholder='Tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
-      br
+      p
+        #list-form.row
+          .col-sm-12
+            form
+              table(width='100%')
+                tr  
+                  td(width='100%')
+                    input.form-control.input-sm(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchList()')
+                    br
+                tr
+                  td(width='100%')
+                    tags-input(placeholder='Tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
+      .alert.alert-dismissible.alert-success(data-ng-show="bookSuccess" ng-class="{fade:doFade}")
+        button.close(type='button', data-dismiss='alert') x
+        strong Success. 
+        | Item saved.
+      .alert.alert-dismissible.alert-danger(data-ng-show="bookError" ng-class="{fade:doFade}")
+        button.close(type='button', data-dismiss='alert') x
+        strong Error. 
+        | {{errorMessage}}.
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists | limitTo: 10')
           .panel-heading
