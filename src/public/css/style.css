@@ -4,10 +4,15 @@ div.show-image {
     margin:5px;
 }
 div.show-image:hover img{
-    opacity:0.5;
+    opacity:0.7;
 }
 div.show-image:hover a {
     display: block;
+    color: #B7B7B7;
+}
+div.show-image:hover a:hover {
+    display: block;
+    color: #000000;
 }
 div.show-image a {
     position:absolute;
@@ -103,12 +108,12 @@ span.tags
     }
 
 .listLink {
-    color: gray;
+    color: #B7B7B7;
     text-decoration: none;
 }
 .listLink:hover, 
 .listLink:focus {
-    color: #2A6496;
+    color: black;
     text-decoration: underline;
 }
 
@@ -195,11 +200,20 @@ span.tags
 
 table a:not(.btn), .table a:not(.btn) {
     text-decoration: none;
-    color: #333333;
 }
 
 textarea {
     overflow:hidden;
     height:1.8em;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: #000000;
+    text-decoration: underline;
 }
 
