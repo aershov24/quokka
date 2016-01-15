@@ -31,6 +31,11 @@
                 console.log('Error: ' + data);
             });
 
+                // when submitting the add form, send the text to the node API
+        $scope.searchList = function(searchStr) {
+           $window.location.href = '/search/name/'+searchStr;
+        };
+
              // when submitting the add form, send the text to the node API
         $scope.deleteBookmark = function(id) {
             $http.delete('/bookmarks/'+id)

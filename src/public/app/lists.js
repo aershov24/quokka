@@ -12,6 +12,12 @@
         $scope.editListItem = {};
         $scope.formData = {};
         $scope.newListItem = {};
+        $scope.searchStr = "";
+
+        // when submitting the add form, send the text to the node API
+        $scope.searchList = function(searchStr) {
+           $window.location.href = '/search/name/'+searchStr;
+        };
 
         $scope.inlineUpload = function(list, file)
         {

@@ -2,7 +2,7 @@ extends ./layout.jade
 block js
   script(src='/app/search.js')
 block body
-  body(ng-controller='searchController', ng-init='init(#{JSON.stringify(searchTag)})')
+  body(ng-controller='searchController', ng-init='init(#{JSON.stringify(searchTag)}, #{JSON.stringify(searchStr)})')
     include ./navmenu.jade
     div(growl)
     .container
@@ -17,11 +17,11 @@ block body
               table(width='100%')
                 tr  
                   td(width='100%')
-                    input.form-control.input-sm(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchList()')
-                    br
+                    p
+                      input.form-control.input-md(type='text', placeholder='Start typing...', ng-model='formData.str', ng-change='searchListKey()')
                 tr
                   td(width='100%')
-                    tags-input(placeholder='Tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
+                    tags-input(placeholder='... or add tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists | limitTo: 10')
           .panel-heading

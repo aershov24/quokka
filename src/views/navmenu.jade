@@ -18,9 +18,11 @@ div(ng-if='profile.facebookId')
               span.glyphicon.glyphicon-bookmark
               |  Bookmarks
           li
-            a(href='/search')
-              span.glyphicon.glyphicon-search
-              |  Search
+            form(ng-submit="searchList(searchStr)")
+              input(type='search', placeholder='Search', ng-model='searchStr')
+              &nbsp;
+              a(href='/search', style='color: white') 
+                |or use tags...
         ul.nav.navbar-nav.navbar-right
           li
             a(href='/users/profile/{{profile._id}}')

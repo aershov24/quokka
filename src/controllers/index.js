@@ -19,7 +19,11 @@ router.get('/search', customMw.isAuthentificated, function(req, res){
     });
 
 router.get('/search/tag/:searchTag', customMw.isAuthentificated, function(req, res){
-    res.render('search', {searchTag: req.params.searchTag});
+    res.render('search', {searchTag: req.params.searchTag, searchStr: ''});
+    });
+
+router.get('/search/name/:searchStr', customMw.isAuthentificated, function(req, res){
+    res.render('search', {searchTag: '', searchStr: req.params.searchStr});
     });
 
 router.get('/mybookmarks', customMw.isAuthentificated, function(req, res){
