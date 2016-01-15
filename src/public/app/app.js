@@ -36,10 +36,10 @@
       }
     } 
   })
-  .directive('inlineListEdit', function($timeout) {
+  .directive('inlineTitleEdit', function($timeout) {
     return {
       scope: {
-        model: '=inlineListEdit',
+        model: '=inlineTitleEdit',
         handleSave: '&onSave',
         handleCancel: '&onCancel'
       },
@@ -51,7 +51,7 @@
           previousValue = scope.model;
           
           $timeout(function() {
-            elm.find('textarea')[0].focus();
+            elm.find('input')[0].focus();
           }, 0, false);
         };
         scope.save = function() {
@@ -67,13 +67,13 @@
             return (!str || 0 === str.length);
         }
       },
-      templateUrl: './templates/inline-list-edit.html'
+      templateUrl: './templates/inline-title-edit.html'
     };
   })
-  .directive('inlineItemEdit', function($timeout) {
+  .directive('inlineDescriptionEdit', function($timeout) {
     return {
       scope: {
-        model: '=inlineItemEdit',
+        model: '=inlineDescriptionEdit',
         handleSave: '&onSave',
         handleCancel: '&onCancel'
       },
@@ -101,7 +101,7 @@
             return (!str || 0 === str.length);
         }
       },
-      templateUrl: './templates/inline-item-edit.html'
+      templateUrl: './templates/inline-description-edit.html'
     };
   })
 })();

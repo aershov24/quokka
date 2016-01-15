@@ -13,11 +13,6 @@
         $scope.formData = {};
         $scope.newListItem = {};
 
-        $scope.listSuccess = false;
-        $scope.listError = false;
-        $scope.itemSuccess = false;
-        $scope.itemError = false;
-
         $scope.inlineUpload = function(list, file)
         {
             $scope.file = file;
@@ -88,7 +83,7 @@
             list.description = description;
             var editList = list;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
-              growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+              growl.success('The list saved.',{title: 'Success!'});
             }).error(function (data) {
               $scope.error = "An Error has occured while Saving list! " + data;
               growl.error('An error has occured while saving list.',{title: 'Error!', ttl: 2000});
@@ -105,7 +100,6 @@
                 $scope.dismiss();
             }).error(function (data) {
                 growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
-                $scope.showItemError(data);
             });
         };
 
