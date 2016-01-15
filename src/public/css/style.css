@@ -1,3 +1,11 @@
+ textarea {
+   resize: none;
+   transition: 0.05s;
+   -moz-transition: 0.05s;
+   -webkit-transition: 0.05s;
+   -o-transition: 0.05s;
+  }
+
 div.show-image {
     position: relative;
     float:left;
@@ -202,10 +210,10 @@ table a:not(.btn), .table a:not(.btn) {
     text-decoration: none;
 }
 
-textarea {
+/*textarea {
     overflow:hidden;
     height:1.8em;
-}
+}*/
 
 a {
     color: #000000;

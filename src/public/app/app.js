@@ -4,7 +4,7 @@
  
 (function () {
     'use strict';
-     angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload', 'angular-growl'])
+    angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload', 'angular-growl', 'autoGrow'])
    .directive('loading', ['$http', function ($http) {
     return {
       restrict: 'A',
