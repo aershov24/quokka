@@ -169,19 +169,19 @@
         // when submitting the add form, send the text to the node API
         $scope.createList = function() {
             $http.post('/lists', $scope.formData)
-                .success(function(data) {
-                    $scope.lists.splice(0, 0, data);
-                    $scope.lists[0].ngTags = [];
-                    $scope.lists[0].editMode = false;
-                    $scope.formData = {}; // clear the form so our user is ready to enter another
-                    $scope.addListForm.$setPristine();
-                    $scope.dismiss();
-                    $scope.showListSuccess();
-                })
-                .error(function(data) {
-                    console.log('Error: ' + data);
-                    $scope.showListError(data);
-                });
+              .success(function(data) {
+                $scope.lists.splice(0, 0, data);
+                $scope.lists[0].ngTags = [];
+                $scope.lists[0].editMode = false;
+                $scope.formData = {}; // clear the form so our user is ready to enter another
+                $scope.addListForm.$setPristine();
+                $scope.dismiss();
+                growl.success('The list created.',{title: 'Success!', ttl: 2000});
+              })
+              .error(function(data) {
+                console.log('Error: ' + data);
+                growl.error('An error has occured while creating the list.',{title: 'Error!', ttl: 2000});
+              });
         };
 
         // when submitting the add form, send the text to the node API
