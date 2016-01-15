@@ -329,7 +329,7 @@
         $scope.deleteList = function(id) {
             $http.delete('/lists/' + id)
                 .success(function(data) {
-                    growl.success('The list deleted.',{title: 'Info.', ttl: 2000});
+                    growl.info('The list deleted.',{title: 'Info.', ttl: 2000});
                     $.each($scope.lists, function (i) {
                       if ($scope.lists[i]._id === id) {
                           $scope.lists.splice(i, 1);
