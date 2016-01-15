@@ -3,8 +3,8 @@
  */
 (function () {
     'use strict';
-    var app= angular.module('quokka');  
-    app.controller('quokkaController', ['$scope', '$http', '$window', '$timeout', 'location','Upload', function($scope, $http, $window, $timeout, location, Upload) {
+    var app = angular.module('quokka');  
+    app.controller('quokkaController', ['$scope', '$http', '$window', '$timeout', 'location','Upload', 'growl', function($scope, $http, $window, $timeout, location, Upload, growl) {
         $scope.selected = 'first';
         location.get(angular.noop, angular.noop);
         $scope.lookedUpLocation = { name: '', latitude: 0, longitude: 0};
@@ -17,6 +17,39 @@
         $scope.listError = false;
         $scope.itemSuccess = false;
         $scope.itemError = false;
+
+        $scope.inlineUpload = function(list, file)
+        {
+            $scope.file = file;
+            var editList = list;
+
+           if ($scope.file){
+              Upload.upload({
+                  url: '/lists/'+ editList._id+'/upload',
+                  data: {file: $scope.file}
+              }).then(function (resp) {
+                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                for (var i = 0; i < $scope.lists.length; ++i) {
+                    if ($scope.lists[i]._id === editList._id) {
+                        $scope.lists[i].image = resp.data.image;
+                        $scope.lists[i].imageId = resp.data.imageId;
+                    }
+                }
+                editList.image = resp.data.image;
+                editList.imageId = resp.data.imageId;
+                $scope.file = null;
+              }, function (resp) {
+                  console.log('Error status: ' + resp.status);
+              }, function (evt) {
+                  var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                  console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+              });
+            }
+        }
+
+        $scope.isEmpty = function (str) {
+            return (!str || 0 === str.length);
+        }
 
         $scope.sortConfig = {
             animation: 150,
@@ -34,49 +67,6 @@
                    });
             },
         };
-
-        $scope.showListError = function(error){
-          //reset
-          $scope.listError = false;
-          $scope.doFade = false;
-          $scope.listError = true;
-          $scope.errorMessage = error;
-          $timeout(function(){
-            $scope.listError = false;
-          }, 2500);
-        };
-
-        $scope.showListSuccess = function(){
-          //reset
-          $scope.listSuccess = false;
-          $scope.doFade = false;
-          $scope.listSuccess = true;
-          $timeout(function(){
-            $scope.listSuccess = false;
-          }, 2500);
-        };
-
-        $scope.showItemError = function(error){
-          //reset
-          $scope.itemError = false;
-          $scope.doFade = false;
-          $scope.itemError = true;
-          $scope.errorMessage = error;
-          $timeout(function(){
-            $scope.listError = false;
-          }, 2500);
-        };
-
-        $scope.showItemSuccess = function(){
-          //reset
-          $scope.itemSuccess = false;
-          $scope.doFade = false;
-          $scope.itemSuccess = true;
-          $timeout(function(){
-            $scope.itemSuccess = false;
-          }, 2500);
-        };
-  
   
       // when landing on the page, get all todos and show them
         $http.get('/users/profile')
@@ -98,10 +88,10 @@
             list.description = description;
             var editList = list;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
-              $scope.showListSuccess();
+              growl.success('The list saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
               $scope.error = "An Error has occured while Saving list! " + data;
-              $scope.showListError(data);
+              growl.error('An error has occured while saving list.',{title: 'Error!', ttl: 2000});
             });
         };
 
@@ -109,12 +99,12 @@
             item.title = title;
             var editListItem = item;
             $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
-                $scope.showItemSuccess();
+                growl.success('The item saved.',{title: 'Success!', ttl: 2000});
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving list! " + data;
+                growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
                 $scope.showItemError(data);
             });
         };
@@ -123,12 +113,12 @@
             item.description = description;
             var editListItem = item;
             $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
-                $scope.showItemSuccess();
+                growl.success('The item saved.',{title: 'Success!', ttl: 2000});
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving list! " + data;
+                growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
                 $scope.showItemError(data);
             });
         };
@@ -142,6 +132,7 @@
             // remove image on server
             $http.delete('/lists/'+editList._id+'/image/'+editList.imageId)
             .success(function(data) {
+              growl.info('Image removed.',{title: 'Info!', ttl: 2000});
               editList.image = null;
               editList.imageId = null;
               for (var i = 0; i < $scope.lists.length; ++i) {
@@ -152,6 +143,7 @@
               }
             })
             .error(function(data) {
+              growl.error('An error has occured while removing image.',{title: 'Error!', ttl: 2000});
               console.log('Error: ' + data);
             });
         };
@@ -160,14 +152,14 @@
         $http.get('/lists')
             .success(function(data) {
                 $scope.lists = data;
-          var i, j;
-          for (i = 0; i < $scope.lists.length; ++i) {
-            $scope.lists[i].ngTags = [];
-            $scope.lists[i].editMode = false;
-            for (j = 0; j < $scope.lists[i].tags.length; ++j) {
-              $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
-            }
-          }
+                var i, j;
+                for (i = 0; i < $scope.lists.length; ++i) {
+                  $scope.lists[i].ngTags = [];
+                  $scope.lists[i].editMode = false;
+                  for (j = 0; j < $scope.lists[i].tags.length; ++j) {
+                    $scope.lists[i].ngTags.push({'text': $scope.lists[i].tags[j]});
+                  }
+                }
                 console.log(data);
             })
             .error(function(data) {
@@ -232,9 +224,12 @@
             $scope.editListItem.url = this.item.url;
             $scope.editListItem.locationName = this.item.locationName;
             $scope.lookedUpLocation.name = this.item.locationName;
-            $scope.results = {};    
-            $scope.lookedUpLocation.latitude = this.item.location[1];
-            $scope.lookedUpLocation.longitude = this.item.location[0];
+            $scope.results = {};
+            if (this.item.location)
+            {
+              $scope.lookedUpLocation.latitude = this.item.location[1];
+              $scope.lookedUpLocation.longitude = this.item.location[0];
+            }
             $(".inputLocation").val("");
             $(".ulLocation").empty();
             $('a[data-toggle="tab"]:first').tab('show');
@@ -291,10 +286,10 @@
                 $scope.editList = {};
                 $scope.editListForm.$setPristine();
                 $scope.dismiss();
-                $scope.showListSuccess();
+                growl.success('The list saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
-                $scope.showListError(data);
+                growl.error('An error has occured while saving the list.',{title: 'Error!', ttl: 2000});
             });
         };
 
@@ -323,10 +318,10 @@
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
-                $scope.showItemSuccess();
+                growl.success('The list item saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
                 $scope.error = "An Error has occured while Saving list! " + data;
-                $scope.showItemError();
+                growl.error('An error has occured while saving the list item.',{title: 'Error!', ttl: 2000});
             });
         };
 
@@ -334,15 +329,17 @@
         $scope.deleteList = function(id) {
             $http.delete('/lists/' + id)
                 .success(function(data) {
-                     $.each($scope.lists, function (i) {
-                        if ($scope.lists[i]._id === id) {
-                            $scope.lists.splice(i, 1);
-                            return false;
-                        }
+                    growl.success('The list deleted.',{title: 'Info.', ttl: 2000});
+                    $.each($scope.lists, function (i) {
+                      if ($scope.lists[i]._id === id) {
+                          $scope.lists.splice(i, 1);
+                          return false;
+                      }
                     });
                 })
                 .error(function(data) {
-                    console.log('Error: ' + data);
+                  growl.error('An error has occured while deleting the list.',{title: 'Error!', ttl: 2000});
+                  console.log('Error: ' + data);
                 });
         };
       
@@ -360,11 +357,11 @@
               .success(function(data) {
                   $scope.newListItem = {};
                   buf.items = data;
-                  $scope.showItemSuccess();
+                  growl.success('The list item created.',{title: 'Success!', ttl: 2000});
               })
               .error(function(data) {
                 console.log('Error:', data);
-                $scope.showItemError(data);
+                growl.error('An error has occured while creating the list item.',{title: 'Error!', ttl: 2000});
               });
         };
       
@@ -372,15 +369,17 @@
         var buf = this.list;
             $http.delete('/lists/' + this.list._id+'/items/'+id)
                 .success(function(data) {
-                     $.each(buf.items, function (i) {
-                        if (buf.items[i]._id === id) {
-                            buf.items.splice(i, 1);
-                            return false;
-                        }
-                    });
+                  growl.info('The list item deleted.',{title: 'Info.', ttl: 2000});
+                  $.each(buf.items, function (i) {
+                      if (buf.items[i]._id === id) {
+                          buf.items.splice(i, 1);
+                          return false;
+                      }
+                  });
                 })
                 .error(function(data) {
-                    return false;
+                  growl.error('An error has occured while deleting the list item.',{title: 'Error!', ttl: 2000});
+                  return false;
                 });
         };
       

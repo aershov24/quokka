@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app= angular.module('quokka');  
-    app.controller('bookmarksController', function($scope, $http) {
+    app.controller('bookmarksController', ['$scope', '$http', 'growl', function($scope, $http, growl) {
         $scope.bookmarks = {};
         // when landing on the page, get all todos and show them
         $http.get('/users/profile')
@@ -35,16 +35,18 @@
         $scope.deleteBookmark = function(id) {
             $http.delete('/bookmarks/'+id)
                 .success(function(data) {
-                      $.each($scope.bookmarks, function (i) {
-                        if ($scope.bookmarks[i]._id === id) {
-                            $scope.bookmarks.splice(i, 1);
-                            return false;
-                        }
-                    });
+                  growl.info('The bookmark deleted.',{title: 'Info.', ttl: 2000});
+                  $.each($scope.bookmarks, function (i) {
+                      if ($scope.bookmarks[i]._id === id) {
+                          $scope.bookmarks.splice(i, 1);
+                          return false;
+                      }
+                  });
                 })
                 .error(function(data) {
-                    console.log('Error: ' + data);
+                  growl.error('An error has occured while deleting bookmark.',{title: 'Error!', ttl: 2000});
+                  console.log('Error: ' + data);
                 });
         };
-    });
+    }]);
 }());

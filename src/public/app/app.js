@@ -4,7 +4,7 @@
  
 (function () {
     'use strict';
-     angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload'])
+     angular.module('quokka', ['ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload', 'angular-growl'])
    .directive('loading', ['$http', function ($http) {
     return {
       restrict: 'A',
@@ -36,10 +36,10 @@
       }
     } 
   })
-  .directive('inlineEdit', function($timeout) {
+  .directive('inlineListEdit', function($timeout) {
     return {
       scope: {
-        model: '=inlineEdit',
+        model: '=inlineListEdit',
         handleSave: '&onSave',
         handleCancel: '&onCancel'
       },
@@ -63,8 +63,45 @@
           scope.model = previousValue;
           scope.handleCancel({value: scope.model});
         };
+        scope.isEmpty = function (str) {
+            return (!str || 0 === str.length);
+        }
       },
-      templateUrl: './templates/inline-edit.html'
+      templateUrl: './templates/inline-list-edit.html'
+    };
+  })
+  .directive('inlineItemEdit', function($timeout) {
+    return {
+      scope: {
+        model: '=inlineItemEdit',
+        handleSave: '&onSave',
+        handleCancel: '&onCancel'
+      },
+      link: function(scope, elm, attr) {
+        var previousValue;
+        
+        scope.edit = function() {
+          scope.editMode = true;
+          previousValue = scope.model;
+          
+          $timeout(function() {
+            elm.find('textarea')[0].focus();
+          }, 0, false);
+        };
+        scope.save = function() {
+          scope.editMode = false;
+          scope.handleSave({value: scope.model});
+        };
+        scope.cancel = function() {
+          scope.editMode = false;
+          scope.model = previousValue;
+          scope.handleCancel({value: scope.model});
+        };
+        scope.isEmpty = function (str) {
+            return (!str || 0 === str.length);
+        }
+      },
+      templateUrl: './templates/inline-item-edit.html'
     };
   })
 })();

@@ -13,7 +13,8 @@
   </tr>
   </table>
   <span ng-mouseenter="showEdit = true" ng-mouseleave="showEdit = false">
-    <span ng-hide="editMode" ng-click="edit()">{{model}}</span>
+    <span ng-if="!isEmpty(model)" ng-hide="editMode" ng-click="edit()">{{model}}</span>
+    <span style="color: grey" ng-if="isEmpty(model)" ng-hide="editMode" ng-click="edit()"><i>Add item description...<i></span>
     <a class="listLink" ng-show="showEdit" ng-click="edit()"><span class="glyphicon glyphicon-pencil"></a>
   </span>
 </div>

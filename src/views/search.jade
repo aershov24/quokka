@@ -4,7 +4,9 @@ block js
 block body
   body(ng-controller='searchController', ng-init='init(#{JSON.stringify(searchTag)})')
     include ./navmenu.jade
+    div(growl)
     .container
+      p
       h3(style='\
       margin-top: 0px;\
       margin-bottom: 15px;') Search
@@ -20,14 +22,6 @@ block body
                 tr
                   td(width='100%')
                     tags-input(placeholder='Tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
-      .alert.alert-dismissible.alert-success(data-ng-show="bookSuccess" ng-class="{fade:doFade}")
-        button.close(type='button', data-dismiss='alert') x
-        strong Success. 
-        | Item saved.
-      .alert.alert-dismissible.alert-danger(data-ng-show="bookError" ng-class="{fade:doFade}")
-        button.close(type='button', data-dismiss='alert') x
-        strong Error. 
-        | {{errorMessage}}.
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists | limitTo: 10')
           .panel-heading

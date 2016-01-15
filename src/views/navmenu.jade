@@ -1,5 +1,5 @@
 div(ng-if='profile.facebookId')
-  nav.navbar.navbar-default
+  nav.navbar.navbar-default(style='margin-bottom: 0px;')
     .container-fluid
       .navbar-header
         button.navbar-toggle(type='button', data-toggle='collapse', data-target='#myNavbar')
@@ -43,5 +43,5 @@ div(ng-if='!profile.facebookId')
         ul.nav.navbar-nav.navbar-right
           li
             a(href='/auth/facebook')
-              span.glyphicon.glyphicon-log-in
-              |  Login
+              | Login with 
+              i.fa.fa-facebook
