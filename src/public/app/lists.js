@@ -13,6 +13,9 @@
         $scope.formData = {};
         $scope.newListItem = {};
         $scope.searchStr = "";
+        $scope.myTotal = 100;
+        $scope.myCurrent = 60;
+        $scope.showProgress = false;
 
         // when submitting the add form, send the text to the node API
         $scope.searchList = function(searchStr) {
@@ -25,6 +28,7 @@
             var editList = list;
 
            if ($scope.file){
+            $scope.showProgress = true;
               Upload.upload({
                   url: '/lists/'+ editList._id+'/upload',
                   data: {file: $scope.file}
@@ -39,10 +43,14 @@
                 editList.image = resp.data.image;
                 editList.imageId = resp.data.imageId;
                 $scope.file = null;
+                $scope.showProgress = false;
+                $scope.myCurrent = 0;
               }, function (resp) {
                   console.log('Error status: ' + resp.status);
+                  growl.error('An error has occured while saving image.',{title: 'Error!', ttl: 2000});
               }, function (evt) {
                   var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                  $scope.myCurrent = progressPercentage;
                   console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
               });
             }
