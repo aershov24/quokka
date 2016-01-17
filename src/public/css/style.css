@@ -59,7 +59,7 @@ div.show-image a.delete {
 
 .my-handle:hover, 
 .my-handle:focus {
-    color: #2A6496;
+    color: #000000;
     text-decoration: underline;
 }
 

@@ -45,7 +45,8 @@ block body
                             td &nbsp;
                             td
                               a.listLink(data-toggle='collapse', href='#collapse{{list._id}}', title='Show items')
-                                span.glyphicon.glyphicon-tasks
+                                //span.glyphicon.glyphicon-tasks
+                                i.fa.fa-list-ul
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body(style='padding-bottom: 5px;')
@@ -71,7 +72,7 @@ block body
                         tr
                           td(align='left' nowrap)
                             span.my-handle
-                              span.glyphicon.glyphicon-option-horizontal
+                              i.fa.fa-bars
                             &nbsp;
                             &nbsp;
                           td(width='100%', align='left')
