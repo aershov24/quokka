@@ -188,6 +188,7 @@ exports.updateItem = function(editListItem, cb) {
           item.url = editListItem.url;
           item.location = editListItem.location;
           item.locationName = editListItem.locationName;
+          logger.pdata("new listItem: ", item.description);
           list.save(function(err, list){
             if(!err){
               cb(null, list.items);

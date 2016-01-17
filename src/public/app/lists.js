@@ -348,7 +348,7 @@
             var buf = this.list;
             $scope.newListItem.listId = buf._id;
             $scope.newListItem.orderId = buf.items.length;
-            //$scope.newListItem.location = '[0, 0]';
+            $scope.newListItem.location = [0,0];
             $scope.newListItem.description = '';
             $scope.newListItem.url = '';
             $scope.newListItem.locationName = '';
