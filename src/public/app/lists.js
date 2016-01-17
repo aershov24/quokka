@@ -14,7 +14,7 @@
         $scope.newListItem = {};
         $scope.searchStr = "";
         $scope.myTotal = 100;
-        $scope.myCurrent = 60;
+        $scope.myCurrent = 0;
         $scope.showProgress = false;
 
         // when submitting the add form, send the text to the node API
@@ -28,7 +28,8 @@
             var editList = list;
 
            if ($scope.file){
-            $scope.showProgress = true;
+              $scope.myCurrent = 0;
+              $scope.showProgress = true;
               Upload.upload({
                   url: '/lists/'+ editList._id+'/upload',
                   data: {file: $scope.file}
@@ -97,7 +98,7 @@
             list.description = description;
             var editList = list;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
-              growl.success('The list saved.',{title: 'Success!'});
+              growl.success('The list saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
               $scope.error = "An Error has occured while Saving list! " + data;
               growl.error('An error has occured while saving list.',{title: 'Error!', ttl: 2000});
@@ -269,10 +270,12 @@
             var editList = $scope.editList;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
                 if ($scope.file){
-                 Upload.upload({
+                  $scope.myCurrent = 0;
+                  $scope.showProgress = true;
+                  Upload.upload({
                     url: '/lists/'+ editList._id+'/upload',
                     data: {file: $scope.file}
-                }).then(function (resp) {
+                  }).then(function (resp) {
                     console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
                     for (i = 0; i < $scope.lists.length; ++i) {
                         if ($scope.lists[i]._id === editList._id) {
@@ -283,10 +286,13 @@
                     editList.image = resp.data.image;
                     editList.imageId = resp.data.imageId;
                     $scope.file = null;
+                    $scope.showProgress = false;
+                    $scope.myCurrent = 0;
                 }, function (resp) {
                     console.log('Error status: ' + resp.status);
                 }, function (evt) {
                     var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    $scope.myCurrent = progressPercentage;
                     console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
                 });
                 }
