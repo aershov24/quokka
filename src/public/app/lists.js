@@ -13,14 +13,44 @@
         $scope.formData = {};
         $scope.newListItem = {};
         $scope.searchStr = "";
-        $scope.myTotal = 100;
-        $scope.myCurrent = 0;
-        $scope.showProgress = false;
+        $scope.myTotal = {};
+        $scope.myCurrent = {};
+        $scope.showProgress = {};
 
         // when submitting the add form, send the text to the node API
         $scope.searchList = function(searchStr) {
            $window.location.href = '/search/name/'+searchStr;
         };
+
+        $scope.inlineItemUpload = function(item, file)
+        {
+            $scope.file = file;
+            var editListItem = item;
+
+           if ($scope.file){
+              $scope.myTotal[item._id] = 100;
+              $scope.myCurrent[item._id] = 0;
+              $scope.showProgress[item._id] = true;
+              Upload.upload({
+                  url: '/lists/'+ editListItem.listId+'/items/'+editListItem._id+'/upload',
+                  data: {file: $scope.file}
+              }).then(function (resp) {
+                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
+                editListItem.image = resp.data.image;
+                editListItem.imageId = resp.data.imageId;
+                $scope.file = null;
+                $scope.showProgress[item._id] = false;
+                $scope.myCurrent[item._id] = 0;
+              }, function (resp) {
+                  console.log('Error status: ' + resp.status);
+                  growl.error('An error has occured while saving image.',{title: 'Error!', ttl: 2000});
+              }, function (evt) {
+                  var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                  $scope.myCurrent[item._id] = progressPercentage;
+                  console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+              });
+            }
+        }
 
         $scope.inlineUpload = function(list, file)
         {
@@ -28,8 +58,9 @@
             var editList = list;
 
            if ($scope.file){
-              $scope.myCurrent = 0;
-              $scope.showProgress = true;
+              $scope.myTotal[list._id] = 100;
+              $scope.myCurrent[list._id] = 0;
+              $scope.showProgress[list._id] = true;
               Upload.upload({
                   url: '/lists/'+ editList._id+'/upload',
                   data: {file: $scope.file}
@@ -44,14 +75,14 @@
                 editList.image = resp.data.image;
                 editList.imageId = resp.data.imageId;
                 $scope.file = null;
-                $scope.showProgress = false;
-                $scope.myCurrent = 0;
+                $scope.showProgress[String(list._id)] = false;
+                $scope.myCurrent[String(list._id)] = 0;
               }, function (resp) {
                   console.log('Error status: ' + resp.status);
                   growl.error('An error has occured while saving image.',{title: 'Error!', ttl: 2000});
               }, function (evt) {
                   var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                  $scope.myCurrent = progressPercentage;
+                  $scope.myCurrent[list._id] = progressPercentage;
                   console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
               });
             }
@@ -133,6 +164,22 @@
         };
 
         $scope.cancelEdit = function(value) {
+        };
+
+        $scope.removeItemImage = function (editListItem) {
+            if ($scope.file)
+              $scope.file = null;
+            // remove image on server
+            $http.delete('/lists/'+editListItem.listId+'/items/'+editListItem._id+'/image/'+editListItem.imageId)
+            .success(function(data) {
+              growl.info('Image removed.',{title: 'Info!', ttl: 2000});
+              editListItem.image = null;
+              editListItem.imageId = null;
+            })
+            .error(function(data) {
+              growl.error('An error has occured while removing image.',{title: 'Error!', ttl: 2000});
+              console.log('Error: ' + data);
+            });
         };
 
         $scope.removeImage = function (editList) {

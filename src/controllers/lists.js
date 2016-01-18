@@ -77,6 +77,40 @@ router.post('/:listId/upload', customMw.isAuthentificated, upload.single('file')
     }
 });
 
+router.post('/:listId/items/:itemId/upload', customMw.isAuthentificated, upload.single('file'), function(req, res) {
+    logger.pdata('load item file', req.file);
+    console.dir(req.file);
+     if(req.file) {
+        cloudinary.config({ 
+          cloud_name: cfg.cloudinary.cloud_name, 
+          api_key: cfg.cloudinary.api_key, 
+          api_secret: cfg.cloudinary.api_secret
+        });
+
+        cloudinary.uploader.upload(req.file.path, function(result) {
+           if (result.url) {
+              logger.pdata('file uploaded', result.url);
+              logger.pdata('image id', result.public_id);
+                var editListItem = {
+                    _id:       req.params.itemId,
+                    listId:   req.params.listId,
+                    imageId:  result.public_id,
+                    image:    result.url
+                }
+          
+                List.updateItemImage(editListItem, function (err, item) {
+                    res.send(item);
+                });
+            } 
+            else {
+              res.send({});
+            }
+       });
+    } else {
+       res.send({});
+    }
+});
+
 router.delete('/:listId/image/:imageId', customMw.isAuthentificated, function(req, res) {
     logger.pdata('delete image', req.params.imageId);
 
@@ -95,6 +129,30 @@ router.delete('/:listId/image/:imageId', customMw.isAuthentificated, function(re
         }
 
         List.updateImage(editList, function (err, item) {
+            res.send(item);
+        });
+    });
+});
+
+router.delete('/:listId/items/:itemId/image/:imageId', customMw.isAuthentificated, function(req, res) {
+    logger.pdata('delete image', req.params.imageId);
+
+    cloudinary.config({ 
+          cloud_name: cfg.cloudinary.cloud_name, 
+          api_key: cfg.cloudinary.api_key, 
+          api_secret: cfg.cloudinary.api_secret
+        });
+
+    cloudinary.uploader.destroy(req.params.imageId, function(result) { 
+        logger.pdata('image deleted', result);
+        var editListItem = {
+            _id:       req.params.itemId,
+            listId:  req.params.listId,
+            imageId:  null,
+            image:    null
+        }
+
+        List.updateItemImage(editListItem, function (err, item) {
             res.send(item);
         });
     });

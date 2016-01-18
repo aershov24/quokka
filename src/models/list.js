@@ -8,6 +8,7 @@ var listItemSchema = mongoose.Schema({
   url:          String, 
   description:  String,
   image:        String,
+  imageId:      String,
   listId:       { type: mongoose.Schema.Types.ObjectId, ref: 'List' },
   location:     { type: [Number], index: '2dsphere'},
   locationName: String,
@@ -188,6 +189,8 @@ exports.updateItem = function(editListItem, cb) {
           item.url = editListItem.url;
           item.location = editListItem.location;
           item.locationName = editListItem.locationName;
+          item.imageId = editListItem.imageId;
+          item.image = editListItem.image;
           logger.pdata("new listItem: ", item.description);
           list.save(function(err, list){
             if(!err){
@@ -203,9 +206,39 @@ exports.updateItem = function(editListItem, cb) {
       else
         cb(null, null);
     }
-  } 
-);
+  });
 }
+
+exports.updateItemImage = function(editListItem, cb) {
+  List.findOne({ _id : editListItem.listId } , function (err, list) {
+    if(err){
+      cb(err, null);
+    } 
+    else 
+    {
+      if (list){
+        var item = list.items.id(editListItem._id);
+        if (item)
+        {
+          item.imageId = editListItem.imageId;
+          item.image = editListItem.image;
+          logger.pdata('editListItem: ', editListItem);
+          list.save(function(err, list){
+            if(!err){
+              cb(null, item);
+            }
+            else
+              cb(err, null);
+            });
+        }
+        else
+          cb(null, null);
+      }
+      else
+        cb(null, null);
+    }
+  });
+};
 
 exports.updateTags = function(listId, tags, cb){
   List.findOne({ _id : listId }, 

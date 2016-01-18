@@ -112,7 +112,6 @@
             current: "="
         },
         link: function (scope, element) {
-
             scope.$watch("current", function (value) {
                 element.css("width", scope.current / scope.total * 100 + "%");
             });
