@@ -75,8 +75,8 @@
                 editList.image = resp.data.image;
                 editList.imageId = resp.data.imageId;
                 $scope.file = null;
-                $scope.showProgress[String(list._id)] = false;
-                $scope.myCurrent[String(list._id)] = 0;
+                $scope.showProgress[list._id] = false;
+                $scope.myCurrent[list._id] = 0;
               }, function (resp) {
                   console.log('Error status: ' + resp.status);
                   growl.error('An error has occured while saving image.',{title: 'Error!', ttl: 2000});

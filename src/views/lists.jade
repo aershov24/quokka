@@ -108,8 +108,8 @@ block body
                                 tr
                                   td(style='min-width:70px; vertical-align: top;')
                                     .show-image
-                                      img.img-thumbnail(ng-if='item.image', ng-src='{{item.image}}' style='width:70px; float:left')
-                                      img.img-thumbnail(ng-if='!item.image', src='http://dummyimage.com/50x50/595759/ffffff.png' style='width:70px; float:left') 
+                                      img.img-thumbnail(ng-if='item.image', ng-src='{{item.image}}' style='width:70px;')
+                                      img.img-thumbnail(ng-if='!item.image', src='http://dummyimage.com/50x50/595759/ffffff.png' style='width:70px;') 
                                       a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB") 
                                         span.glyphicon.glyphicon-pencil
                                       a.delete(href="#" ng-click='removeItemImage(item)') 
