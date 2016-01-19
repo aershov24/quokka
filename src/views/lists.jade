@@ -52,10 +52,11 @@ block body
               .panel-body(style='padding-bottom: 5px;')
                 table(style='width: 100%')
                   tr
-                    td(style='min-width:100px')
+                    td(style='min-width:70px')
                       .show-image
-                        img.img-thumbnail(ng-if='list.image', ng-src='{{list.image}}' style='width:100px')
-                        img.img-thumbnail(ng-if='!list.image', src='http://dummyimage.com/200x100/595759/ffffff.png' style='width:100px') 
+                        .image-cropper-100
+                          img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:100px')
+                          img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
                         a.update(href="#" ngf-select='inlineUpload(list, $file)' ngf-max-size="20MB") 
                           span.glyphicon.glyphicon-pencil
                         a.delete(href="#" ng-click='removeImage(list)') 
@@ -106,10 +107,11 @@ block body
                             .list-group-item-text
                               table
                                 tr
-                                  td(style='min-width:70px; vertical-align: top;')
+                                  td(style='min-width:50px; vertical-align: top;')
                                     .show-image
-                                      img.img-thumbnail(ng-if='item.image', ng-src='{{item.image}}' style='width:70px;')
-                                      img.img-thumbnail(ng-if='!item.image', src='http://dummyimage.com/50x50/595759/ffffff.png' style='width:70px;') 
+                                      .image-cropper-70
+                                        img.img-round.rounded(ng-if='item.image', ng-src='{{item.image}}' style='width:50px;')
+                                        img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;') 
                                       a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB") 
                                         span.glyphicon.glyphicon-pencil
                                       a.delete(href="#" ng-click='removeItemImage(item)') 

@@ -1,3 +1,39 @@
+  .image-cropper-100 {
+    width: 70px;
+    height: 70px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
+}
+
+ .image-cropper-70 {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
+}
+.img-round {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+
  textarea {
    resize: none;
    transition: 0.05s;
@@ -28,11 +64,11 @@ div.show-image a {
 }
 div.show-image a.update {
     top:-10%;
-    left:67%;
+    left:55%;
 }
 div.show-image a.delete {
     top:-10%;
-    left:90%;
+    left:85%;
 }
 
 .form-control
