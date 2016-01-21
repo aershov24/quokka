@@ -1,4 +1,4 @@
-  .image-cropper-100 {
+.image-cropper-100 img{
     width: 70px;
     height: 70px;
     position: relative;
@@ -13,7 +13,7 @@
     -moz-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
 }
 
- .image-cropper-70 {
+.image-cropper-70 img{
     width: 50px;
     height: 50px;
     position: relative;
@@ -27,6 +27,7 @@
     -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
     -moz-box-shadow: 0 0 2px rgba(0, 0, 0, .8);
 }
+
 .img-round {
     display: inline;
     margin: 0 auto;
@@ -58,12 +59,14 @@ div.show-image:hover a:hover {
     display: block;
     color: #000000;
 }
+
 div.show-image a {
     position:absolute;
     display:none;
 }
 
 div.show-image a.fancybox {
+  position:relative;
   display: block;
 }
 

@@ -56,8 +56,8 @@ block body
                     td(style='min-width:70px')
                       .show-image
                         .image-cropper-100
-                          a(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
-                            img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:100px')
+                          a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
+                            img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:70px')
                           img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
                         a.update(href="#" ngf-select='inlineUpload(list, $file)' ngf-max-size="20MB") 
                           span.glyphicon.glyphicon-pencil
