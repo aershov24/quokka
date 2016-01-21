@@ -1,6 +1,11 @@
 extends ./layout.jade
 block js
   script(src='/app/bookmarks.js')
+  script(src='/libs/fancybox.js')
+  script.
+    $(document).ready(function(){
+        $("body").tooltip({ selector: '[rel=tooltip]' });
+    });
 block body
   body(ng-controller='bookmarksController')
     include ./navmenu.jade
@@ -18,25 +23,30 @@ block body
                 table(style='width: 100%')
                   tr
                     td(align='left')
+                      .col-md-12(style="padding-right: 0px;")
+                        .image-cropper-30
+                          a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
+                            img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:30px')
+                          img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
+                    td(align='left' style='width: 100%')
                       .col-md-12
-                        strong
-                          a(data-toggle='collapse', href='#collapse{{bookmark.listId._id}}') {{ bookmark.listId.title }}
+                        a.listTitle(data-toggle='collapse', href='#collapse{{bookmark.listId._id}}') {{ bookmark.listId.title }}
                     td(align='right')
                       .col-md-12
                         table
                           tr
                             td
-                              a(href='/users/profile/{{bookmark.listId.userId._id}}' data-toggle='tooltip' title='{{bookmark.listId.userId.name}}')
+                              a(href='/users/profile/{{bookmark.listId.userId._id}}' rel='tooltip' title='{{bookmark.listId.userId.name}}')
                                 img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{bookmark.listId.userId.facebookId}}/picture?type=square')
                             td &nbsp;
                             td &nbsp;
                             td(style='white-space:nowrap')
-                              a.listLink(href='/lists/preview/{{bookmark.listId._id}}' target='_blank' data-toggle='tooltip' title='Share list') 
+                              a.listLink(href='/lists/preview/{{bookmark.listId._id}}' target='_blank' rel='tooltip' title='Share') 
                                 span.glyphicon.glyphicon-share-alt
                             td &nbsp;
                             td &nbsp;
                             td(style='white-space:nowrap')
-                              a.listLink(data-ng-click='deleteBookmark(bookmark._id)' href='javascript:;' data-toggle='tooltip' title='Delete')
+                              a.listLink(data-ng-click='deleteBookmark(bookmark._id)' href='javascript:;' rel='tooltip' title='Delete')
                                 span.glyphicon.glyphicon-remove
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
@@ -45,9 +55,13 @@ block body
                   div(ng-if='bookmark.listId.description != null')
                     table
                       tr
-                        td
-                          img.img-thumbnail(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:70px') 
-                        td(style='padding-left: 10px;')
+                        td(style='min-width:70px')
+                          .show-image
+                            .image-cropper-100
+                              a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
+                                img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:70px')
+                              img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
+                        td(style='padding-left: 10px; width: 100%')
                           p
                             {{bookmark.listId.description}}
                   p
@@ -58,8 +72,29 @@ block body
                             tr
                               td(width='100%', align='left')
                                 | {{item.title}}
-                        p.list-group-item-text
-                          | {{item.description}}
+                              td &nbsp;
+                              td &nbsp;
+                              td
+                                div(ng-if='item.locationName')
+                                    a.listLink(href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank' rel='tooltip' title='Open location')
+                                      span.glyphicon.glyphicon-map-marker
+                              td(ng-if='item.locationName') &nbsp;
+                              td(ng-if='item.locationName') &nbsp;
+                              td
+                                div(ng-if='item.url')
+                                  a.listLink(href='{{item.url}}', target='_blank' rel='tooltip' title='Open url') 
+                                    span.glyphicon.glyphicon-link
+                        list-group-item-text
+                          table
+                            tr
+                              td(style='min-width:50px; vertical-align: top;')
+                                .show-image
+                                  .image-cropper-70
+                                    a.fancybox(ng-if='item.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
+                                      img.img-round.rounded(ng-if='item.image', ng-src='{{item.image}}' style='width:50px;')
+                                    img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;') 
+                              td(style='vertical-align: top;')
+                                {{item.description}}
             .panel-footer
               table(width='100%')
                 tr
