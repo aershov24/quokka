@@ -3,11 +3,8 @@ extends ./layout.jade
 block js
   script(src='/libs/fileUpload.js')
   script(src='/libs/cloudinary.js')
+  script(src='/libs/fancybox.js')
   script(src='/app/lists.js')
-  script(type='text/javascript').
-    $(document).ready(function() {
-      $(".fancybox").fancybox();
-    });
 block body
   body(ng-controller='quokkaController')
     include ./navmenu.jade
