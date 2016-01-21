@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app= angular.module('quokka');  
-    app.controller('bookmarksController', ['$scope', '$http', 'growl', function($scope, $http, growl) {
+    app.controller('bookmarksController', ['$scope', '$http', '$window', 'growl', function($scope, $http, $window, growl) {
         $scope.bookmarks = {};
         // when landing on the page, get all todos and show them
         $http.get('/users/profile')

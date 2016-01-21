@@ -30,36 +30,35 @@ block body
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists | limitTo: 10')
           .panel-heading
-            h4.panel-title
-              .row
-                table(style='width: 100%')
-                  tr
-                    td(align='left')
-                      .col-md-12(style="padding-right: 0px;")
-                        .image-cropper-30
-                          a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
-                            img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:30px')
-                          img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
-                    td(align='left' style='width: 100%')
-                      .col-md-12
-                        a.listTitle(data-toggle='collapse', href='#collapse{{list._id}}') {{ list.title }}
-                    td(align='right')
-                      .col-md-12
-                        table
-                          tr
-                            td
-                              a(href='/users/profile/{{list.userId._id}}')
-                                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square', rel='tooltip', title='{{list.userId.name}}')
-                            td &nbsp;
-                            td &nbsp;
-                            td(style='white-space:nowrap')
-                              a.listLink(data-ng-click='addBookmark(list)', href='javascript:;' rel='tooltip', title='Add Bookmark')
-                                span.glyphicon.glyphicon-bookmark
-                            td &nbsp;
-                            td &nbsp;
-                            td(style='white-space:nowrap')
-                              a.listLink(href='/lists/preview/{{list._id}}',target='_blank' rel='tooltip' title='Share') 
-                                span.glyphicon.glyphicon-share-alt
+            .row
+              table(style='width: 100%')
+                tr
+                  td(align='left')
+                    .col-md-12(style="padding-right: 0px;")
+                      .image-cropper-30
+                        a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
+                          img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:30px')
+                        img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
+                  td(align='left' style='width: 100%')
+                    .col-md-12
+                      a.listTitle(data-toggle='collapse', href='#collapse{{list._id}}') {{ list.title }}
+                  td(align='right')
+                    .col-md-12
+                      table
+                        tr
+                          td
+                            a(href='/users/profile/{{list.userId._id}}')
+                              img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?type=square', rel='tooltip', title='{{list.userId.name}}')
+                          td &nbsp;
+                          td &nbsp;
+                          td(style='white-space:nowrap')
+                            a.listLink(data-ng-click='addBookmark(list)', href='javascript:;' rel='tooltip', title='Add Bookmark')
+                              span.glyphicon.glyphicon-bookmark
+                          td &nbsp;
+                          td &nbsp;
+                          td(style='white-space:nowrap')
+                            a.listLink(href='/lists/preview/{{list._id}}',target='_blank' rel='tooltip' title='Share') 
+                              span.glyphicon.glyphicon-share-alt
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body

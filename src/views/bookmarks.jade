@@ -18,36 +18,35 @@ block body
       .panel-group
         .panel.panel-default(data-ng-repeat='bookmark in bookmarks')
           .panel-heading
-            h4.panel-title
-              .row
-                table(style='width: 100%')
-                  tr
-                    td(align='left')
-                      .col-md-12(style="padding-right: 0px;")
-                        .image-cropper-30
-                          a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
-                            img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:30px')
-                          img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
-                    td(align='left' style='width: 100%')
-                      .col-md-12
-                        a.listTitle(data-toggle='collapse', href='#collapse{{bookmark.listId._id}}') {{ bookmark.listId.title }}
-                    td(align='right')
-                      .col-md-12
-                        table
-                          tr
-                            td
-                              a(href='/users/profile/{{bookmark.listId.userId._id}}' rel='tooltip' title='{{bookmark.listId.userId.name}}')
-                                img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{bookmark.listId.userId.facebookId}}/picture?type=square')
-                            td &nbsp;
-                            td &nbsp;
-                            td(style='white-space:nowrap')
-                              a.listLink(href='/lists/preview/{{bookmark.listId._id}}' target='_blank' rel='tooltip' title='Share') 
-                                span.glyphicon.glyphicon-share-alt
-                            td &nbsp;
-                            td &nbsp;
-                            td(style='white-space:nowrap')
-                              a.listLink(data-ng-click='deleteBookmark(bookmark._id)' href='javascript:;' rel='tooltip' title='Delete')
-                                span.glyphicon.glyphicon-remove
+            .row
+              table(style='width: 100%')
+                tr
+                  td(align='left')
+                    .col-md-12(style="padding-right: 0px;")
+                      .image-cropper-30
+                        a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
+                          img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:30px')
+                        img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
+                  td(align='left' style='width: 100%')
+                    .col-md-12
+                      a.listTitle(data-toggle='collapse', href='#collapse{{bookmark.listId._id}}') {{ bookmark.listId.title }}
+                  td(align='right')
+                    .col-md-12
+                      table
+                        tr
+                          td
+                            a(href='/users/profile/{{bookmark.listId.userId._id}}' rel='tooltip' title='{{bookmark.listId.userId.name}}')
+                              img.img-circle(width='25px', ng-src='http://graph.facebook.com/{{bookmark.listId.userId.facebookId}}/picture?type=square')
+                          td &nbsp;
+                          td &nbsp;
+                          td(style='white-space:nowrap')
+                            a.listLink(href='/lists/preview/{{bookmark.listId._id}}' target='_blank' rel='tooltip' title='Share') 
+                              span.glyphicon.glyphicon-share-alt
+                          td &nbsp;
+                          td &nbsp;
+                          td(style='white-space:nowrap')
+                            a.listLink(data-ng-click='deleteBookmark(bookmark._id)' href='javascript:;' rel='tooltip' title='Delete')
+                              span.glyphicon.glyphicon-remove
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
               .panel-body
