@@ -37,6 +37,14 @@
           }
         }
 
+        $scope.getThumbnails = function(imageUrl, width) {
+          var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
+          version = version.substring(0, version.indexOf("/"));
+          console.log(version);
+          imageUrl = imageUrl.replace(version, "w_"+width);
+          return imageUrl;
+        };
+
         // when submitting the add form, send the text to the node API
         $scope.searchList = function(searchStr) {
           $scope.formData.str = searchStr;

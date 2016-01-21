@@ -25,7 +25,7 @@ block body
                     .col-md-12(style="padding-right: 0px;")
                       .image-cropper-30
                         a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
-                          img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:30px')
+                          img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{getThumbnails(bookmark.listId.image, 50)}}' style='width:30px')
                         img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
                   td(align='left' style='width: 100%')
                     .col-md-12
@@ -58,7 +58,7 @@ block body
                           .show-image
                             .image-cropper-100
                               a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
-                                img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{bookmark.listId.image}}' style='width:70px')
+                                img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{getThumbnails(bookmark.listId.image, 100)}}' style='width:70px')
                               img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
                         td(style='padding-left: 10px; width: 100%')
                           p
@@ -90,7 +90,7 @@ block body
                                 .show-image
                                   .image-cropper-70
                                     a.fancybox(ng-if='item.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
-                                      img.img-round.rounded(ng-if='item.image', ng-src='{{item.image}}' style='width:50px;')
+                                      img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px;')
                                     img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;') 
                               td(style='vertical-align: top;')
                                 {{item.description}}
