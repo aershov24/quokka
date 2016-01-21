@@ -4,6 +4,10 @@ block js
   script(src='/libs/fileUpload.js')
   script(src='/libs/cloudinary.js')
   script(src='/app/lists.js')
+  script(type='text/javascript').
+    $(document).ready(function() {
+      $(".fancybox").fancybox();
+    });
 block body
   body(ng-controller='quokkaController')
     include ./navmenu.jade
@@ -55,7 +59,8 @@ block body
                     td(style='min-width:70px')
                       .show-image
                         .image-cropper-100
-                          img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:100px')
+                          a(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
+                            img.img-round.rounded(ng-if='list.image', ng-src='{{list.image}}' style='width:100px')
                           img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
                         a.update(href="#" ngf-select='inlineUpload(list, $file)' ngf-max-size="20MB") 
                           span.glyphicon.glyphicon-pencil
@@ -110,7 +115,8 @@ block body
                                   td(style='min-width:50px; vertical-align: top;')
                                     .show-image
                                       .image-cropper-70
-                                        img.img-round.rounded(ng-if='item.image', ng-src='{{item.image}}' style='width:50px;')
+                                        a.fancybox(ng-if='item.image' class="fancybox" rel="{{list._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
+                                          img.img-round.rounded(ng-if='item.image', ng-src='{{item.image}}' style='width:50px;')
                                         img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;') 
                                       a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB") 
                                         span.glyphicon.glyphicon-pencil
