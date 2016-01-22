@@ -12,49 +12,84 @@ block js
   script(src='/libs/fb.js')
   script(src='/app/preview.js')
   link(rel='stylesheet', href='/css/preview.css')
+  script.
+    $(function() {
+      $("h2")
+          .wrapInner("<span>")
+
+      $("h2 br")
+          .before("<span class='spacer'>")
+          .after("<span class='spacer'>");
+    });
 
 block body
-  body(ng-controller='previewController')
+  body(ng-controller='previewController', ng-init='init(#{JSON.stringify(list)})')
     #fb-root
     include ./navmenu.jade
-    .container(class='preview')
+    .container(style='max-width:730px;')
       .row
-        .col-md-12.col-xs-12
-          table(style='width:100%')
-            tr
-              td(style='vertical-align: bottom;')
-                img.img-thumbnail(src='#{list.image}' style='width:70px') 
-                h1 
-                  b #{list.title}
-                p
-                  | #{list.description}
-                div
-                    ul
-                      each item in list.items
-                        li
-                          table
-                            tr
-                              td
-                                h3
-                                  b #{item.title}
-                              td &nbsp;
-                              td
-                                if (item.locationName)
-                                  h4 
-                                    a.listLink(href='http://maps.google.com/maps?q=loc:#{item.location[1]},#{item.location[0]}&z=15', target='_blank')
-                                      span.glyphicon.glyphicon-map-marker
-                              td &nbsp;
-                              td
-                                if (item.url)
-                                  h4
-                                    a.listLink(href='#{item.url}', target='_blank') 
-                                      span.glyphicon.glyphicon-link
-                          p #{item.description}
-              td(style='width:30%; vertical-align: text-top; text-align: center;')
-                img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
-                br
-                .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
-        // /col
-      // /row
-    // /container
+        .image
+          img(ng-src='{{getPreviewImage(list.image)}}', alt='', width="500px")
+          h2
+            | {{list.title}}
+          p
+            span {{list.description}}
+      .row
+        .previewList
+          ol
+            li(data-ng-repeat="item in list.items | orderBy: 'orderId'")
+              .text
+                em {{item.title}}
+                table
+                  tr
+                    td(style="padding-right: 10px; vertical-align: top;")
+                      .image-cropper-70
+                        a.fancybox(ng-if='item.image' class="fancybox" rel="{{list._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
+                          img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px; align:left;')
+                        img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;align:left;') 
+                    td(width='100%')
+                      | {{item.description}}
+
+    //-   //.row
+    //-     .col-md-12.col-xs-12
+    //-       table(style='width:100%')
+    //-         tr
+    //-           td(style='vertical-align: bottom;')
+    //-             img.img-thumbnail(src='#{list.image}' style='width:70px') 
+    //-             h1 
+    //-               b #{list.title}
+    //-             p
+    //-               | #{list.description}
+    //-             div.previewList
+    //-                 ol
+    //-                   each item in list.items
+    //-                     li
+    //-                       span 1.
+    //-                       //p 
+    //-                         table
+    //-                           tr
+    //-                             td
+    //-                               h3
+    //-                                 b #{item.title}
+    //-                             td &nbsp;
+    //-                             td
+    //-                               if (item.locationName)
+    //-                                 h4 
+    //-                                   a.listLink(href='http://maps.google.com/maps?q=loc:#{item.location[1]},#{item.location[0]}&z=15', target='_blank')
+    //-                                     span.glyphicon.glyphicon-map-marker
+    //-                             td &nbsp;
+    //-                             td
+    //-                               if (item.url)
+    //-                                 h4
+    //-                                   a.listLink(href='#{item.url}', target='_blank') 
+    //-                                     span.glyphicon.glyphicon-link
+    //-                       p 
+    //-                         | #{item.description}
+    //-           td(style='width:30%; vertical-align: text-top; text-align: center;')
+    //-             img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
+    //-             br
+    //-             .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
+    //-     // /col
+    //-   // /row
+    //- // /container
     include ./footer.jade
