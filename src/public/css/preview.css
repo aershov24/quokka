@@ -60,7 +60,7 @@
 .previewList {
     margin: 10px;
 }
-.previewList ol { font-style:italic; font-family:Georgia, Times, serif; font-size:30px;   }
+.previewList ol { font-style:italic; font-family:Georgia, Times, serif; font-size:32px;   }
 .previewList ol li { }
 .previewList ol li .text { 
     padding:8px; 
@@ -73,4 +73,4 @@
     margin-bottom: 0px; 
     text-align: justify;
   }
-.previewList ol li .text em { font-size:17px;  font-weight:bold; display:block; }
+.previewList ol li .text em { font-size:20px;  font-weight:bold; display:block; }
