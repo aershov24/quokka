@@ -381,7 +381,11 @@ exports.findByUser = function(userId, cb){
 
 exports.searchByName = function(str, cb){
   var re = new RegExp(str, 'i');
-  List.find({ $or:[ {'title': { $regex: re }}, {'description': { $regex: re }} ]})
+  List.find()
+    .and([
+      { $or:[{'title': { $regex: re }}, {'description': { $regex: re }} ]},
+      {'published': true}
+    ])
     .populate('userId')
     .exec(function(err, lists) {
     if(!err) 
@@ -396,8 +400,11 @@ exports.random = function(cb){
 };
 
 exports.searchByTags = function(tags, cb){
-  logger.pdata('search tags', tags);
-  List.find({ tags: { "$all" : tags} })
+  List.find()
+    .and([
+      { tags: { "$all" : tags} },
+      {'published': true}
+    ])
     .populate('userId') 
     .exec(function(err, lists) {
     if(!err) 
