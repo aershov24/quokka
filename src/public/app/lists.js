@@ -16,6 +16,21 @@
         $scope.myTotal = {};
         $scope.myCurrent = {};
         $scope.showProgress = {};
+        $scope.pub = false;
+
+        $scope.listPublishUpdate = function(list)
+        {
+          var editList = list;
+          $http.post('/lists/' + editList._id, editList).success(function (data) {
+              $scope.editList = {};
+              $scope.editListForm.$setPristine();
+              $scope.dismiss();
+              growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+          }).error(function (data) {
+              $scope.error = "An Error has occured while Saving list! " + data;
+              growl.error('An error has occured while saving the list.',{title: 'Error!', ttl: 2000});
+          });
+        }
 
         $scope.getThumbnails = function(imageUrl, width) {
           var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
@@ -319,6 +334,7 @@
                 if ($scope.lists[i]._id === $scope.editList._id) {
                     $scope.lists[i].title = $scope.editList.title;
                     $scope.lists[i].description = $scope.editList.description;
+                    $scope.lists[i].published = $scope.editList.published;
                 }
             }
 

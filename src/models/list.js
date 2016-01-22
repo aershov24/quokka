@@ -24,7 +24,8 @@ var listSchema = mongoose.Schema({
   created:      { type: Date },
   updated:      { type: Date },
   image:        String,
-  imageId:      String
+  imageId:      String,
+  published:    Boolean
 });
 
 listSchema.plugin(random);
@@ -46,7 +47,8 @@ exports.create = function(list, cb) {
     description: list.description,
     items: list.items,
     tags : list.tags,
-    userId : list.userId
+    userId : list.userId,
+    published: list.published
   });
   
   newList.save(function(err, list){
@@ -65,6 +67,7 @@ exports.update = function(editList, cb) {
     } else {
       list.title = editList.title;
       list.description = editList.description;
+      list.published = editList.published;
       list.save(function (err, list) {
         if(!err){
           cb(null, list)

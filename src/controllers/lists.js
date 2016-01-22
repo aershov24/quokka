@@ -177,7 +177,8 @@ router.post('/:listId', customMw.isAuthentificated, function(req, res) {
             var editList = {
                 id:     req.params.listId,
                 title:  req.body.title,
-                description: req.body.description
+                description: req.body.description,
+                published: req.body.published
             }
             
             List.update(editList, function (err, items) {
@@ -264,7 +265,8 @@ router.post('/', customMw.isAuthentificated, function(req, res) {
         description:  req.body.description,
         items:        [],
         tags:         [],
-        userId:       req.session.user._id
+        userId:       req.session.user._id,
+        published:    false
     }
     
     List.create(newList, function(err, list){

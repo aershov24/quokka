@@ -41,7 +41,12 @@ block body
                     td(align='right')
                       .col-md-12
                         table
-                          tr      
+                          tr
+                            td
+                              a(href='' title="Publish", rel='tooltip', ng-click='listPublishUpdate(list)')
+                                input.js-switch(type='checkbox', ui-switch="{size: 'small'}", checked='', ng-model='list.published')    
+                            td &nbsp;
+                            td &nbsp;
                             td
                               a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);', target='_blank', title="Share", rel='tooltip')
                                 span.glyphicon.glyphicon-share-alt
