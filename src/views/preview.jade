@@ -12,6 +12,7 @@ block js
   script(src='/libs/fb.js')
   script(src='/app/preview.js')
   link(rel='stylesheet', href='/css/preview.css')
+  script(src='/libs/fancybox.js')
   script.
     $(function() {
       $("h2")
@@ -29,7 +30,8 @@ block body
     .container(style='max-width:730px;')
       .row
         .image
-          img(ng-src='{{getPreviewImage(list.image)}}', alt='', width="500px")
+          a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
+            img(ng-src='{{getPreviewImage(list.image)}}', alt='', width="500px")
           h2
             | {{list.title}}
           p

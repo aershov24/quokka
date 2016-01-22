@@ -137,19 +137,18 @@ block body
                                   td(style='vertical-align: top;')
                                     .div(inline-description-edit="item.description" on-save="updateInlineItemDescription(item, item.description)" on-cancel="cancelEdit()")
                 #list-form.row
-                p
-                  .col-sm-12(style='padding-left: 0px; padding-right: 0px;')
-                    form(name='addItem', role='form', novalidate='')
-                      table(width='100%', valign='top')
-                        tr
-                          td(width='100%')
-                            input.form-control.input-md(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
-                            small.error(ng-show='addItem.title.$error.minlength && addItem.title.$dirty')
-                              | Title is required to be at least 4 characters
-                            small.error(ng-show='addItem.title.$error.maxlength && addItem.title.$dirty')
-                              | Title cannot be longer than 50 characters
-                          td(align='right', style='vertical-align:top; padding-left: 10px;')
-                            button.btn.btn-success.btn-sm(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
+                .col-sm-12(style='padding-left: 0px; padding-right: 0px; padding-top: 7px; padding-bottom: 3px;')
+                  form(name='addItem', role='form', novalidate='')
+                    table(width='100%', valign='top')
+                      tr
+                        td(width='100%')
+                          input.form-control.input-md(name='title', type='text', placeholder='New item', ng-model='newListItem.title', ng-minlength='4', ng-maxlength='50', required='')
+                          small.error(ng-show='addItem.title.$error.minlength && addItem.title.$dirty')
+                            | Title is required to be at least 4 characters
+                          small.error(ng-show='addItem.title.$error.maxlength && addItem.title.$dirty')
+                            | Title cannot be longer than 50 characters
+                        td(align='right', style='vertical-align:top; padding-left: 10px;')
+                          button.btn.btn-success.btn-sm(ng-disabled='addItem.$invalid', type='submit', ng-click='createListItem(list)') Add Item
             .panel-footer
               table(width='100%')
                 tr

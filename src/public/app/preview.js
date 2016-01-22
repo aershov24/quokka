@@ -18,7 +18,7 @@
       var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
       version = version.substring(0, version.indexOf("/"));
       console.log(version);
-      imageUrl = imageUrl.replace(version, "w_700,c_fit");
+      imageUrl = imageUrl.replace(version, "w_700");
       return imageUrl;
     };
 
