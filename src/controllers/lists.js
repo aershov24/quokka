@@ -178,7 +178,9 @@ router.post('/:listId', customMw.isAuthentificated, function(req, res) {
                 id:     req.params.listId,
                 title:  req.body.title,
                 description: req.body.description,
-                published: req.body.published
+                published: req.body.published,
+                image: req.body.image,
+                imageId: req.body.imageId
             }
             
             List.update(editList, function (err, items) {
@@ -247,7 +249,9 @@ router.post('/:listId/items/:itemId', customMw.isAuthentificated, function(req, 
                 description: req.body.description,
                 url: req.body.url,
                 location: req.body.location,
-                locationName: req.body.locationName
+                locationName: req.body.locationName,
+                image: req.body.image,
+                imageId: req.body.imageId
             }
             
             List.updateItem(editListItem, function (err, items) {

@@ -190,10 +190,13 @@ div.show-image a.fancybox {
   position:relative;
   display: block;
 }
-
+div.show-image a.url {
+    top:-10%;
+    left:-10%;
+}
 div.show-image a.update {
     top:-10%;
-    left:55%;
+    left:40%;
 }
 div.show-image a.delete {
     top:-10%;

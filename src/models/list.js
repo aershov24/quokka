@@ -68,6 +68,8 @@ exports.update = function(editList, cb) {
       list.title = editList.title;
       list.description = editList.description;
       list.published = editList.published;
+      list.image = editList.image;
+      list.imageId = editList.imageId;
       list.save(function (err, list) {
         if(!err){
           cb(null, list)

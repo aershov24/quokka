@@ -40,8 +40,9 @@
         $scope.getThumbnails = function(imageUrl, width) {
           var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
           version = version.substring(0, version.indexOf("/"));
-          console.log(version);
-          imageUrl = imageUrl.replace(version, "w_"+width);
+          //console.log(version);
+          if (version.length != 0)
+            imageUrl = imageUrl.replace(version, "w_"+width);
           return imageUrl;
         };
 

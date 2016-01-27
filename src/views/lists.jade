@@ -8,7 +8,64 @@ block js
   script.
     $(document).ready(function(){
         $("body").tooltip({ selector: '[rel=tooltip]' });
+        //$('[name="thumbnail"]').on('change', function() {
+        //  $('img.preview').prop('src', this.value);
+        //});
     });
+  script#popoverImgItem(type='text/ng-template').
+    <div class="triangle"></div>
+    <div class="ns-popover-tooltip">
+      <input ng-model="item.image" placeholder="Post image URL here" />
+      <table>
+      <tr>
+        <td>
+          <div style="padding-top: 10px; padding-bottom: 10px; " class="image-cropper-70">
+            <img ng-if="item.image" ng-src="{{item.image}}" style="width:50px" class="img-round rounded"/>
+            <img ng-if="!item.image" src="http://dummyimage.com/70x70/5e5e5e/ffffff.png" style="width:50px" class="img-round rounded"/>
+          </div>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td style="padding-left: 20px;">
+            <a data-ng-click="savePopoverItemImage(item)" class="listLink"><span class="glyphicon glyphicon-ok"></span></a>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td>
+            <a data-ng-click="hidePopover()" class="listLink"><span class="glyphicon glyphicon-remove"></span></a>
+        </td>
+      </tr>
+      </table>
+    </div>
+  script#popoverImgList(type='text/ng-template').
+    <div class="triangle"></div>
+    <div class="ns-popover-tooltip">
+      <input ng-model="list.image" placeholder="Post image URL here" />
+      <table>
+      <tr>
+        <td>
+          <div style="padding-top: 10px; padding-bottom: 10px; " class="image-cropper-70">
+            <img ng-if="list.image" ng-src="{{list.image}}" style="width:50px" class="img-round rounded"/>
+            <img ng-if="!list.image" src="http://dummyimage.com/70x70/5e5e5e/ffffff.png" style="width:50px" class="img-round rounded"/>
+          </div>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td style="padding-left: 20px;">
+            <a data-ng-click="savePopoverListImage(list)" class="listLink"><span class="glyphicon glyphicon-ok"></span></a>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td>
+            <a data-ng-click="hidePopover()" class="listLink"><span class="glyphicon glyphicon-remove"></span></a>
+        </td>
+      </tr>
+      </table>
+    </div>
 block body
   body(ng-controller='quokkaController')
     include ./navmenu.jade
@@ -44,7 +101,7 @@ block body
                           tr
                             td
                               a(href='' title="Publish", rel='tooltip', ng-click='listPublishUpdate(list)')
-                                input.js-switch(type='checkbox', ui-switch="{size: 'small'}", checked='', ng-model='list.published')    
+                                input.js-switch(type='checkbox', ui-switch="{size: 'small'}", checked='', ng-model='list.published')
                             td &nbsp;
                             td &nbsp;
                             td
@@ -72,8 +129,11 @@ block body
                           a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
                             img.img-round.rounded(ng-if='list.image', ng-src='{{getThumbnails(list.image, 100)}}' style='width:70px')
                           img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
-                        a.update(href="#" ngf-select='inlineUpload(list, $file)' ngf-max-size="20MB" rel='tooltip' title='Choose image') 
-                          span.glyphicon.glyphicon-pencil
+                        a.url(href="#", ns-popover='', ns-popover-template='popoverImgList', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false',
+                        ns-popover-timeout='-1', rel='tooltip', title='Image Url') 
+                          span.glyphicon.glyphicon-globe
+                        a.update(href="#" ngf-select='inlineUpload(list, $file)' ngf-max-size="20MB" rel='tooltip' title='Upload image') 
+                          span.glyphicon.glyphicon-cloud-upload
                         a.delete(href="#" ng-click='removeImage(list)' rel='tooltip' title='Remove image') 
                           span.glyphicon.glyphicon-remove
                         .progress(ng-if='showProgress[list._id]')
@@ -127,9 +187,11 @@ block body
                                       .image-cropper-70
                                         a.fancybox(ng-if='item.image' class="fancybox" rel="{{list._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
                                           img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px;')
-                                        img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;') 
-                                      a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB" rel='tooltip' title='Choose image') 
-                                        span.glyphicon.glyphicon-pencil
+                                        img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;')
+                                      a.url(href="#", ns-popover='', ns-popover-template='popoverImgItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1' rel='tooltip' title='Image Url') 
+                                        span.glyphicon.glyphicon-globe
+                                      a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB" rel='tooltip' title='Upload image') 
+                                        span.glyphicon.glyphicon-cloud-upload
                                       a.delete(href="#" ng-click='removeItemImage(item)' rel='tooltip' title='Delete image') 
                                         span.glyphicon.glyphicon-remove
                                       .progress(ng-if='showProgress[item._id]')

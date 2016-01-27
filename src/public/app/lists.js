@@ -18,6 +18,32 @@
         $scope.showProgress = {};
         $scope.pub = false;
 
+        $scope.savePopoverItemImage = function(item)
+        {
+          item.imageId = null;
+          var editListItem = item;
+          $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
+              growl.success('The item saved.',{title: 'Success!', ttl: 2000});
+              $scope.editListItem = {};
+              $scope.editListItemForm.$setPristine();
+              $scope.dismiss();
+          }).error(function (data) {
+              growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
+          });
+        }
+
+        $scope.savePopoverListImage = function(list)
+        {
+          list.imageId = null;
+          var editList = list;
+          $http.post('/lists/' + editList._id, editList).success(function (data) {
+            growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+          }).error(function (data) {
+            $scope.error = "An Error has occured while Saving list! " + data;
+            growl.error('An error has occured while saving list.',{title: 'Error!', ttl: 2000});
+          });
+        }
+
         $scope.listPublishUpdate = function(list)
         {
           var editList = list;
@@ -35,8 +61,9 @@
         $scope.getThumbnails = function(imageUrl, width) {
           var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
           version = version.substring(0, version.indexOf("/"));
-          console.log(version);
-          imageUrl = imageUrl.replace(version, "w_"+width);
+          //console.log(version);
+          if (version.length != 0)
+            imageUrl = imageUrl.replace(version, "w_"+width);
           return imageUrl;
         };
 
