@@ -37,11 +37,27 @@ block body
           p
             span {{list.description}}
       .row
+        .author
+          table(style='vertical-align: middle;')
+            tr
+              td(style='min-width: 70px')
+                a(href='/users/profile/{{list.userId._id}}' title='{{list.userId.name}}')
+                  img.img-circle.img-thumbnail.img-responsive(ng-src='http://graph.facebook.com/{{list.userId.facebookId}}/picture?width=70&height=70', alt='')
+              td(nowrap)
+                p
+                  a(href='/users/profile/{{list.userId._id}}' title='{{list.userId.name}}') {{list.userId.name}}
+              td(style='width: 100%; text-align: right;')
+                .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/{{list.id}}', data-layout='button_count')
+      .row
         .previewList
           ol
             li(data-ng-repeat="item in list.items | orderBy: 'orderId'")
               .text
-                em {{item.title}}
+                em {{item.title}} &nbsp;
+                  a.listLink(ng-if='item.locationName' ng-href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank')
+                    span.glyphicon.glyphicon-map-marker
+                  a.listLink(ng-if='item.url' ng-href='{{item.url}}', target='_blank') 
+                    span.glyphicon.glyphicon-link
                 table
                   tr
                     td(style="padding-right: 10px; vertical-align: top;")
@@ -51,47 +67,4 @@ block body
                         img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;align:left;') 
                     td(width='100%')
                       | {{item.description}}
-
-    //-   //.row
-    //-     .col-md-12.col-xs-12
-    //-       table(style='width:100%')
-    //-         tr
-    //-           td(style='vertical-align: bottom;')
-    //-             img.img-thumbnail(src='#{list.image}' style='width:70px') 
-    //-             h1 
-    //-               b #{list.title}
-    //-             p
-    //-               | #{list.description}
-    //-             div.previewList
-    //-                 ol
-    //-                   each item in list.items
-    //-                     li
-    //-                       span 1.
-    //-                       //p 
-    //-                         table
-    //-                           tr
-    //-                             td
-    //-                               h3
-    //-                                 b #{item.title}
-    //-                             td &nbsp;
-    //-                             td
-    //-                               if (item.locationName)
-    //-                                 h4 
-    //-                                   a.listLink(href='http://maps.google.com/maps?q=loc:#{item.location[1]},#{item.location[0]}&z=15', target='_blank')
-    //-                                     span.glyphicon.glyphicon-map-marker
-    //-                             td &nbsp;
-    //-                             td
-    //-                               if (item.url)
-    //-                                 h4
-    //-                                   a.listLink(href='#{item.url}', target='_blank') 
-    //-                                     span.glyphicon.glyphicon-link
-    //-                       p 
-    //-                         | #{item.description}
-    //-           td(style='width:30%; vertical-align: text-top; text-align: center;')
-    //-             img.center-block.img-circle.img-thumbnail.img-responsive(src='http://graph.facebook.com/#{list.userId.facebookId}/picture?width=120&height=120', alt='')
-    //-             br
-    //-             .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/#{list.id}', data-layout='button_count')
-    //-     // /col
-    //-   // /row
-    //- // /container
     include ./footer.jade
