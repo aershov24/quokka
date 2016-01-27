@@ -32,6 +32,19 @@
           });
         }
 
+        $scope.savePopoverItemUrl = function(item)
+        {
+          var editListItem = item;
+          $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
+              growl.success('The item saved.',{title: 'Success!', ttl: 2000});
+              $scope.editListItem = {};
+              $scope.editListItemForm.$setPristine();
+              $scope.dismiss();
+          }).error(function (data) {
+              growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
+          });
+        }
+
         $scope.savePopoverListImage = function(list)
         {
           list.imageId = null;

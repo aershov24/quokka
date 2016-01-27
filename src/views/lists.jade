@@ -8,9 +8,6 @@ block js
   script.
     $(document).ready(function(){
         $("body").tooltip({ selector: '[rel=tooltip]' });
-        //$('[name="thumbnail"]').on('change', function() {
-        //  $('img.preview').prop('src', this.value);
-        //});
     });
   script#popoverImgItem(type='text/ng-template').
     <div class="triangle"></div>
@@ -28,13 +25,13 @@ block js
           &nbsp;
         </td>
         <td style="padding-left: 20px;">
-            <a data-ng-click="savePopoverItemImage(item)" class="listLink"><span class="glyphicon glyphicon-ok"></span></a>
+            <a data-ng-click="savePopoverItemImage(item)" class="listLink" rel="tooltip" title="Save"><span class="glyphicon glyphicon-ok"></span></a>
         </td>
         <td>
           &nbsp;
         </td>
         <td>
-            <a data-ng-click="hidePopover()" class="listLink"><span class="glyphicon glyphicon-remove"></span></a>
+            <a data-ng-click="hidePopover()" class="listLink" rel="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
         </td>
       </tr>
       </table>
@@ -55,13 +52,42 @@ block js
           &nbsp;
         </td>
         <td style="padding-left: 20px;">
-            <a data-ng-click="savePopoverListImage(list)" class="listLink"><span class="glyphicon glyphicon-ok"></span></a>
+            <a data-ng-click="savePopoverListImage(list)" class="listLink" rel="tooltip" title="Save"><span class="glyphicon glyphicon-ok"></span></a>
         </td>
         <td>
           &nbsp;
         </td>
         <td>
-            <a data-ng-click="hidePopover()" class="listLink"><span class="glyphicon glyphicon-remove"></span></a>
+            <a data-ng-click="hidePopover()" class="listLink" rel="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
+        </td>
+      </tr>
+      </table>
+    </div>
+  script#popoverUrlItem(type='text/ng-template').
+    <div class="triangle"></div>
+    <div class="ns-popover-tooltip">
+      <input ng-model="item.url" placeholder="Post item URL here" />
+      <table>
+      <tr>
+        <td>
+          <a ng-if="item.url" href="{{item.url}}" target="_blank" rel="tooltip" title="Open url" class="listLink"> 
+            <span class="glyphicon glyphicon-share-alt"></span>
+          </a>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td>
+            <a data-ng-click="savePopoverItemUrl(item)" class="listLink" rel="tooltip" title="Save">
+            <span class="glyphicon glyphicon-ok"></span></a>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+        <td>
+            <a data-ng-click="hidePopover()" class="listLink" rel="tooltip" title="Cancel">
+              <span class="glyphicon glyphicon-remove"></span>
+            </a>
         </td>
       </tr>
       </table>
@@ -166,11 +192,13 @@ block body
                                   td(ng-if='item.locationName') &nbsp;
                                   td(ng-if='item.locationName') &nbsp;
                                   td
-                                    div(ng-if='item.url')
+                                    //div(ng-if='item.url')
                                       a.listLink(href='{{item.url}}', target='_blank' rel='tooltip' title='Open url') 
                                         span.glyphicon.glyphicon-link
-                                  td(ng-if='item.url') &nbsp;
-                                  td(ng-if='item.url') &nbsp;
+                                    a.listLink(href="#", ns-popover='', ns-popover-template='popoverUrlItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|right', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1', rel='tooltip', title='Item Url') 
+                                      span.glyphicon.glyphicon-link
+                                  td &nbsp;
+                                  td &nbsp;
                                   td
                                     a.listLink(data-ng-click='openEditListItem(list)', data-toggle='modal', rel='tooltip' title='Edit' data-target='#editListItemForm')
                                       span.glyphicon.glyphicon-pencil
@@ -188,7 +216,7 @@ block body
                                         a.fancybox(ng-if='item.image' class="fancybox" rel="{{list._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
                                           img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px;')
                                         img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;')
-                                      a.url(href="#", ns-popover='', ns-popover-template='popoverImgItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1' rel='tooltip' title='Image Url') 
+                                      a.url(href="#", ns-popover='', ns-popover-template='popoverImgItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1' rel='tooltip' title='Image Url') 
                                         span.glyphicon.glyphicon-globe
                                       a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB" rel='tooltip' title='Upload image') 
                                         span.glyphicon.glyphicon-cloud-upload
@@ -196,7 +224,7 @@ block body
                                         span.glyphicon.glyphicon-remove
                                       .progress(ng-if='showProgress[item._id]')
                                         .progress-bar.progress-bar-warning(role='progressbar', aria-valuenow='10', aria-valuemin='0', aria-valuemax='100', progressbar='', total='myTotal[item._id]', current='myCurrent[item._id]')
-                                  td(style='vertical-align: top; width: 100%')
+                                  td(style='vertical-align: top; width: 100%; padding-left: 10px;')
                                     .div(inline-description-edit="item.description" on-save="updateInlineItemDescription(item, item.description)" on-cancel="cancelEdit()")
                 #list-form.row
                 .col-sm-12(style='padding-left: 0px; padding-right: 0px; padding-top: 7px; padding-bottom: 3px;')
@@ -275,19 +303,6 @@ block body
                   textarea#comment.form-control(name='description', rows='2', ng-model='editList.description', placeholder='Description', ng-maxlength='500')
                   small.error(ng-show='editListForm.description.$error.maxlength')
                     | Description cannot be longer than 500 characters
-                //.form-group
-                    table(width='100%')
-                      tr
-                        td(align='left', width='100%')
-                          div(ng-if='file')
-                            img(ngf-thumbnail="file" width='100')
-                          div(ng-if='editList.image')
-                            img.img-thumbnail(ng-src='{{editList.image}}')
-                        td(align='right', style='padding-left: 10px;')
-                          button.btn.btn-success.btn-sm(ngf-select='upload($file)' ngf-max-size="20MB") Select image
-                        td(align='right', style='padding-left: 10px;')
-                          div(ng-if='editList.image != null || file')
-                            button.btn.btn-danger.btn-sm(ng-click='removeImage(editList)') Remove
             .modal-footer
               table(width='100%')
                 tr
