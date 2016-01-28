@@ -103,47 +103,46 @@ block body
             td(valign='bottom')
               h3(style='\
               margin-top: 0px;\
-              margin-bottom: 0px;') My Tops
+              margin-bottom: 0px;') My Recommendations
             td(align='right')
-              button.btn.btn-success.btn-sm(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add List
+              button.btn.btn-success.btn-sm(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add 
+                i.fa.fa-thumbs-up
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists')
           .panel-heading
-              .row
-                table(style='width: 100%')
-                  tr
-                    td(align='left')
-                      .col-md-12(style="padding-right: 0px;")
-                        .image-cropper-30
-                          a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
-                            img.img-round.rounded(ng-if='list.image', ng-src='{{getThumbnails(list.image, 50)}}' style='width:30px')
-                          img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
-                    td(align='left' style='width: 100%')
-                      .col-md-12
-                        a.listTitle(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
-                    td(align='right')
-                      .col-md-12
-                        table
-                          tr
-                            td
-                              a(href='' title="Publish", rel='tooltip', ng-click='listPublishUpdate(list)')
-                                input.js-switch(type='checkbox', ui-switch="{size: 'small'}", checked='', ng-model='list.published')
-                            td &nbsp;
-                            td &nbsp;
-                            td
-                              a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);', target='_blank', title="Share", rel='tooltip')
-                                span.glyphicon.glyphicon-share-alt
-                            td &nbsp;
-                            td &nbsp;
-                            td
-                              a.listLink(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm', title='Edit list' rel='tooltip')
-                                span.glyphicon.glyphicon-pencil
-                            td &nbsp;
-                            td &nbsp;
-                            td
-                              a.listLink(data-toggle='collapse', href='#collapse{{list._id}}', title='Show items' rel='tooltip')
-                                //span.glyphicon.glyphicon-tasks
-                                i.fa.fa-list-ul
+              table(style='width: 100%')
+                tr
+                  td(align='left')
+                    .image-cropper-30
+                      a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
+                        img.img-round.rounded(ng-if='list.image', ng-src='{{getThumbnails(list.image, 50)}}' style='width:30px')
+                      img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:30px') 
+                  td(align='left', style='width: 100%; padding-left: 10px;')
+                    a.listTitle(data-toggle='collapse', data-ng-hide='list.editMode', href='#collapse{{list._id}}') {{ list.title }}
+                    br(ng-if='list.tags')
+                    a(data-ng-repeat="tag in list.tags", style="margin-right: 3px; margin-top: 5px; float: left;" ng-click='tagNameClicked(tag)').label.label-tag {{tag}}
+                  td(align='right')
+                    table
+                      tr
+                        td
+                          a(href='' title="Publish", rel='tooltip', ng-click='listPublishUpdate(list)')
+                            input.js-switch(type='checkbox', ui-switch="{size: 'small'}", checked='', ng-model='list.published')
+                        td &nbsp;
+                        td &nbsp;
+                        td
+                          a.listLink(href='/lists/preview/{{ list._id }}', data-ng-click='share(list);', target='_blank', title="Share", rel='tooltip')
+                            span.glyphicon.glyphicon-share-alt
+                        td &nbsp;
+                        td &nbsp;
+                        td
+                          a.listLink(data-ng-click='openEditList(list)', data-toggle='modal', data-target='#editListForm', title='Edit list' rel='tooltip')
+                            span.glyphicon.glyphicon-pencil
+                        td &nbsp;
+                        td &nbsp;
+                        td
+                          a.listLink(data-toggle='collapse', href='#collapse{{list._id}}', title='Show items' rel='tooltip')
+                            //span.glyphicon.glyphicon-tasks
+                            i.fa.fa-list-ul
           .panel-collapse.collapse(id='collapse{{list._id}}')
             .panel.panel-default
               .panel-body(style='padding-bottom: 5px; padding-top: 5px;')

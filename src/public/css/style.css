@@ -1,3 +1,12 @@
+.label-tag {
+    background-color: #80B96D;
+    border-radius: 3px;
+}
+
+.label-tag:hover{
+    background-color: #3FB618;
+    border-radius: 3px;
+}
 
 input[type="checkbox"] { 
   position: absolute;
@@ -371,8 +380,9 @@ span.tags
 
 .listTitle, .listTitle:hover {
   font-size: 17px;
+  font-weight: bold; 
   text-decoration: none; 
-  color: #000000;
+  color: #171717;
 }
 
 table a:not(.btn), .table a:not(.btn) {

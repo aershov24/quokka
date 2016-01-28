@@ -28,7 +28,7 @@
               $scope.editListItemForm.$setPristine();
               $scope.dismiss();
           }).error(function (data) {
-              growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
+              growl.error('An error has occured while saving the recomendo.',{title: 'Error!', ttl: 2000});
           });
         }
 
@@ -36,12 +36,12 @@
         {
           var editListItem = item;
           $http.post('/lists/' + editListItem.listId+'/items/'+editListItem._id, editListItem).success(function (data) {
-              growl.success('The item saved.',{title: 'Success!', ttl: 2000});
+              growl.success('The recomendo saved!',{title: 'Success!', ttl: 2000});
               $scope.editListItem = {};
               $scope.editListItemForm.$setPristine();
               $scope.dismiss();
           }).error(function (data) {
-              growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
+              growl.error('An error has occured while saving the recomendo.',{title: 'Error!', ttl: 2000});
           });
         }
 
@@ -50,10 +50,10 @@
           list.imageId = null;
           var editList = list;
           $http.post('/lists/' + editList._id, editList).success(function (data) {
-            growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+            growl.success('The recommendation saved.',{title: 'Success!', ttl: 2000});
           }).error(function (data) {
-            $scope.error = "An Error has occured while Saving list! " + data;
-            growl.error('An error has occured while saving list.',{title: 'Error!', ttl: 2000});
+            $scope.error = "An Error has occured while saving recommendation! " + data;
+            growl.error('An error has occured while saving recomendo.',{title: 'Error!', ttl: 2000});
           });
         }
 
@@ -64,10 +64,10 @@
               $scope.editList = {};
               $scope.editListForm.$setPristine();
               $scope.dismiss();
-              growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+              growl.success('The recommendation saved.',{title: 'Success!', ttl: 2000});
           }).error(function (data) {
-              $scope.error = "An Error has occured while Saving list! " + data;
-              growl.error('An error has occured while saving the list.',{title: 'Error!', ttl: 2000});
+              $scope.error = "An Error has occured while saving recommendation! " + data;
+              growl.error('An error has occured while saving the recommendation.',{title: 'Error!', ttl: 2000});
           });
         }
 
@@ -192,7 +192,7 @@
             list.description = description;
             var editList = list;
             $http.post('/lists/' + editList._id, editList).success(function (data) {
-              growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+              growl.success('The recommendaton saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
               $scope.error = "An Error has occured while Saving list! " + data;
               growl.error('An error has occured while saving list.',{title: 'Error!', ttl: 2000});
@@ -295,11 +295,11 @@
                 $scope.formData = {}; // clear the form so our user is ready to enter another
                 $scope.addListForm.$setPristine();
                 $scope.dismiss();
-                growl.success('The list created.',{title: 'Success!', ttl: 2000});
+                growl.success('The recommendation created.',{title: 'Success!', ttl: 2000});
               })
               .error(function(data) {
                 console.log('Error: ' + data);
-                growl.error('An error has occured while creating the list.',{title: 'Error!', ttl: 2000});
+                growl.error('An error has occured while creating the recommendation.',{title: 'Error!', ttl: 2000});
               });
         };
 
@@ -411,10 +411,10 @@
                 $scope.editList = {};
                 $scope.editListForm.$setPristine();
                 $scope.dismiss();
-                growl.success('The list saved.',{title: 'Success!', ttl: 2000});
+                growl.success('The recommendation saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving list! " + data;
-                growl.error('An error has occured while saving the list.',{title: 'Error!', ttl: 2000});
+                $scope.error = "An Error has occured while saving the recommendation! " + data;
+                growl.error('An error has occured while saving the recommendation.',{title: 'Error!', ttl: 2000});
             });
         };
 
@@ -443,10 +443,10 @@
                 $scope.editListItem = {};
                 $scope.editListItemForm.$setPristine();
                 $scope.dismiss();
-                growl.success('The list item saved.',{title: 'Success!', ttl: 2000});
+                growl.success('The item saved.',{title: 'Success!', ttl: 2000});
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving list! " + data;
-                growl.error('An error has occured while saving the list item.',{title: 'Error!', ttl: 2000});
+                $scope.error = "An Error has occured while saving the item! " + data;
+                growl.error('An error has occured while saving the item.',{title: 'Error!', ttl: 2000});
             });
         };
 
@@ -454,7 +454,7 @@
         $scope.deleteList = function(id) {
             $http.delete('/lists/' + id)
                 .success(function(data) {
-                    growl.info('The list deleted.',{title: 'Info.', ttl: 2000});
+                    growl.info('The recommendation deleted.',{title: 'Info.', ttl: 2000});
                     $.each($scope.lists, function (i) {
                       if ($scope.lists[i]._id === id) {
                           $scope.lists.splice(i, 1);
@@ -463,7 +463,7 @@
                     });
                 })
                 .error(function(data) {
-                  growl.error('An error has occured while deleting the list.',{title: 'Error!', ttl: 2000});
+                  growl.error('An error has occured while deleting the recommendation.',{title: 'Error!', ttl: 2000});
                   console.log('Error: ' + data);
                 });
         };
@@ -482,11 +482,11 @@
               .success(function(data) {
                   $scope.newListItem = {};
                   buf.items = data;
-                  growl.success('The list item created.',{title: 'Success!', ttl: 2000});
+                  growl.success('The item created.',{title: 'Success!', ttl: 2000});
               })
               .error(function(data) {
                 console.log('Error:', data);
-                growl.error('An error has occured while creating the list item.',{title: 'Error!', ttl: 2000});
+                growl.error('An error has occured while creating the item.',{title: 'Error!', ttl: 2000});
               });
         };
       
@@ -494,7 +494,7 @@
         var buf = this.list;
             $http.delete('/lists/' + this.list._id+'/items/'+id)
                 .success(function(data) {
-                  growl.info('The list item deleted.',{title: 'Info.', ttl: 2000});
+                  growl.info('The item deleted.',{title: 'Info.', ttl: 2000});
                   $.each(buf.items, function (i) {
                       if (buf.items[i]._id === id) {
                           buf.items.splice(i, 1);
@@ -503,7 +503,7 @@
                   });
                 })
                 .error(function(data) {
-                  growl.error('An error has occured while deleting the list item.',{title: 'Error!', ttl: 2000});
+                  growl.error('An error has occured while deleting the item.',{title: 'Error!', ttl: 2000});
                   return false;
                 });
         };
@@ -518,7 +518,7 @@
             $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
 
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving tag! " + data;
+                $scope.error = "An Error has occured while saving tag! " + data;
             });
         };
 
@@ -531,13 +531,17 @@
             $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
 
             }).error(function (data) {
-                $scope.error = "An Error has occured while Saving tag! " + data;
+                $scope.error = "An Error has occured while saving tag! " + data;
             });
         };
 
                 // when submitting the add form, send the text to the node API
         $scope.tagClicked = function(tag) {
             $window.location.href = '/search/tag/'+tag.text;
+        };
+
+        $scope.tagNameClicked = function(tag) {
+            $window.location.href = '/search/tag/'+tag;
         };
     }]);
 }());
