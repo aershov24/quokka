@@ -236,7 +236,7 @@ div.show-image a.delete {
 .my-handle {
     cursor: move;
     cursor: -webkit-move;
-    color: gray;
+    color: #B7B7B7;
 }
 
 .my-handle:hover, 
