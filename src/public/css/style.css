@@ -217,6 +217,11 @@ div.show-image a.delete {
   height: 32px;
 }
 
+.newItem
+{
+  border-style: dashed;
+}
+
 #message {
     position: fixed;
     top: 0;

@@ -164,7 +164,12 @@
                 var i;
                 $http.post('/lists/'+evt.model.listId+'/sortItems', { oldIndex: evt.oldIndex, newIndex: evt.newIndex })
                    .success(function(data) {
-                       console.log(data);
+                       for (var i = 0; i < $scope.lists.length; ++i) {
+                          if ($scope.lists[i]._id === evt.model.listId)
+                          {
+                            $scope.lists[i].items = data.items;
+                          }
+                      }
                    })
                    .error(function(data) {
                        console.log('Error: ' + data);
@@ -452,20 +457,25 @@
 
        // delete a todo after checking it
         $scope.deleteList = function(id) {
-            $http.delete('/lists/' + id)
-                .success(function(data) {
-                    growl.info('The recommendation deleted.',{title: 'Info.', ttl: 2000});
-                    $.each($scope.lists, function (i) {
-                      if ($scope.lists[i]._id === id) {
-                          $scope.lists.splice(i, 1);
-                          return false;
-                      }
-                    });
-                })
-                .error(function(data) {
-                  growl.error('An error has occured while deleting the recommendation.',{title: 'Error!', ttl: 2000});
-                  console.log('Error: ' + data);
-                });
+          $http.delete('/lists/' + id)
+              .success(function(data) {
+                  growl.info('The recommendation deleted.',{title: 'Info.', ttl: 2000});
+                  $.each($scope.lists, function (i) {
+                    if ($scope.lists[i]._id === id) {
+                        $scope.lists.splice(i, 1);
+                        return false;
+                    }
+                  });
+              })
+              .error(function(data) {
+                growl.error('An error has occured while deleting the recommendation.',{title: 'Error!', ttl: 2000});
+                console.log('Error: ' + data);
+              });
+          $scope.formData = {};
+          $scope.editList = {};
+          $scope.addListForm.$setPristine();
+          $scope.editListForm.$setPristine();
+          $scope.dismiss();
         };
       
       // when submitting the add form, send the text to the node API

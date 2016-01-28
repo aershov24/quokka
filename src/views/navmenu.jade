@@ -6,7 +6,9 @@ div(ng-if='profile.facebookId')
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href='/') Recomendo
+        a.navbar-brand(href='/') 
+          span(style='font-weight: bold;') Recomen
+          | Do
       #myNavbar.collapse.navbar-collapse
         ul.nav.navbar-nav
           li
@@ -40,7 +42,9 @@ div(ng-if='!profile.facebookId')
           span.icon-bar
           span.icon-bar
           span.icon-bar
-        a.navbar-brand(href='#') Recomendo
+        a.navbar-brand(href='#')
+          span(style='font-weight: bold;') Recomen
+          | Do
       #myNavbar.collapse.navbar-collapse
         ul.nav.navbar-nav.navbar-right
           li
