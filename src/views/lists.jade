@@ -12,11 +12,11 @@ block js
   script#popoverImgItem(type='text/ng-template').
     <div class="triangle"></div>
     <div class="ns-popover-tooltip">
-      <input ng-model="item.image" placeholder="Post image URL here" />
-      <table>
+      <input type="text" ng-model="item.image" placeholder="Post image URL here"/>
+      <table width="100%">
       <tr>
-        <td>
-          <div style="padding-top: 10px; padding-bottom: 10px; " class="image-cropper-70">
+        <td width="100%">
+          <div style="padding-top: 10px; padding-bottom: 10px;" class="image-cropper-70">
             <img ng-if="item.image" ng-src="{{item.image}}" style="width:50px" class="img-round rounded"/>
             <img ng-if="!item.image" src="http://dummyimage.com/70x70/5e5e5e/ffffff.png" style="width:50px" class="img-round rounded"/>
           </div>
@@ -24,13 +24,13 @@ block js
         <td>
           &nbsp;
         </td>
-        <td style="padding-left: 20px;">
+        <td style="padding-left: 20px;" align="right">
             <a data-ng-click="savePopoverItemImage(item)" class="listLink" rel="tooltip" title="Save"><span class="glyphicon glyphicon-ok"></span></a>
         </td>
         <td>
           &nbsp;
         </td>
-        <td>
+        <td align="right">
             <a data-ng-click="hidePopover()" class="listLink" rel="tooltip" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
         </td>
       </tr>
@@ -39,7 +39,7 @@ block js
   script#popoverImgList(type='text/ng-template').
     <div class="triangle"></div>
     <div class="ns-popover-tooltip">
-      <input ng-model="list.image" placeholder="Post image URL here" />
+      <input ng-model="list.image" placeholder="Post image URL here"/>
       <table>
       <tr>
         <td>
@@ -66,7 +66,7 @@ block js
   script#popoverUrlItem(type='text/ng-template').
     <div class="triangle"></div>
     <div class="ns-popover-tooltip">
-      <input ng-model="item.url" placeholder="Post item URL here" />
+      <input ng-model="item.url" placeholder="Post item URL here"/>
       <table>
       <tr>
         <td>
@@ -77,14 +77,14 @@ block js
         <td>
           &nbsp;
         </td>
-        <td>
+        <td align="right">
             <a data-ng-click="savePopoverItemUrl(item)" class="listLink" rel="tooltip" title="Save">
             <span class="glyphicon glyphicon-ok"></span></a>
         </td>
         <td>
           &nbsp;
         </td>
-        <td>
+        <td align="right">
             <a data-ng-click="hidePopover()" class="listLink" rel="tooltip" title="Cancel">
               <span class="glyphicon glyphicon-remove"></span>
             </a>

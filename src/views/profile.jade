@@ -7,17 +7,12 @@ block body
     include ./navmenu.jade
     .container
       .row
-        .col-lg-5
-          .media
-            a.pull-left(href='#')
-              img.media-object.dp.img-circle(ng-src='http://graph.facebook.com/{{user.facebookId}}/picture?width=120&height=120', style='width: 100px;height:100px;')
-            .media-body
-              h4.media-heading
-                | {{user.name}} 
-                small 
-              hr(style='margin:8px auto')
-              span.label.label-default HTML5/CSS3
-              span.label.label-default jQuery
-              span.label.label-info CakePHP
-              span.label.label-default Android
+        .media
+          a.pull-left(href='#')
+            img.media-object.img-circle(ng-src='http://graph.facebook.com/{{user.facebookId}}/picture?width=120&height=120', style='width: 100px;height:100px;')
+          .media-body
+            h4.media-heading
+              | {{user.name}} 
+              small 
+            hr(style='margin:8px auto')
     include ./footer.jade

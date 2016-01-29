@@ -121,4 +121,45 @@
         }
     };
   })
+  .directive('xngClearable', function() {
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        compile: function(tElement) {
+
+            // Add css class to input
+            tElement.addClass('xng-clearable');
+
+            // Class name for clear button
+            var clearClass = 'clear_button';
+
+            // Add clear button DOM element
+            tElement.after('<a tabindex="-1" class="' + clearClass + '">&times;</a>');
+            var btn = tElement.next();
+            btn.css('font-size', Math.round(tElement.prop('offsetHeight') * 0.8) + 'px');
+
+            return function(scope, iElement, iAttrs) {
+
+                if (iElement[0].tagName === 'INPUT') {
+                    var text = angular.element(iElement[0]);
+
+                    btn.bind('mousedown', function(e) {
+                        text.val('');
+                        text.triggerHandler('input');
+                        e.preventDefault();
+                    });
+
+                    scope.$watch(iAttrs.ngModel, function(v) {
+                        if (v && v.length > 0) {
+                            btn.css('display', 'block');
+                        } else {
+                            btn.css('display', 'none');
+                        }
+                    });
+                }
+            };
+
+        }
+    };
+  })
 })();
