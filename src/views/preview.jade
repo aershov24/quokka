@@ -49,7 +49,8 @@ block body
                 p
                   a(href='/users/profile/{{list.userId._id}}' title='{{list.userId.name}}') {{list.userId.name}}
               td(style='width: 100%; text-align: right;')
-                .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/{{list.id}}', data-layout='button_count')
+                //a(ng-href="https://www.facebook.com/sharer/sharer.php?u=https://quokka-the-lists.herokuapp.com/lists/preview/{{list._id}}" target="_blank") Share on Facebook
+                .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/{{list._id}}', data-layout='button')
       .row
         .previewList
           ol
