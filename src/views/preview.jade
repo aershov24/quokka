@@ -6,6 +6,9 @@ block opengraph
   meta(property='og:title', content='#{list.title}')
   meta(property='og:description', content='#{list.description}')
   meta(property='og:image', content='#{list.image}')
+  meta(property='og:image:width', content='500')
+  meta(property='og:image:height', content='300')
+  meta(property='fb:app_id', content='1641569646091283') 
   meta(property='og:site_name', content='RecomenDo')
   meta(property='fb:admins', content='100000807659130')
   meta(property='fb:app_id', content='1641569646091283') 
@@ -33,7 +36,7 @@ block body
       .row
         .image
           a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
-            img(ng-src='{{getPreviewImage(list.image)}}', alt='', width="500px")
+            img(ng-src='{{getPreviewImage(list.image)}}', alt='')
           h2
             | {{list.title}}
           p
@@ -49,8 +52,9 @@ block body
                 p
                   a(href='/users/profile/{{list.userId._id}}' title='{{list.userId.name}}') {{list.userId.name}}
               td(style='width: 100%; text-align: right;')
-                //a(ng-href="https://www.facebook.com/sharer/sharer.php?u=https://quokka-the-lists.herokuapp.com/lists/preview/{{list._id}}" target="_blank") Share on Facebook
                 .fb-share-button(data-href='https://quokka-the-lists.herokuapp.com/lists/preview/{{list._id}}', data-layout='button')
+                //a(ng-href="https://www.facebook.com/sharer/sharer.php?u=https://quokka-the-lists.herokuapp.com/lists/preview/{{list._id}}" target="_blank")
+                  | Share on Facebook
       .row
         .previewList
           ol
