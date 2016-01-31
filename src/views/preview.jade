@@ -1,7 +1,7 @@
 extends ./layout.jade
 
 block opengraph
-  meta(property='og:url', content='https://www.recomen-do.com/lists/preview/#{list.id}')
+  meta(property='og:url', content='http://www.recomen-do.com/lists/preview/#{list.id}')
   meta(property='og:type', content='article')
   meta(property='og:title', content='#{list.title}')
   meta(property='og:description', content='#{list.description}')
@@ -54,15 +54,15 @@ block body
               td(style='width: 100%; text-align: right;')
                 ul.share-buttons
                   li
-                    a(href='#', socialshare='', socialshare-provider='facebook', socialshare-description='{{list.title}}', socialshare-via='1641569646091283', socialshare-url='https://www.recomen-do.com/lists/preview/{{list._id}}', title='Share on Facebook', target='_blank')
+                    a(href='#', socialshare='', socialshare-provider='facebook', socialshare-description='{{list.title}}', socialshare-via='1641569646091283', socialshare-url='http://www.recomen-do.com/lists/preview/{{list._id}}', title='Share on Facebook', target='_blank')
                       img(src='/img/flat_web_icon_set/color/Facebook.png')
                       &nbsp;
                   li
-                    a(href='#', socialshare='', socialshare-provider='twitter', socialshare-text='{{list.title}}' socialshare-url='https://www.recomen-do.com/lists/preview/{{list._id}}', target='_blank', title='Tweet')
+                    a(href='#', socialshare='', socialshare-provider='twitter', socialshare-text='{{list.title}}' socialshare-url='http://www.recomen-do.com/lists/preview/{{list._id}}', target='_blank', title='Tweet')
                       img(src='/img/flat_web_icon_set/color/Twitter.png')
                       &nbsp;
                   li
-                    a(href='#', socialshare='', socialshare-provider='linkedin', socialshare-url='https://www.recomen-do.com/lists/preview/{{list._id}}', target='_blank', title='Share on LinkedIn')
+                    a(href='#', socialshare='', socialshare-provider='linkedin', socialshare-url='http://www.recomen-do.com/lists/preview/{{list._id}}', target='_blank', title='Share on LinkedIn')
                       img(src='/img/flat_web_icon_set/color/LinkedIn.png')
                       &nbsp;
       .row
