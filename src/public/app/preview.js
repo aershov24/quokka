@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app= angular.module('quokka');  
-  app.controller('previewController', function($scope, $http) {
+  app.controller('previewController', function($scope, $http, $window) {
     $scope.profile = {};
     $scope.list = {};
 
@@ -20,6 +20,10 @@
       if (version.length != 0)
         imageUrl = imageUrl.replace(version, "w_700,h_400,c_scale");
       return imageUrl;
+    };
+
+    $scope.tagNameClicked = function(tag) {
+      $window.location.href = '/search/tag/'+tag;
     };
 
     $scope.getThumbnails = function(imageUrl, width) {
@@ -39,8 +43,4 @@
         console.log('Error: ' + data);
       });
     });
-
-    $scope.tagNameClicked = function(tag) {
-      $window.location.href = '/search/tag/'+tag;
-    };
 }());
