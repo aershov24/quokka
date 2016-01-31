@@ -154,8 +154,8 @@ block body
                           a.fancybox(ng-if='list.image' class="fancybox" rel="{{list._id}}" ng-href="{{list.image}}" ng-attr-title="{{list.title}}")
                             img.img-round.rounded(ng-if='list.image', ng-src='{{getThumbnails(list.image, 100)}}' style='width:70px')
                           img.img-round.rounded(ng-if='!list.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
-                        a.url(href="#", ns-popover='', ns-popover-template='popoverImgList', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false',
-                        ns-popover-timeout='-1', rel='tooltip', title='Image Url') 
+                        //a.url(href="#", ns-popover='', ns-popover-template='popoverImgList', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false',
+                        //ns-popover-timeout='-1', rel='tooltip', title='Image Url') 
                           span.glyphicon.glyphicon-globe
                         a.update(href="#" ngf-select='inlineUpload(list, $file)' ngf-max-size="20MB" rel='tooltip' title='Upload image') 
                           span.glyphicon.glyphicon-cloud-upload
@@ -216,7 +216,7 @@ block body
                                         a.fancybox(ng-if='item.image' class="fancybox" rel="{{list._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
                                           img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px;')
                                         img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;')
-                                      a.url(href="#", ns-popover='', ns-popover-template='popoverImgItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1' rel='tooltip' title='Image Url') 
+                                      //a.url(href="#", ns-popover='', ns-popover-template='popoverImgItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1' rel='tooltip' title='Image Url') 
                                         span.glyphicon.glyphicon-globe
                                       a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB" rel='tooltip' title='Upload image') 
                                         span.glyphicon.glyphicon-cloud-upload
