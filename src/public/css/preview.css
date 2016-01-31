@@ -1,3 +1,7 @@
+ul.share-buttons li{
+  display: inline;
+}
+
 .author 
 {
   padding-left: 12px;

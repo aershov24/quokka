@@ -25,10 +25,6 @@ router.get('/random', function(req, res) {
 
 router.get('/preview/:listId', function(req, res) {
     List.getById(req.params.listId, function (err, list) {
-        var version = list.image.substring(list.image.indexOf("upload/") + 7);
-        version = version.substring(0, version.indexOf("/"));
-        if (version.length != 0)
-            list.image = list.image.replace(version, "w_500,h_300,c_scale");
         //if (list.items.length > 5)
         //    list.items =  list.items.slice(0,5);
         res.render('preview', {list: list});

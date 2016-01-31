@@ -4,7 +4,7 @@
  
 (function () {
     'use strict';
-    angular.module('quokka', ['NgSwitchery','ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload', 'angular-growl', 'autoGrow', 'nsPopover'])
+    angular.module('quokka', ['NgSwitchery','ngTagsInput', 'ng-sortable', 'locator', 'ngMap', 'ngFileUpload', 'angular-growl', 'autoGrow', 'nsPopover', '720kb.socialshare'])
    .directive('loading', ['$http', function ($http) {
     return {
       restrict: 'A',
