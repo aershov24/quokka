@@ -16,6 +16,10 @@ ul.share-buttons li{
   font-weight: bold;
   margin-bottom: 0px;
 }
+.author .tags
+{
+  margin-left: 10px;
+}
 
 .img-thumbnail {
     border: 0 none;

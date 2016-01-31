@@ -51,6 +51,8 @@ block body
               td(nowrap)
                 p
                   a(href='/users/profile/{{list.userId._id}}' title='{{list.userId.name}}') {{list.userId.name}}
+                .tags
+                  a(data-ng-repeat="tag in list.tags", style="margin-right: 3px; margin-top: 5px;" ng-click='tagNameClicked(tag)').label.label-tag {{tag}}
               td(style='width: 100%; text-align: right;')
                 ul.share-buttons
                   li
