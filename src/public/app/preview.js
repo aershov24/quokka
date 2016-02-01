@@ -14,6 +14,14 @@
         }
     }
 
+    $scope.getTagsStr = function(list) {
+      var tagsStr = '';
+      for (var i = 0; i < list.tags.length; ++i) {
+        tagsStr = tagsStr + ' #' + list.tags[i];
+      } 
+      return tagsStr;
+    };
+
     $scope.getPreviewImage = function(imageUrl) {
       var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
       version = version.substring(0, version.indexOf("/"));
