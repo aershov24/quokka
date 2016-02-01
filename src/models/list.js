@@ -396,7 +396,8 @@ exports.searchByName = function(str, cb){
 };
 
 exports.random = function(cb){
-  List.findRandom({}, {}, {limit: 3, populate:'userId'}, function(err, results) {
+  var filter = { published: 'true'};
+  List.findRandom(filter, {}, {limit: 3, populate:'userId'}, function(err, results) {
       cb(err, results)
   });
 };

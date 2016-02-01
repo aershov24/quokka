@@ -2,9 +2,17 @@
  * login.js
  */
 (function () {
-    'use strict';
-    var app= angular.module('quokka');	
-	app.controller('loginController', function($scope, $http) {
+  'use strict';
+  var app= angular.module('quokka');  
+  app.controller('loginController', function($scope, $http) {
+    $scope.getThumbnails = function(imageUrl, width) {
+          var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
+          version = version.substring(0, version.indexOf("/"));
+          //console.log(version);
+          if (version.length != 0)
+            imageUrl = imageUrl.replace(version, "w_"+width);
+          return imageUrl;
+        };
     // when landing on the page, get 3 random list
     $http.get('/lists/random')
         .success(function(data) {
@@ -22,5 +30,5 @@
         .error(function(data) {
             console.log('Error: ' + data);
         });
-	});
+    });
 }());
