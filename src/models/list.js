@@ -381,13 +381,19 @@ exports.findByUser = function(userId, cb){
   ).sort('-updated');
 };
 
-exports.searchByName = function(str, cb){
+exports.searchByName = function(str, pg, cb){
+  // will always return 10 results
+  // implement paging in the future
+  var perPage = 10;
+  var page = Math.max(0, pg);
   var re = new RegExp(str, 'i');
   List.find()
     .and([
       { $or:[{'title': { $regex: re }}, {'description': { $regex: re }} ]},
       {'published': true}
     ])
+    .limit(perPage)
+    //.skip(perPage * page)
     .populate('userId')
     .exec(function(err, lists) {
     if(!err) 
@@ -403,11 +409,15 @@ exports.random = function(cb){
 };
 
 exports.searchByTags = function(tags, cb){
+  // will always return 10 results
+  // implement paging in the future
+  var perPage = 10;
   List.find()
     .and([
       { tags: { "$all" : tags} },
       {'published': true}
     ])
+    .limit(perPage)
     .populate('userId') 
     .exec(function(err, lists) {
     if(!err) 

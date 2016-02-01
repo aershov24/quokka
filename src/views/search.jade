@@ -27,6 +27,8 @@ block body
                 tr
                   td(width='100%')
                     tags-input(placeholder='... or add tags', ng-model='searchTags', maxtags='10', on-tag-added='tagAdded($tag)', on-tag-removed='tagRemoved($tag)')
+      //a(data-ng-click='loadMore()', href='javascript:;' rel='tooltip', title='Add Bookmark') 
+        | Load more
       .panel-group
         .panel.panel-default(data-ng-repeat='list in lists | limitTo: 10')
           .panel-heading
