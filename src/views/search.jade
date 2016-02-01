@@ -79,7 +79,7 @@ block body
                             {{list.description}}
                   p
                     ul.list-group(style='margin-bottom: 0px;')
-                      li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId' | limitTo: 5")
+                      li.list-group-item(data-ng-repeat="item in list.items | orderBy: 'orderId'")
                         strong.list-group-item-heading
                           table
                             tr
