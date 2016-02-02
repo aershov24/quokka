@@ -1,13 +1,14 @@
 {
-  "name": "Quokka",
+  "name": "RecomenDo",
   "version": "1.0.0",
-  "description": "Quokka project",
+  "description": "RecomenDo. Suggest your best.",
   "main": "app.js",
   "scripts": {
     "start": "node src/app.js",
     "test": "node node_modules/mocha/bin/mocha src/test/*/*",
-    "nodemon": "nodemon -e js src/app.js",
-    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha test/*/*"
+    "nodemon": "node node_modules/nodemon/bin/nodemon -e js src/app.js",
+    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha test/*/*",
+    "apidoc": "node node_modules/apidoc/bin/apidoc -i src/ -o apidoc"
   },
   "keywords": [
     "base",
@@ -16,7 +17,7 @@
     "express",
     "structure"
   ],
-  "author": "Alex Ershov",
+  "author": "ErshovAS",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -39,7 +40,9 @@
     "winston-loggly": "^1.1.0"
   },
   "devDependencies": {
+    "apidoc": "^0.14.0",
     "mocha": "^2.2.4",
+    "nodemon": "^1.8.1",
     "should": "^6.0.1"
   }
 }
