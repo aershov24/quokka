@@ -88,9 +88,8 @@ ul.share-buttons li{
 .previewList {
     margin: 10px;
 }
-.previewList ol { font-style:italic; font-family:Georgia, Times, serif; font-size:32px;   }
-.previewList ol li { }
-.previewList ol li .text { 
+#previewListSt { font-style:italic; font-family:Georgia, Times, serif; font-size:32px;   }
+#textSt { 
     padding:8px; 
     font-style:normal; 
     font-size:15px; 
@@ -101,4 +100,4 @@ ul.share-buttons li{
     margin-bottom: 0px; 
     text-align: justify;
   }
-.previewList ol li .text em { font-size:20px;  font-weight:bold; display:block; }
+#emSt { font-size:20px;  font-weight:bold; display:block; }

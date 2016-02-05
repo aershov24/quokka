@@ -69,10 +69,10 @@ block body
                       &nbsp;
       .row
         .previewList
-          ol
+          ol(id='previewListSt')
             li(data-ng-repeat="item in list.items | orderBy: 'orderId'")
-              .text
-                em {{item.title}} &nbsp;
+              .text(id='textSt') 
+                em(id='emSt') {{item.title}} &nbsp;
                   a.listLink(ng-if='item.locationName' ng-href='http://maps.google.com/maps?q=loc:{{item.location[1]}},{{item.location[0]}}&z=15', target='_blank')
                     span.glyphicon.glyphicon-map-marker
                   a.listLink(ng-if='item.url' ng-href='{{item.url}}', target='_blank') 

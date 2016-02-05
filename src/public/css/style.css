@@ -183,13 +183,13 @@ input[type="checkbox"].green.ios-switch:checked + div > div {
     width: auto;
 }
 
- textarea {
+/* textarea {
    resize: none;
    transition: 0.05s;
    -moz-transition: 0.05s;
    -webkit-transition: 0.05s;
    -o-transition: 0.05s;
-  }
+  }*/
 
 div.show-image {
     position: relative;
@@ -263,7 +263,7 @@ div.show-image a.delete {
     text-decoration: underline;
 }
 
-.top5 ul li:nth-child(-n+5) strong{
+.top5 ul li:nth-child(-n+5) .strongSt{
     color:green;
 }
 

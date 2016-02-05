@@ -18,6 +18,12 @@
         $scope.showProgress = {};
         $scope.pub = false;
 
+        $scope.getMarkdown = function(str)
+        {
+          var converter = new showdown.Converter();
+          return converter.makeHtml(str);
+        }
+
         $scope.savePopoverItemImage = function(item)
         {
           item.imageId = null;

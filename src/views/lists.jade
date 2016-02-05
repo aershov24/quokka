@@ -8,6 +8,7 @@ block js
   script.
     $(document).ready(function(){
         $("body").tooltip({ selector: '[rel=tooltip]' });
+        //$("textarea").markdown({autofocus:false, savable:false})
     });
   script#popoverImgItem(type='text/ng-template').
     <div class="triangle"></div>
@@ -179,7 +180,7 @@ block body
                             &nbsp;
                             &nbsp;
                           td(width='100%', align='left')
-                            strong.list-group-item-heading
+                            strong.list-group-item-heading.strongSt
                               table(style='width: 100%')
                                 tr
                                   td(style='width: 100%')
