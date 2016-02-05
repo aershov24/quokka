@@ -183,13 +183,13 @@ input[type="checkbox"].green.ios-switch:checked + div > div {
     width: auto;
 }
 
-/* textarea {
+ textarea {
    resize: none;
    transition: 0.05s;
    -moz-transition: 0.05s;
    -webkit-transition: 0.05s;
    -o-transition: 0.05s;
-  }*/
+  }
 
 div.show-image {
     position: relative;
@@ -479,8 +479,4 @@ input::-webkit-input-placeholder {
 
 td .tooltip {
     position:absolute
-}
-
-.tags{
-  float: left;
 }
