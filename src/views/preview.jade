@@ -85,7 +85,7 @@ block body
                           img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px; align:left;')
                         img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;align:left;') 
                     td(width='100%')
-                      | {{item.description}}
+                      .div(markdown text="item.description")
       .row
          //#disqus_thread
           script.

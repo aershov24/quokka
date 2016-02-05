@@ -70,6 +70,25 @@
       templateUrl: './templates/inline-title-edit.html'
     };
   })
+  .directive('bindHtmlUnsafe', function( $compile ) {
+    return function( $scope, $element, $attrs ) {
+
+        var compile = function( newHTML ) { // Create re-useable compile function
+            newHTML = $compile(newHTML)($scope); // Compile html
+            $element.html('').append(newHTML); // Clear and append it
+        };
+
+        var htmlName = $attrs.bindHtmlUnsafe; // Get the name of the variable 
+                                              // Where the HTML is stored
+
+        $scope.$watch(htmlName, function( newHTML ) { // Watch for changes to 
+                                                      // the HTML
+            if(!newHTML) return;
+            compile(newHTML);   // Compile it
+        });
+
+    };
+  })
   .directive('inlineDescriptionEdit', function($timeout) {
     return {
       scope: {
@@ -77,9 +96,16 @@
         handleSave: '&onSave',
         handleCancel: '&onCancel'
       },
+      controller: function($scope) {
+            // Retain the original value
+            var converter = new showdown.Converter();
+            $scope.markdown = converter.makeHtml($scope.model);
+      },
       link: function(scope, elm, attr) {
         var previousValue;
-        
+        var converter = new showdown.Converter();
+        scope.markdown = converter.makeHtml(scope.model);
+
         scope.edit = function() {
           scope.editMode = true;
           previousValue = scope.model;
@@ -90,6 +116,7 @@
         };
         scope.save = function() {
           scope.editMode = false;
+          scope.markdown = converter.makeHtml(scope.model);
           scope.handleSave({value: scope.model});
         };
         scope.cancel = function() {
@@ -118,6 +145,19 @@
             scope.$watch("total", function (value) {
                 element.css("width", scope.current / scope.total * 100 + "%");
             })
+        }
+    };
+  })
+  .directive('markdown', function () {
+    var converter = new showdown.Converter();
+    return {
+        restrict: 'A',
+        scope: {
+            text: "=",
+        },
+        link: function (scope, element, attrs) {
+            var htmlText = converter.makeHtml(scope.text);
+            element.html(htmlText);
         }
     };
   })

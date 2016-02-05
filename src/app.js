@@ -38,9 +38,9 @@ mongoose.connect(cfg.mongo.connectionString, function(err) {
 });
 
 app.use(session({
-  secret: 'foo',
+    secret: 'foo',
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  resave: false,
+    resave: false,
     saveUninitialized: true
 }));
   

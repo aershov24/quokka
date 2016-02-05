@@ -7,7 +7,7 @@
     "start": "node src/app.js",
     "test": "node node_modules/mocha/bin/mocha src/test/*/*",
     "nodemon": "node node_modules/nodemon/bin/nodemon -e js src/app.js",
-    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha test/*/*",
+    "istanbul": "istanbul cover node_modules/mocha/bin/_mocha src/test/*/*",
     "apidoc": "node node_modules/apidoc/bin/apidoc -i src/ -o apidoc"
   },
   "keywords": [

@@ -226,7 +226,6 @@ block body
                                       .progress(ng-if='showProgress[item._id]')
                                         .progress-bar.progress-bar-warning(role='progressbar', aria-valuenow='10', aria-valuemin='0', aria-valuemax='100', progressbar='', total='myTotal[item._id]', current='myCurrent[item._id]')
                                   td(style='vertical-align: top; width: 100%; padding-left: 10px;')
-
                                     .div(inline-description-edit="item.description" on-save="updateInlineItemDescription(item, item.description)" on-cancel="cancelEdit()")
                 #list-form.row
                 .col-sm-12(style='padding-left: 0px; padding-right: 0px; padding-top: 7px; padding-bottom: 3px;')

@@ -3,9 +3,9 @@ var ENV = process.env.NODE_ENV || 'DEV';
 
 var fbcall;
 if (ENV == 'production')
-	fbcall = 'http://www.recomen-do.com/auth/facebook/callback';
+  fbcall = 'http://www.recomen-do.com/auth/facebook/callback';
 else
-	fbcall = 'http://localhost:3000/auth/facebook/callback';
+  fbcall = 'http://localhost:3000/auth/facebook/callback';
 
 var log = {
     file: "./logs/all-logs.log",
@@ -19,7 +19,7 @@ var loggly = {
 };
 
 var mongo = {
-	connectionString: "mongodb://mytop5-node:ghjdthrf@ds063869.mongolab.com:63869/mytop5"
+  connectionString: "mongodb://mytop5-node:ghjdthrf@ds063869.mongolab.com:63869/mytop5"
 }
 
 var sslcert = {
@@ -30,7 +30,7 @@ var sslcert = {
 var facebook = {
     apiKey: '1641569646091283',
     apiSecret: '27cc6a4c90c35c3fba25177364e9fd2f',
-	callback: fbcall,
+    callback: fbcall,
     fields: ["id", "birthday", "email", "first_name", "gender", "last_name"]
 }
 
