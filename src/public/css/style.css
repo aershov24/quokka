@@ -480,3 +480,7 @@ input::-webkit-input-placeholder {
 td .tooltip {
     position:absolute
 }
+
+.tags{
+  float: left;
+}
