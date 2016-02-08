@@ -50,23 +50,21 @@ block body
           .panel-collapse.collapse(id='collapse{{bookmark.listId._id}}')
             .panel.panel-default
               .panel-body
-                .top5
-                  div(ng-if='bookmark.listId.description != null')
-                    table
-                      tr
-                        td(style='min-width:70px')
-                          .show-image
-                            .image-cropper-100
-                              a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
-                                img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{getThumbnails(bookmark.listId.image, 100)}}' style='width:70px')
-                              img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
-                        td(style='padding-left: 10px; width: 100%')
-                          p
-                            {{bookmark.listId.description}}
-                  p
+                div(ng-if='bookmark.listId.description != null')
+                  table
+                    tr
+                      td(style='min-width:70px')
+                        .show-image
+                          .image-cropper-100
+                            a.fancybox(ng-if='bookmark.listId.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{bookmark.listId.image}}" ng-attr-title="{{bookmark.listId.title}}")
+                              img.img-round.rounded(ng-if='bookmark.listId.image', ng-src='{{getThumbnails(bookmark.listId.image, 100)}}' style='width:70px')
+                            img.img-round.rounded(ng-if='!bookmark.listId.image', src='http://dummyimage.com/70x70/5e5e5e/ffffff.png' style='width:70px') 
+                      td(style='padding-left: 10px; width: 100%')
+                          .div(markdown text="bookmark.listId.description")
+                  .top5
                     ul.list-group(style='margin-bottom: 0px;')
                       li.list-group-item(data-ng-repeat="item in bookmark.listId.items | orderBy: 'orderId'")
-                        strong.list-group-item-heading
+                        strong.list-group-item-heading.strongSt
                           table
                             tr
                               td(width='100%', align='left')
@@ -86,14 +84,20 @@ block body
                         list-group-item-text
                           table
                             tr
+                              td(align='left', nowrap)
+                                span(style="color: #B7B7B7;")
+                                  i.fa.fa-hashtag 
+                                em(style='font-weight: bold; color: #B7B7B7;'){{item.orderId+1}}
+                                &nbsp;
+                                &nbsp;
                               td(style='min-width:50px; vertical-align: top;')
                                 .show-image
                                   .image-cropper-70
                                     a.fancybox(ng-if='item.image' class="fancybox" rel="{{bookmark.listId._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
                                       img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px;')
                                     img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;') 
-                              td(style='vertical-align: top;')
-                                {{item.description}}
+                              td(style='vertical-align: top; padding-left: 10px;')
+                                .div(markdown text="item.description")
             .panel-footer
               table(width='100%')
                 tr
