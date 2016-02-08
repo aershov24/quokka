@@ -128,7 +128,19 @@ exports.deleteItem = function(listId, itemId, cb){
     function (err, list){
       if (!err){
         if (list){
+          var oldOrderList = [];
+          var newOrderList = [];
           list.items.id(itemId).remove();
+          for (var i = 0; i < list.items.length; i++)
+            oldOrderList.push([list.items[i].id,list.items[i].orderId]);
+
+          newOrderList = oldOrderList.sort(function(a, b) {
+                return a[1] - b[1];
+            });
+
+          for (var i = 0; i < newOrderList.length; i++)
+            list.items.id(newOrderList[i][0]).orderId = i;
+
           list.save(function(err, list){
             if(!err){
               cb(null, list.items);

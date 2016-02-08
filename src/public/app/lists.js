@@ -175,7 +175,7 @@
                           {
                             $scope.lists[i].items = data.items;
                           }
-                      }
+                        }
                    })
                    .error(function(data) {
                        console.log('Error: ' + data);
@@ -249,6 +249,12 @@
               growl.info('Image removed.',{title: 'Info!', ttl: 2000});
               editListItem.image = null;
               editListItem.imageId = null;
+              for (var i = 0; i < $scope.lists.length; ++i) {
+                if ($scope.lists[i]._id === evt.model.listId)
+                {
+                  $scope.lists[i].items = data.items;
+                }
+              }
             })
             .error(function(data) {
               growl.error('An error has occured while removing image.',{title: 'Error!', ttl: 2000});
@@ -507,21 +513,22 @@
         };
       
         $scope.deleteListItem = function(id) {
-        var buf = this.list;
-            $http.delete('/lists/' + this.list._id+'/items/'+id)
-                .success(function(data) {
-                  growl.info('The item deleted.',{title: 'Info.', ttl: 2000});
-                  $.each(buf.items, function (i) {
-                      if (buf.items[i]._id === id) {
-                          buf.items.splice(i, 1);
-                          return false;
-                      }
-                  });
-                })
-                .error(function(data) {
-                  growl.error('An error has occured while deleting the item.',{title: 'Error!', ttl: 2000});
-                  return false;
-                });
+          var buf = this.list;
+          $http.delete('/lists/' + this.list._id+'/items/'+id)
+              .success(function(data) {
+                growl.info('The item deleted.',{title: 'Info.', ttl: 2000});
+                buf.items = data;
+                /*$.each(buf.items, function (i) {
+                    if (buf.items[i]._id === id) {
+                        buf.items.splice(i, 1);
+                        return false;
+                    }
+                });*/
+              })
+              .error(function(data) {
+                growl.error('An error has occured while deleting the item.',{title: 'Error!', ttl: 2000});
+                return false;
+              });
         };
       
       $scope.tagAdded = function (tag) {
