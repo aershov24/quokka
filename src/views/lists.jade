@@ -109,7 +109,12 @@ block body
               button.kc_fab_main_btn(data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') +
               //button.btn.btn-success.btn-sm(type='submit', data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Add 
                 i.fa.fa-thumbs-up
-      .panel-group
+      .div(ng-if='lists.length == 0')
+        .row(style="text-align: center;")
+          .div(style="margin-left: 10px; margin-right: 10px; ")
+            hr
+            button.btn.btn-success(data-ng-click='openAddList()', data-toggle='modal', data-target='#addListForm') Create Recommendation
+      .panel-group(ng-if='lists.length > 0')
         .panel.panel-default(data-ng-repeat='list in lists')
           .panel-heading
               table(style='width: 100%')

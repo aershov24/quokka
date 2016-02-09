@@ -33,8 +33,14 @@ router.get('/preview/:listId', function(req, res) {
 
 router.post('/search/name', customMw.isAuthentificated, function(req, res) {
     logger.pdata('Search string: ', req.body.str);
-    logger.pdata('Page: ', req.body.pg);
     List.searchByName(req.body.str, req.body.pg, function (err, lists) {
+        res.send(lists);
+    });
+});
+
+router.post('/search/user', customMw.isAuthentificated, function(req, res) {
+    logger.pdata('Search userId: ', req.body.userId);
+    List.searchByUser(req.body.userId, req.body.pg, function (err, lists) {
         res.send(lists);
     });
 });

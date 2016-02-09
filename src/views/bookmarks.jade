@@ -15,7 +15,13 @@ block body
       h3(style='\
       margin-top: 0px;\
       margin-bottom: 15px;') Bookmarks
-      .panel-group
+      .div(ng-if='bookmarks.length == 0')
+        .row(style="text-align: center;")
+          .div(style="margin-left: 10px; margin-right: 10px; ")
+            hr
+            em
+              | You haven't added any bookmarks yet
+      .panel-group(ng-if='bookmarks')
         .panel.panel-default(data-ng-repeat='bookmark in bookmarks')
           .panel-heading
             .row

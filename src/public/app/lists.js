@@ -287,6 +287,7 @@
         // when landing on the page, get all todos and show them
         $http.get('/lists')
             .success(function(data) {
+                //$scope.lists = [];
                 $scope.lists = data;
                 var i, j;
                 for (i = 0; i < $scope.lists.length; ++i) {

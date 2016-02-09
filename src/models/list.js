@@ -393,6 +393,26 @@ exports.findByUser = function(userId, cb){
   ).sort('-updated');
 };
 
+exports.searchByUser = function(userId, pg, cb){
+  // will always return 10 results
+  // implement paging in the future
+  var perPage = 10;
+  var page = Math.max(0, pg);
+  List.find()
+    .and([
+      {'userId': userId},
+      {'published': true}
+    ])
+    .sort('-updated')
+    .limit(perPage)
+    //.skip(perPage * page)
+    .populate('userId')
+    .exec(function(err, lists) {
+    if(!err) 
+      cb(null, lists); 
+  });
+};
+
 exports.searchByName = function(str, pg, cb){
   // will always return 10 results
   // implement paging in the future
