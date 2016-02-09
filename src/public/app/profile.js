@@ -4,7 +4,7 @@
 (function () {
     'use strict';
     var app= angular.module('quokka');  
-    app.controller('profileController', function($scope, $http) {
+    app.controller('profileController', function($scope, $http, $window) {
         $scope.profile = {};
         $scope.currentPage = 0;
         // when landing on the page, get all todos and show them
@@ -15,6 +15,11 @@
             .error(function(data) {
                 console.log('Error: ' + data);
             });
+
+        // when submitting the add form, send the text to the node API
+        $scope.searchList = function(searchStr) {
+           $window.location.href = '/search/name/'+searchStr;
+        };
 
         $scope.getThumbnails = function(imageUrl, width) {
           var version = imageUrl.substring(imageUrl.indexOf("upload/") + 7);
