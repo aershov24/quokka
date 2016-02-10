@@ -1,6 +1,7 @@
 var mongoose    = require('mongoose');
 var logger = require('../helpers/logger.js');
 var random = require('mongoose-simple-random');
+var version = require('mongoose-version2');
 var math = require('mathjs');
 
 var listItemSchema = mongoose.Schema({
@@ -29,6 +30,7 @@ var listSchema = mongoose.Schema({
 });
 
 listSchema.plugin(random);
+listSchema.plugin(version, {});
 
 listSchema.pre('save', function(next){
   now = new Date();

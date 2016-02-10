@@ -32,6 +32,8 @@
     "mathjs": "^2.5.0",
     "mongoose": "^4.1.10",
     "mongoose-simple-random": "^0.3.3",
+    "mongoose-version": "^0.2.4",
+    "mongoose-version2": "0.0.4",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
     "passport": "^0.3.0",

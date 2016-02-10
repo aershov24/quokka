@@ -534,38 +534,50 @@
       
       $scope.tagAdded = function (tag) {
         var i = 0;
+        var nTag = tag;
         var tags = [];
+        var list = this.list;
         for (i = 0; i < this.list.ngTags.length; ++i) {
-                this.list.ngTags[i].text = this.list.ngTags[i].text.toLowerCase();
-                tags.push(this.list.ngTags[i].text.toLowerCase());
+          this.list.ngTags[i].text = this.list.ngTags[i].text.toLowerCase();
+          tags.push(this.list.ngTags[i].text.toLowerCase());
         }
-            $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
+        $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).
+          success(function (data) {
+            list.tags.push(tag.text.toLowerCase());
+          }).error(function (data) {
+              $scope.error = "An Error has occured while saving tag! " + data;
+          });
+      };
 
-            }).error(function (data) {
-                $scope.error = "An Error has occured while saving tag! " + data;
-            });
-        };
-
-        $scope.tagRemoved = function (tag) {
+      $scope.tagRemoved = function (tag) {
         var i = 0;
+        var nTag = tag;
+        var list = this.list;
         var tags = [];
         for (i = 0; i < this.list.ngTags.length; ++i) {
-                tags.push(this.list.ngTags[i].text);
+          this.list.ngTags[i].text = this.list.ngTags[i].text.toLowerCase();
+          tags.push(this.list.ngTags[i].text.toLowerCase());
         }
-            $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).success(function (data) {
+        $http.post('/lists/'+ this.list._id+'/tags', { tags: tags }).
+          success(function (data) {
+            for (i = 0; i < list.tags.length; ++i) {
+              if (list.tags[i] === nTag.text) {
+                list.tags.splice(i, 1);
+                return false;
+              }
+            }
+          }).error(function (data) {
+            $scope.error = "An Error has occured while saving tag! " + data;
+          });
+      };
 
-            }).error(function (data) {
-                $scope.error = "An Error has occured while saving tag! " + data;
-            });
-        };
+      // when submitting the add form, send the text to the node API
+      $scope.tagClicked = function(tag) {
+          $window.location.href = '/search/tag/'+tag.text;
+      };
 
-                // when submitting the add form, send the text to the node API
-        $scope.tagClicked = function(tag) {
-            $window.location.href = '/search/tag/'+tag.text;
-        };
-
-        $scope.tagNameClicked = function(tag) {
-            $window.location.href = '/search/tag/'+tag;
-        };
+      $scope.tagNameClicked = function(tag) {
+          $window.location.href = '/search/tag/'+tag;
+      };
     }]);
 }());

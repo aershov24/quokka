@@ -199,10 +199,7 @@ block body
                                   td(ng-if='item.locationName') &nbsp;
                                   td(ng-if='item.locationName') &nbsp;
                                   td
-                                    //div(ng-if='item.url')
-                                      a.listLink(href='{{item.url}}', target='_blank' rel='tooltip' title='Open url') 
-                                        span.glyphicon.glyphicon-link
-                                    a.listLink(href="#", ns-popover='', ns-popover-template='popoverUrlItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|right', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1', rel='tooltip', title='Item Url') 
+                                    a.listLink(ng-if='item.url.length > 0', ng-href='{{item.url}}', target='_blank' rel='tooltip', title='Item Url') 
                                       span.glyphicon.glyphicon-link
                                   td &nbsp;
                                   td &nbsp;
@@ -223,8 +220,6 @@ block body
                                         a.fancybox(ng-if='item.image' class="fancybox" rel="{{list._id}}" ng-href="{{item.image}}" ng-attr-title="{{item.title}}")
                                           img.img-round.rounded(ng-if='item.image', ng-src='{{getThumbnails(item.image, 70)}}' style='width:50px;')
                                         img.img-round.rounded(ng-if='!item.image', src='http://dummyimage.com/50x50/5e5e5e/ffffff.png' style='width:50px;')
-                                      //a.url(href="#", ns-popover='', ns-popover-template='popoverImgItem', ns-popover-theme='ns-popover-tooltip-theme', ns-popover-trigger='click', ns-popover-placement='bottom|left', ns-popover-hide-on-inside-click='false', ns-popover-timeout='-1' rel='tooltip' title='Image Url') 
-                                        span.glyphicon.glyphicon-globe
                                       a.update(href="#" ngf-select='inlineItemUpload(item, $file)' ngf-max-size="20MB" rel='tooltip' title='Upload image') 
                                         span.glyphicon.glyphicon-cloud-upload
                                       a.delete(href="#" ng-click='removeItemImage(item)' rel='tooltip' title='Delete image') 
