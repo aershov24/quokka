@@ -18,6 +18,12 @@
     border-radius: 3px;
 }
 
+.date {
+  font-size:15px;
+  color: grey;
+  font-weight: normal;
+}
+
 .label-tag:hover{
     background-color: #3FB618;
     border-radius: 3px;

@@ -40,6 +40,12 @@ var cloudinary = ({
   api_secret: 'yQkx4lCLTBW0mNKnkBoPlHHrAzQ' 
 });
 
+var googleImageSearch = ({
+    SEID: '012093613817600048226:ax1o1jcfllg',
+    Key: 'AIzaSyBQL4hVbAPz35Xsim7dyeWJe_u3USGdFmg'
+  }
+);
+
 exports.ENV = ENV;
 exports.facebook = facebook;
 exports.sslcert = sslcert;
@@ -47,3 +53,4 @@ exports.log = log;
 exports.loggly = loggly;
 exports.mongo = mongo;
 exports.cloudinary = cloudinary;
+exports.googleSE = googleImageSearch;

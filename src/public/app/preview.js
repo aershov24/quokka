@@ -14,6 +14,15 @@
         }
     }
 
+    $scope.getDateFormat = function(dateStr)
+    {
+      var dt = new Date(dateStr);
+      var yyyy = dt.getFullYear().toString();
+      var mm = (dt.getMonth()+1).toString(); // getMonth() is zero-based
+      var dd  = dt.getDate().toString();
+      return yyyy +'.' +(mm[1]?mm:"0"+mm[0])+'.' + (dd[1]?dd:"0"+dd[0]); // padding
+    };
+
     $scope.getTagsStr = function(list) {
       var tagsStr = '';
       for (var i = 0; i < list.tags.length; ++i) {

@@ -5,9 +5,13 @@ var express = require('express')
   , List = require('../models/list')
   , logger = require('../helpers/logger.js')
   , customMw = require('../middlewares/middleware.js')
+  , request = require('request')
+  , fs = require('fs')
+  , googleImages = require('google-images');
+
+var googleClient = googleImages(cfg.googleSE.SEID, cfg.googleSE.Key);
 
 var multer = require('multer');
-
 var upload = multer({ dest: './uploads/' })
   
 router.get('/', customMw.isAuthentificated, function(req, res) {
@@ -209,12 +213,55 @@ router.post('/:listId/items', customMw.isAuthentificated, function(req, res) {
                 listId:       req.body.listId,
                 orderId:      req.body.orderId,
                 location:     req.body.location,
-                locationName: req.body.locationName
+                locationName: req.body.locationName,
+                image:        null,
+                imageId:      null
             }
             logger.pdata('item', newListItem);
-            List.addItem(req.params.listId, newListItem, function (err, items) {
-                res.send(items);
+
+             // do google image search and save image
+            googleClient.search(req.body.title, {
+              page: random(1, 5)
             })
+            .then(function (images) {
+              var rnd = random(0,images.length-1);
+              logger.pdata("random", rnd);
+              logger.pdata("images len", images.length);
+              logger.pdata("images", images[rnd]);
+
+              download(images[rnd].url, './uploads/google', function(){
+                logger.debug('download done');
+
+                cloudinary.config({ 
+                  cloud_name: cfg.cloudinary.cloud_name, 
+                  api_key: cfg.cloudinary.api_key, 
+                  api_secret: cfg.cloudinary.api_secret
+                });
+
+                cloudinary.uploader.upload('./uploads/google', function(result) {
+                   if (result.url) {
+                      logger.pdata('file uploaded', result.url);
+                      logger.pdata('image id', result.public_id);
+                      newListItem.imageId =  result.public_id;
+                      newListItem.image = result.url;
+                      logger.pdata('item', newListItem);
+
+                      List.addItem(req.params.listId, newListItem, function (err, items) {
+                        if (!err){
+                            res.send(items);
+                        }
+                        else{
+                            logger.error('Error create list item: '+ err);
+                            res.send({ error: err });
+                        }
+                      });
+                    } 
+                    else {
+                      res.send({});
+                    }
+               });
+              });
+            });
         }
         else
             res.send({error: err});
@@ -269,7 +316,23 @@ router.post('/:listId/items/:itemId', customMw.isAuthentificated, function(req, 
             res.send({error: err});
     });
 });
-  
+
+function download(uri, filename, callback){
+  logger.pdata('downloading:', uri);
+  logger.pdata('destination:', filename);
+
+  request.head(uri, function(err, res, body){
+    logger.pdata('content-type:', res.headers['content-type']);
+    logger.pdata('content-length:', res.headers['content-length']);
+
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  });
+};
+
+function random(low, high) {
+    return Math.floor(Math.random() * (high - low + 1) + low);
+}
+
 router.post('/', customMw.isAuthentificated, function(req, res) {
     var newList = {
         title:        req.body.title,
@@ -277,17 +340,52 @@ router.post('/', customMw.isAuthentificated, function(req, res) {
         items:        [],
         tags:         [],
         userId:       req.session.user._id,
-        published:    false
+        published:    false,
+        imageId:      null,
+        image:        null
     }
-    
-    List.create(newList, function(err, list){
-        if (!err){
-            res.send(list);
-        }
-        else{
-            logger.error('Error create list: '+ err);
-            res.send({ error: err });
-        }
+
+    // do google image search and save image
+    googleClient.search(req.body.title, {
+      page: random(1, 5)
+    })
+    .then(function (images) {
+      var rnd = random(0,images.length-1);
+      logger.pdata("random", rnd);
+      logger.pdata("images len", images.length);
+      logger.pdata("images", images[rnd]);
+
+      download(images[rnd].url, './uploads/google', function(){
+        logger.debug('download done');
+
+        cloudinary.config({ 
+          cloud_name: cfg.cloudinary.cloud_name, 
+          api_key: cfg.cloudinary.api_key, 
+          api_secret: cfg.cloudinary.api_secret
+        });
+
+        cloudinary.uploader.upload('./uploads/google', function(result) {
+           if (result.url) {
+              logger.pdata('file uploaded', result.url);
+              logger.pdata('image id', result.public_id);
+              newList.imageId =  result.public_id;
+              newList.image = result.url;
+              logger.pdata('list', newList);
+              List.create(newList, function(err, list){
+                if (!err){
+                    res.send(list);
+                }
+                else{
+                    logger.error('Error create list: '+ err);
+                    res.send({ error: err });
+                }
+              });
+            } 
+            else {
+              res.send({});
+            }
+       });
+      });
     });
 });
   
